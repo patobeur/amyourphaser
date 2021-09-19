@@ -119,7 +119,7 @@ class Tools extends Phaser.Scene {
 			console.log('This Rooms[' + roomImmat + '] x,y :' + this.Rooms[roomImmat].x + 'px, ' + this.Rooms[roomImmat].y + 'px')
 
 			// ADD TO GAMESCENE
-			this['room' + roomImmat] = this.add.image(this.Rooms[roomImmat].x, this.Rooms[roomImmat].y, 'room' + roomImmat)//.setOrigin(0.5, 0.5)
+			this['room' + roomImmat] = this.add.image(this.Rooms[roomImmat].x, this.Rooms[roomImmat].y, 'room' + roomImmat).setOrigin(0)
 			// add roomImmat/id to roomè
 			this['room' + roomImmat].roomImmat = roomImmat
 
@@ -171,7 +171,7 @@ class Tools extends Phaser.Scene {
 							// this.Rooms[roomImmat].portals[number].x + (this.Rooms[roomImmat].x / 2),
 							// this.Rooms[roomImmat].portals[number].y + (this.Rooms[roomImmat].y / 2),
 							'portal' + roomImmat + '_' + number
-						)
+						).setOrigin(0)
 					}
 
 				}
@@ -184,7 +184,7 @@ class Tools extends Phaser.Scene {
 			this.Rooms[this.actualroom].x + this.Rooms[this.actualroom].startpos.x,
 			this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y,
 			'playerOne'
-		)//.setOrigin(.5, .5)
+		).setOrigin(0)
 	}
 	// _____________________________________________
 	// FUNCTIONS __________________________________/
