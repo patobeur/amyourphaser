@@ -11,22 +11,25 @@ class SceneMain extends Tools {
 		this.preloadPortalsImages()
 	}
 	create() {
-		this.addRooms()
-
 		// re set physics.world.setBounds with actual room size
-		// this.ObjectsBounds.world = {
-		// 	w: this['room' + this.actualroom].width,
-		// 	h: this['room' + this.actualroom].height,
-		// }
-		// this.physics.world.setBounds(0, 0, this.ObjectsBounds.world.w, this.ObjectsBounds.world.h);
+		this.physics.world.debugGraphic.defaultStrokeWidth = 2;
 
+
+		this.addRooms()
+		this.physics.world.setBounds(
+			this.Rooms[this.actualroom].x,
+			this.Rooms[this.actualroom].y,
+			this.Rooms[this.actualroom].w,
+			this.Rooms[this.actualroom].h
+		);
 		this.addplayer()
-
 		this.addconsole()
 
+		// event
 		this.input.keyboard.on('keydown', this.onKeyDown, this);
 		this.input.on('wheel', (event) => { this.onWheelScroll(event) }, this);
 
+		// cameras.main follow player
 		this.cameras.main.startFollow(this.playerOne);
 	}
 	update() {

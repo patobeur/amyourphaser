@@ -23,8 +23,8 @@ class Tools extends Phaser.Scene {
 			keyShift: [13], // shift
 		}
 		this.ObjectsBounds = {
-			world: { w: 2048, h: 2048 },
-			camera: { w: 2048, h: 2048, ww: window.innerWidth, wh: window.innerHeight }
+			world: { w: 777, h: 512 },
+			camera: { w: 777, h: 512, ww: window.innerWidth, wh: window.innerHeight }
 		}
 		this.myconsolestyle = {
 			font: "bold 32px quikhand",
@@ -37,14 +37,14 @@ class Tools extends Phaser.Scene {
 				x: 1, y: 1, w: 256, h: 256, image: 'assets/floor_256-0.png'
 			},
 			{
-				x: 306, y: 306, w: 257, h: 256, image: 'assets/floor_256-1.png', startpos: { x: 33, y: 33 },
+				x: 257, y: 256, w: 256, h: 256, image: 'assets/floor_256-1.png', startpos: { x: 33, y: 33 },
 				portals: [
 					{ action: 'out', x: 1, y: 1, w: 64, h: 64, image: 'assets/p_out.png', norigin: { x: 0.5, y: 0.5 }, dest: { room: 2, portal: 0 } },
 					{ action: 'in', x: 192, y: 192, w: 64, h: 64, image: 'assets/p_in.png', norigin: { x: 0.5, y: 0.5 }, from: { room: 1, portal: 0 } }
 				]
 			},
 			{
-				x: 602, y: 1, w: 256, h: 256, image: 'assets/floor_256-2.png',
+				x: 513, y: 1, w: 256, h: 256, image: 'assets/floor_256-2.png',
 				portals: [
 					{ action: 'out', x: 1, y: 1, w: 64, h: 64, image: 'assets/p_out.png' },//, norigin: { x: 0.5, y: 0.5 }, from: { room: 1, portal: 0 } },
 					{ action: 'in', x: 192, y: 192, w: 64, h: 64, image: 'assets/p_in.png' },//, norigin: { x: 0.5, y: 0.5 }, dest: { room: 1, portal: 0 } }
@@ -175,7 +175,17 @@ class Tools extends Phaser.Scene {
 							'portal' + roomImmat + '_' + number
 						).setOrigin(0)
 
-						this.physics.add.collider(this['portal' + roomImmat + '_' + number], this.playerOne, this.teleportationTo(this['portal' + roomImmat + '_' + number]), null, this);
+						if (this.Rooms[roomImmat].portals[number].action = 'in') {
+							console.log('portal' + roomImmat + '_' + number + ' is activated !')
+							let room = this['portal' + roomImmat + '_' + number]
+							this.physics.add.collider(
+								room,
+								this.playerOne,
+								this.teleportationTo(room),
+								null,
+								this
+							);
+						}
 					}
 
 				}
@@ -212,9 +222,10 @@ class Tools extends Phaser.Scene {
 	// ______________________________________________________
 	// TEMPORARY DEV CONSOLE ___________________________//__/
 	addconsole() {
-		// this.myconsole = this.physics.add.text(24, 16, '', this.myconsolestyle)
+		// this.myconsole = this.physics.add.text(1, 1, '', this.myconsolestyle)
 		this.myconsole = this.add.text(1, 1, '', this.myconsolestyle)
 		// this.myconsole.setInteractive()
+		// this.myconsole.setCollideWorldBounds(true);
 	}
 	refreshconsole() {
 		// this.myconsole.setText('X: ' + this.cameras.main.scrollX + ' / Y: ' + parseInt(this.cameras.main.scrollY))
