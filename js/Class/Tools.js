@@ -40,14 +40,14 @@ class Tools extends Phaser.Scene {
 				x: 306, y: 306, w: 257, h: 256, image: 'assets/floor_256-1.png', startpos: { w: 1, x: 1 },
 				portals: [
 					{ action: 'out', x: 1, y: 1, w: 64, h: 64, image: 'assets/p_out.png', norigin: { x: 0.5, y: 0.5 }, dest: { room: 2, portal: 0 } },
-					{ action: 'in', x: 65, y: 65, w: 64, h: 64, image: 'assets/p_in.png', norigin: { x: 0.5, y: 0.5 }, from: { room: 1, portal: 0 } }
+					{ action: 'in', x: 192, y: 192, w: 64, h: 64, image: 'assets/p_in.png', norigin: { x: 0.5, y: 0.5 }, from: { room: 1, portal: 0 } }
 				]
 			},
 			{
-				x: 552, y: 1, w: 256, h: 256, image: 'assets/floor_256-2.png',
+				x: 602, y: 1, w: 256, h: 256, image: 'assets/floor_256-2.png',
 				portals: [
 					{ action: 'out', x: 1, y: 1, w: 64, h: 64, image: 'assets/p_out.png' },//, norigin: { x: 0.5, y: 0.5 }, from: { room: 1, portal: 0 } },
-					{ action: 'in', x: 65, y: 65, w: 64, h: 64, image: 'assets/p_in.png' },//, norigin: { x: 0.5, y: 0.5 }, dest: { room: 1, portal: 0 } }
+					{ action: 'in', x: 192, y: 192, w: 64, h: 64, image: 'assets/p_in.png' },//, norigin: { x: 0.5, y: 0.5 }, dest: { room: 1, portal: 0 } }
 				]
 			},
 		];
@@ -115,27 +115,27 @@ class Tools extends Phaser.Scene {
 	// _____________________________________________
 	// GAMESCENE ADDS _____________________________/
 	addRooms() {
-		for (let immat = 0; immat < this.Rooms.length; immat++) {
-			console.log('This Rooms (' + immat + ') pos dont work ???', this.Rooms[immat].x + 'px', this.Rooms[immat].y + 'px')
+		for (let roomImmat = 0; roomImmat < this.Rooms.length; roomImmat++) {
+			console.log('This Rooms[' + roomImmat + '] x,y :' + this.Rooms[roomImmat].x + 'px, ' + this.Rooms[roomImmat].y + 'px')
 
 			// ADD TO GAMESCENE
-			this['room' + immat] = this.add.image(this.Rooms[immat].x, this.Rooms[immat].y, 'room' + immat)
-			// add immat/id to roomè
-			this['room' + immat].immat = immat
+			this['room' + roomImmat] = this.add.image(this.Rooms[roomImmat].x, this.Rooms[roomImmat].y, 'room' + roomImmat)
+			// add roomImmat/id to roomè
+			this['room' + roomImmat].roomImmat = roomImmat
 
 			// only room where playerOne is
-			if (immat === this.actualroom) {
-				this['room' + immat].setInteractive()
-				this['room' + immat].on('pointerdown', () => { this.roomClickedByImmat(immat) }, this)
+			if (roomImmat === this.actualroom) {
+				this['room' + roomImmat].setInteractive()
+				this['room' + roomImmat].on('pointerdown', () => { this.roomClickedByImmat(roomImmat) }, this)
 				// if portals exists
-				if (typeof this.Rooms[immat].portals === 'object') {
-					this.addPortalsByRoomImmat(immat, { only: 'all' })
+				if (typeof this.Rooms[roomImmat].portals === 'object') {
+					this.addPortalsByRoomImmat(roomImmat, { only: 'all' })
 				}
 			}
 			else {
 				// only room where playerOne is NOT and portals exists
-				if (typeof this.Rooms[immat].portals === 'object') {
-					this.addPortalsByRoomImmat(immat, { only: 'out' })
+				if (typeof this.Rooms[roomImmat].portals === 'object') {
+					this.addPortalsByRoomImmat(roomImmat, { only: 'out' })
 				}
 			}
 		}
@@ -162,14 +162,16 @@ class Tools extends Phaser.Scene {
 					}
 					if (addthisone === true) {
 						// add to game
-						console.log('This dont work ???: posX ??' + this.Rooms[roomImmat].x + 'px')
+						console.log('This Rooms[' + roomImmat + '] Portals[' + number + '] = ' + this.Rooms[roomImmat].x + 'px, ' + this.Rooms[roomImmat].y + 'px')
 						this.add.image(
+							// this.Rooms[roomImmat].portals[number].x,
+							// this.Rooms[roomImmat].portals[number].y,
 							this.Rooms[roomImmat].portals[number].x + this.Rooms[roomImmat].x,
-							// this.Rooms[roomImmat].portals[number].x + (this.Rooms[roomImmat].x / 2),
 							this.Rooms[roomImmat].portals[number].y + this.Rooms[roomImmat].y,
+							// this.Rooms[roomImmat].portals[number].x + (this.Rooms[roomImmat].x / 2),
 							// this.Rooms[roomImmat].portals[number].y + (this.Rooms[roomImmat].y / 2),
 							'portal' + roomImmat + '_' + number
-						)
+						).setOrigin(.5, .5)
 					}
 
 				}
