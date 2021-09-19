@@ -5,7 +5,7 @@ class SceneMain extends Tools {
 		this.myconsole
 	}
 	preload() {
-		// !localStorage.getItem('phaser-bestscore') ? localStorage.setItem('phaser-bestscore', 0) : '';
+		// !localStorage.getItem('phaser-data') ? localStorage.setItem('phaser-data', 0) : '';
 		this.preloadRoomsImages()
 		this.preloadPlayerImages()
 		this.preloadPortalsImages()
@@ -25,7 +25,8 @@ class SceneMain extends Tools {
 		this.addconsole()
 
 		this.input.keyboard.on('keydown', this.onKeyDown, this);
-		this.input.on('wheel', () => { this.onWheelScroll(event) }, this);
+		this.input.on('wheel', (event) => { this.onWheelScroll(event) }, this);
+
 		this.cameras.main.startFollow(this.playerOne);
 	}
 	update() {
