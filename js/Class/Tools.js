@@ -37,17 +37,17 @@ class Tools extends Phaser.Scene {
 				x: 1, y: 1, w: 256, h: 256, image: 'assets/floor_256-0.png'
 			},
 			{
-				x: 257, y: 256, w: 256, h: 256, image: 'assets/floor_256-1.png', startpos: { x: 33, y: 33 },
+				x: 257, y: 256, w: 256, h: 256, image: 'assets/floor_256-1.png', startpos: { x: 124, y: 124 },
 				portals: [
-					{ action: 'out', x: 1, y: 1, w: 64, h: 64, image: 'assets/p_out.png', norigin: { x: 0.5, y: 0.5 }, dest: { room: 2, portal: 0 } },
-					{ action: 'in', x: 192, y: 192, w: 64, h: 64, image: 'assets/p_in.png', norigin: { x: 0.5, y: 0.5 }, from: { room: 1, portal: 0 } }
+					{ action: 'out', x: 1, y: 1, w: 64, h: 64, image: 'assets/p_out.png', norigin: { x: 0.5, y: 0.5 } },
+					{ action: 'in', x: 192, y: 192, w: 64, h: 64, image: 'assets/p_in.png', norigin: { x: 0.5, y: 0.5 }, dest: { room: 2, portal: 0 } },
 				]
 			},
 			{
 				x: 513, y: 1, w: 256, h: 256, image: 'assets/floor_256-2.png',
 				portals: [
-					{ action: 'out', x: 1, y: 1, w: 64, h: 64, image: 'assets/p_out.png' },//, norigin: { x: 0.5, y: 0.5 }, from: { room: 1, portal: 0 } },
-					{ action: 'in', x: 192, y: 192, w: 64, h: 64, image: 'assets/p_in.png' },//, norigin: { x: 0.5, y: 0.5 }, dest: { room: 1, portal: 0 } }
+					{ action: 'out', x: 1, y: 1, w: 64, h: 64, image: 'assets/p_out.png', norigin: { x: 0.5, y: 0.5 } },
+					{ action: 'in', x: 192, y: 192, w: 64, h: 64, image: 'assets/p_in.png', norigin: { x: 0.5, y: 0.5 }, dest: { room: 1, portal: 0 } },
 				]
 			},
 		];
@@ -143,13 +143,7 @@ class Tools extends Phaser.Scene {
 	addPortalsByRoomImmat(roomImmat, rules = false) {
 		if (typeof this.Rooms[roomImmat].portals === 'object') {
 			if (this.Rooms[roomImmat].portals.length > 0) {
-				for (let number = 0; number < this.Rooms[roomImmat].portals.length; number++) {
-
-
-
-					console.log('-> room:' + roomImmat + '/portal:' + number)
-
-
+				for (let portalImmat = 0; portalImmat < this.Rooms[roomImmat].portals.length; portalImmat++) {
 					let addthisone = false
 					if (rules === false) {
 						addthisone = true
@@ -158,34 +152,33 @@ class Tools extends Phaser.Scene {
 						if (rules.only && rules.only === 'all') {
 							addthisone = true
 						}
-						else if (rules.only && rules.only === 'out' && this.Rooms[roomImmat].portals[number].action === 'out') {
+						else if (rules.only && rules.only === 'in' && this.Rooms[roomImmat].portals[portalImmat].action === 'in') {
 							addthisone = true
 						}
-						else if (rules.only && rules.only === 'in' && this.Rooms[roomImmat].portals[number].action === 'in') {
+						else if (rules.only && rules.only === 'out' && this.Rooms[roomImmat].portals[portalImmat].action === 'out') {
 							addthisone = true
 						}
 					}
 					if (addthisone === true) {
-						// add to game
-						this['portal' + roomImmat + '_' + number] = this.add.image(
-							// this.Rooms[roomImmat].portals[number].x,
-							// this.Rooms[roomImmat].portals[number].y,
-							this.Rooms[roomImmat].portals[number].x + this.Rooms[roomImmat].x,
-							this.Rooms[roomImmat].portals[number].y + this.Rooms[roomImmat].y,
-							// this.Rooms[roomImmat].portals[number].x + (this.Rooms[roomImmat].x / 2),
-							// this.Rooms[roomImmat].portals[number].y + (this.Rooms[roomImmat].y / 2),
-							'portal' + roomImmat + '_' + number
+						// add portal to game
+						this['portal' + roomImmat + '_' + portalImmat] = this.physics.add.image(
+							this.Rooms[roomImmat].portals[portalImmat].x + this.Rooms[roomImmat].x,
+							this.Rooms[roomImmat].portals[portalImmat].y + this.Rooms[roomImmat].y,
+							'portal' + roomImmat + '_' + portalImmat
 						).setOrigin(0)
 
 
-						console.log(this.Rooms[roomImmat].portals[number].action)
-						if (this.Rooms[roomImmat].portals[number].action == 'in') {
-							console.log('portal OK room:' + roomImmat + '/portal:' + number + ' action:' + this.Rooms[roomImmat].portals[number].action)
-							let room = this['portal' + roomImmat + '_' + number]
+						// ADD COLLIDER TO PORTAL WITH TELEPORTATION
+
+						if (this.Rooms[roomImmat].portals[portalImmat].action == 'in') {
+
+							console.log('adding collider portal[room' + roomImmat + 'portal:' + portalImmat + '] action:' + this.Rooms[roomImmat].portals[portalImmat].action)
+
+							let portal = this['portal' + roomImmat + '_' + portalImmat]
 							this.physics.add.collider(
-								room,
+								portal,
 								this.playerOne,
-								this.teleportationTo(roomImmat),
+								this.teleportationTo(roomImmat, portalImmat),
 								null,
 								this
 							);
@@ -197,7 +190,7 @@ class Tools extends Phaser.Scene {
 		}
 	}
 	addplayer() {
-		console.log('player pos: ', (this.Rooms[this.actualroom].x + this.Rooms[this.actualroom].startpos.x), (this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y))
+		// console.log('player pos: ', (this.Rooms[this.actualroom].x + this.Rooms[this.actualroom].startpos.x), (this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y))
 		this.playerOne = this.physics.add.image(
 			this.Rooms[this.actualroom].x + this.Rooms[this.actualroom].startpos.x + (this.playerDatas.w / 2),
 			this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y + (this.playerDatas.h / 2),
@@ -208,12 +201,34 @@ class Tools extends Phaser.Scene {
 	}
 	// _____________________________________________
 	// FUNCTIONS __________________________________/
-	teleportationTo = (roomImmat) => {
-		console.log('Beam me up, Scotty !')
-		console.log('teleporting to : rooms[' + roomImmat + ']')
-		// get room dest portal pos 
+	setWorldBounds() {
+		this.physics.world.setBounds(
+			this.Rooms[this.actualroom].x,
+			this.Rooms[this.actualroom].y,
+			this.Rooms[this.actualroom].w,
+			this.Rooms[this.actualroom].h
+			// this.Rooms[2].x,
+			// this.Rooms[2].y,
+			// this.Rooms[2].w,
+			// this.Rooms[2].h
+		);
+
+	}
+	teleportationTo = (roomImmat, portalImmat) => {		// get room dest portal pos 
+		console.log(
+			'Beam me up, Scotty ! teleporting from',
+			'Room[' + roomImmat + ']Portal[' + roomImmat + '] to ',
+			'Room[' + this.Rooms[roomImmat].portals[portalImmat].dest.room + ']Portal[' + this.Rooms[roomImmat].portals[portalImmat].dest.portal + ']')
+
 		// change room
-		// this.playerOne.y = ?;
+		// this.actualroom = this.Rooms[roomImmat].portals[portalImmat].dest.room
+
+		// wtf ?
+		// this.playerOne.x = this.Rooms[this.actualroom].portals[portalImmat].x;
+		// this.playerOne.y = this.Rooms[this.actualroom].portals[portalImmat].y;
+
+		// refresh worlds bound
+		// this.setWorldBounds()
 	}
 	roomClickedByImmat = (immat) => {
 		var tx = this['room' + immat].input.localX

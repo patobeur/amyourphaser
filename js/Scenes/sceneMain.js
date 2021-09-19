@@ -16,16 +16,7 @@ class SceneMain extends Tools {
 
 
 		this.addRooms()
-		this.physics.world.setBounds(
-			this.Rooms[this.actualroom].x,
-			this.Rooms[this.actualroom].y,
-			this.Rooms[this.actualroom].w,
-			this.Rooms[this.actualroom].h
-			// this.Rooms[2].x,
-			// this.Rooms[2].y,
-			// this.Rooms[2].w,
-			// this.Rooms[2].h
-		);
+		this.setWorldBounds()
 		this.addplayer()
 		this.addconsole()
 
@@ -38,5 +29,4 @@ class SceneMain extends Tools {
 	}
 	update() {
 	}
-
 }
