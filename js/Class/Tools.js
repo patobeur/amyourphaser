@@ -217,7 +217,7 @@ class Tools extends Phaser.Scene {
 	teleportationTo = (roomImmat, portalImmat) => {		// get room dest portal pos 
 		console.log(
 			'Beam me up, Scotty ! teleporting from',
-			'Room[' + roomImmat + ']Portal[' + roomImmat + '] to ',
+			'Room[' + roomImmat + ']Portal[' + roomImmat + '] to',
 			'Room[' + this.Rooms[roomImmat].portals[portalImmat].dest.room + ']Portal[' + this.Rooms[roomImmat].portals[portalImmat].dest.portal + ']')
 
 		// change room
