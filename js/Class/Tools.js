@@ -141,10 +141,16 @@ class Tools extends Phaser.Scene {
 		}
 	}
 	addPortalsByRoomImmat(roomImmat, rules = false) {
-
 		if (typeof this.Rooms[roomImmat].portals === 'object') {
 			if (this.Rooms[roomImmat].portals.length > 0) {
 				for (let number = 0; number < this.Rooms[roomImmat].portals.length; number++) {
+
+
+
+					console.log(this.Rooms[roomImmat].portals[number].action)
+
+
+
 					let addthisone = false
 					if (rules === false) {
 						addthisone = true
