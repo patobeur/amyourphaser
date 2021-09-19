@@ -37,7 +37,7 @@ class Tools extends Phaser.Scene {
 				x: 1, y: 1, w: 256, h: 256, image: 'assets/floor_256-0.png'
 			},
 			{
-				x: 306, y: 306, w: 257, h: 256, image: 'assets/floor_256-1.png', startpos: { w: 1, x: 1 },
+				x: 306, y: 306, w: 257, h: 256, image: 'assets/floor_256-1.png', startpos: { x: 1, y: 1 },
 				portals: [
 					{ action: 'out', x: 1, y: 1, w: 64, h: 64, image: 'assets/p_out.png', norigin: { x: 0.5, y: 0.5 }, dest: { room: 2, portal: 0 } },
 					{ action: 'in', x: 192, y: 192, w: 64, h: 64, image: 'assets/p_in.png', norigin: { x: 0.5, y: 0.5 }, from: { room: 1, portal: 0 } }
@@ -179,9 +179,10 @@ class Tools extends Phaser.Scene {
 		}
 	}
 	addplayer() {
+		console.log('player pos: ', (this.Rooms[this.actualroom].x + this.Rooms[this.actualroom].startpos.x), (this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y))
 		this.playerOne = this.physics.add.image(
-			this.Rooms[this.actualroom].x,
-			this.Rooms[this.actualroom].y,
+			this.Rooms[this.actualroom].x + this.Rooms[this.actualroom].startpos.x,
+			this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y,
 			'playerOne'
 		)//.setOrigin(.5, .5)
 	}
