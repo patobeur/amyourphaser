@@ -21,6 +21,10 @@ class SceneMain extends Tools {
 			this.Rooms[this.actualroom].y,
 			this.Rooms[this.actualroom].w,
 			this.Rooms[this.actualroom].h
+			// this.Rooms[2].x,
+			// this.Rooms[2].y,
+			// this.Rooms[2].w,
+			// this.Rooms[2].h
 		);
 		this.addplayer()
 		this.addconsole()
