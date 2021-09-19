@@ -172,7 +172,7 @@ class Tools extends Phaser.Scene {
 							'portal' + roomImmat + '_' + number
 						).setOrigin(0)
 
-						if (this.Rooms[roomImmat].portals[number].action === 'in') {
+						if (this.Rooms[roomImmat].portals[number].action == 'in') {
 							let room = this['portal' + roomImmat + '_' + number]
 							this.physics.add.collider(
 								room,
