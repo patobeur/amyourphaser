@@ -171,8 +171,8 @@ class Tools extends Phaser.Scene {
 							// this.Rooms[roomImmat].portals[number].y + (this.Rooms[roomImmat].y / 2),
 							'portal' + roomImmat + '_' + number
 						).setOrigin(0)
-						console.log('test action:' + this.Rooms[roomImmat].portals[number].action)
 						if (this.Rooms[roomImmat].portals[number].action == 'in') {
+							console.log('portal OK ' + roomImmat + '/' + number + ' action:' + this.Rooms[roomImmat].portals[number].action)
 							let room = this['portal' + roomImmat + '_' + number]
 							this.physics.add.collider(
 								room,
