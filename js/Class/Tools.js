@@ -2,8 +2,9 @@ class Tools extends Phaser.Scene {
 	constructor() {
 		super()
 		this.actualroom = 1
-		this.centerX = GAME.config.width / 2
-		this.centerY = GAME.config.height / 2
+		this.zoomStepValue = .1
+		// this.centerX = GAME.config.width / 2
+		// this.centerY = GAME.config.height / 2
 		this.keys = {
 			keyUp: [90, 38], // 'z', arrowUp
 			keyDown: [83, 40], // 's', arrowDown
@@ -50,28 +51,32 @@ class Tools extends Phaser.Scene {
 			objname: 'playerOne',
 			startPos: { x: 1, y: 1 },
 			media: { x: 1, y: 1 },
-			picture: 'assets/playerface.png'
+			picture: 'assets/playerface.png',
+			speed: 5
 		}
-		this.zoomStepValue = .1
 	}
 	// ______________________________________________________
 	// SOMES LISTENERS ____________________________//_______/
 	onKeyDown(event) {
 		if (this.keys.keyUp.indexOf(event.keyCode) > -1) {
-			this.playerOne.y -= 5;
-			this.cameras.main.scrollY -= 5;
+			// this.cameras.main.scrollY -= this.playerDatas.speed;
+			this.myconsole.y -= this.playerDatas.speed;
+			this.playerOne.y -= this.playerDatas.speed;
 		}
 		else if (this.keys.keyDown.indexOf(event.keyCode) > -1) {
-			this.cameras.main.scrollY += 5;
-			this.playerOne.y += 5;
+			// this.cameras.main.scrollY += this.playerDatas.speed;
+			this.myconsole.y += this.playerDatas.speed;
+			this.playerOne.y += this.playerDatas.speed;
 		}
 		else if (this.keys.keyLeft.indexOf(event.keyCode) > -1) {
-			this.cameras.main.scrollX -= 5;
-			this.playerOne.x -= 5;
+			// this.cameras.main.scrollX -= this.playerDatas.speed;
+			this.myconsole.x -= this.playerDatas.speed;
+			this.playerOne.x -= this.playerDatas.speed;
 		}
 		else if (this.keys.keyRight.indexOf(event.keyCode) > -1) {
-			this.cameras.main.scrollX += 5;
-			this.playerOne.x += 5;
+			// this.cameras.main.scrollX += this.playerDatas.speed;
+			this.myconsole.x += this.playerDatas.speed;
+			this.playerOne.x += this.playerDatas.speed;
 		}
 		this.refreshconsole()
 	}
