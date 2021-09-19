@@ -28,7 +28,9 @@ class Tools extends Phaser.Scene {
 			boundsAlignV: "middle"
 		}
 		this.Rooms = [
-			{ x: 1, y: 1, w: 256, h: 256, image: 'assets/floor_256-0.png' },
+			{
+				x: 1, y: 1, w: 256, h: 256, image: 'assets/floor_256-0.png'
+			},
 			{
 				x: 306, y: 306, w: 257, h: 256, image: 'assets/floor_256-1.png', startpos: { w: 1, x: 1 },
 				portals: [
@@ -106,6 +108,8 @@ class Tools extends Phaser.Scene {
 	addRooms() {
 		for (let immat = 0; immat < this.Rooms.length; immat++) {
 			console.log('This Rooms (' + immat + ') pos dont work ???', this.Rooms[immat].x + 'px', this.Rooms[immat].y + 'px')
+
+			// ADD TO GAMESCENE
 			this['room' + immat] = this.add.image(this.Rooms[immat].x, this.Rooms[immat].y, 'room' + immat)
 			// add immat/id to roomè
 			this['room' + immat].immat = immat
@@ -147,7 +151,7 @@ class Tools extends Phaser.Scene {
 							addthisone = true
 						}
 					}
-					if (addthisone) {
+					if (addthisone === true) {
 						// add to game
 						console.log('This dont work ???: posX ??' + this.Rooms[roomImmat].x + 'px')
 						this.add.image(

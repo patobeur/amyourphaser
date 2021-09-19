@@ -1,3 +1,3 @@
 # amYourPhaser
 
-🐰 try it ! https://patobeur.github.io/amyourphaser/
+🐰 try it ! 🌱 https://patobeur.github.io/amyourphaser/
