@@ -199,7 +199,9 @@ class Tools extends Phaser.Scene {
 	// ______________________________________________________
 	// TEMPORARY DEV CONSOLE ___________________________//__/
 	addconsole() {
+		// this.myconsole = this.physics.add.text(24, 16, '', this.myconsolestyle)
 		this.myconsole = this.add.text(24, 16, '', this.myconsolestyle)
+		// this.myconsole.setInteractive()
 	}
 	refreshconsole() {
 		this.myconsole.setText('X: ' + this.cameras.main.scrollX + ' / Y: ' + parseInt(this.cameras.main.scrollY))
