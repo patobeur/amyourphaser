@@ -14,10 +14,10 @@ class SceneMain extends Tools {
 		this.addRooms()
 
 		// re set physics.world.setBounds with actual room size
-		this.ObjectsBounds.world = {
-			w: this['room' + this.actualroom].width,
-			h: this['room' + this.actualroom].height
-		}
+		// this.ObjectsBounds.world = {
+		// 	w: this['room' + this.actualroom].width,
+		// 	h: this['room' + this.actualroom].height,
+		// }
 		// this.physics.world.setBounds(0, 0, this.ObjectsBounds.world.w, this.ObjectsBounds.world.h);
 
 		this.addplayer()

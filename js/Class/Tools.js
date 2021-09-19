@@ -163,7 +163,7 @@ class Tools extends Phaser.Scene {
 					if (addthisone === true) {
 						// add to game
 						console.log('This Rooms[' + roomImmat + '] Portals[' + number + '] = ' + this.Rooms[roomImmat].x + 'px, ' + this.Rooms[roomImmat].y + 'px')
-						this.add.image(
+						this['portal' + roomImmat + '_' + number] = this.add.image(
 							// this.Rooms[roomImmat].portals[number].x,
 							// this.Rooms[roomImmat].portals[number].y,
 							this.Rooms[roomImmat].portals[number].x + this.Rooms[roomImmat].x,
@@ -172,6 +172,8 @@ class Tools extends Phaser.Scene {
 							// this.Rooms[roomImmat].portals[number].y + (this.Rooms[roomImmat].y / 2),
 							'portal' + roomImmat + '_' + number
 						).setOrigin(0)
+
+						this.physics.add.collider(this['portal' + roomImmat + '_' + number], this.playerOne, this.teleportationTo(this['portal' + roomImmat + '_' + number]), null, this);
 					}
 
 				}
@@ -185,6 +187,8 @@ class Tools extends Phaser.Scene {
 			this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y,
 			'playerOne'
 		).setOrigin(0)
+
+		this.playerOne.setCollideWorldBounds(true);
 	}
 	// _____________________________________________
 	// FUNCTIONS __________________________________/
@@ -207,7 +211,7 @@ class Tools extends Phaser.Scene {
 	// TEMPORARY DEV CONSOLE ___________________________//__/
 	addconsole() {
 		// this.myconsole = this.physics.add.text(24, 16, '', this.myconsolestyle)
-		this.myconsole = this.add.text(24, 16, '', this.myconsolestyle)
+		this.myconsole = this.add.text(1, 1, '', this.myconsolestyle)
 		// this.myconsole.setInteractive()
 	}
 	refreshconsole() {
