@@ -118,8 +118,6 @@ class Tools extends Phaser.Scene {
 	// GAMESCENE ADDS _____________________________/
 	addRooms() {
 		for (let roomImmat = 0; roomImmat < this.Rooms.length; roomImmat++) {
-			console.log('This Rooms[' + roomImmat + '] x,y :' + this.Rooms[roomImmat].x + 'px, ' + this.Rooms[roomImmat].y + 'px')
-
 			// ADD TO GAMESCENE
 			this['room' + roomImmat] = this.add.image(this.Rooms[roomImmat].x, this.Rooms[roomImmat].y, 'room' + roomImmat).setOrigin(0)
 			// add roomImmat/id to roomè
@@ -164,7 +162,6 @@ class Tools extends Phaser.Scene {
 					}
 					if (addthisone === true) {
 						// add to game
-						console.log('This Rooms[' + roomImmat + '] Portals[' + number + '] = ' + this.Rooms[roomImmat].x + 'px, ' + this.Rooms[roomImmat].y + 'px')
 						this['portal' + roomImmat + '_' + number] = this.add.image(
 							// this.Rooms[roomImmat].portals[number].x,
 							// this.Rooms[roomImmat].portals[number].y,
@@ -175,13 +172,12 @@ class Tools extends Phaser.Scene {
 							'portal' + roomImmat + '_' + number
 						).setOrigin(0)
 
-						if (this.Rooms[roomImmat].portals[number].action = 'in') {
-							console.log('portal' + roomImmat + '_' + number + ' is activated !')
+						if (this.Rooms[roomImmat].portals[number].action === 'in') {
 							let room = this['portal' + roomImmat + '_' + number]
 							this.physics.add.collider(
 								room,
 								this.playerOne,
-								this.teleportationTo(room),
+								this.teleportationTo(roomImmat),
 								null,
 								this
 							);
@@ -204,9 +200,9 @@ class Tools extends Phaser.Scene {
 	}
 	// _____________________________________________
 	// FUNCTIONS __________________________________/
-	teleportationTo = (roomdest) => {
+	teleportationTo = (roomImmat) => {
 		console.log('Beam me up, Scotty !')
-		console.log(roomdest)
+		console.log('teleporting to : rooms[' + roomImmat + ']')
 		// get room dest portal pos 
 		// change room
 		// this.playerOne.y = ?;
