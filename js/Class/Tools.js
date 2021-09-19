@@ -2,7 +2,11 @@ class Tools extends Phaser.Scene {
 	constructor() {
 		super()
 		this.actualroom = 1
-		this.zoomStepValue = .1
+		this.zoOom = {
+			step: .1,
+			max: 3,
+			min: .5
+		}
 		// this.centerX = GAME.config.width / 2
 		// this.centerY = GAME.config.height / 2
 		this.keys = {
@@ -82,8 +86,8 @@ class Tools extends Phaser.Scene {
 	}
 	onWheelScroll(event) {
 		event.deltaY > 0
-			? this.cameras.main.zoom > 0.8 ? this.cameras.main.zoom -= this.zoomStepValue : ''
-			: this.cameras.main.zoom < 3 ? this.cameras.main.zoom += this.zoomStepValue : '';
+			? this.cameras.main.zoom > this.zoOom.min ? this.cameras.main.zoom -= this.zoOom.step : ''
+			: this.cameras.main.zoom < this.zoOom.max ? this.cameras.main.zoom += this.zoOom.step : '';
 	}
 	// ______________________________________________________
 	// GAMESCENE PRELOADS _________________________//_______/
