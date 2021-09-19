@@ -1,6 +1,6 @@
 class SceneMain extends Tools {
 	constructor() {
-		super()
+		super(SceneMain)
 		// this.camera
 		this.myconsole
 	}
@@ -13,11 +13,11 @@ class SceneMain extends Tools {
 	create() {
 		this.addRooms()
 
-		// re set physics.world.setBounds 
-		// this.ObjectsBounds.world = {
-		// 	w: this['room' + this.actualroom].width,
-		// 	h: this['room' + this.actualroom].height
-		// }
+		// re set physics.world.setBounds with actual room size
+		this.ObjectsBounds.world = {
+			w: this['room' + this.actualroom].width,
+			h: this['room' + this.actualroom].height
+		}
 		// this.physics.world.setBounds(0, 0, this.ObjectsBounds.world.w, this.ObjectsBounds.world.h);
 
 		this.addplayer()
