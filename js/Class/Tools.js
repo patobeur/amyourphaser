@@ -53,9 +53,11 @@ class Tools extends Phaser.Scene {
 		];
 		this.playerDatas = {
 			objname: 'playerOne',
-			startPos: { x: 1, y: 1 },
+			startPos: {},
 			media: { x: 1, y: 1 },
 			picture: 'assets/playerface.png',
+			w: 20,
+			h: 31,
 			speed: 5
 		}
 	}
@@ -183,10 +185,10 @@ class Tools extends Phaser.Scene {
 	addplayer() {
 		console.log('player pos: ', (this.Rooms[this.actualroom].x + this.Rooms[this.actualroom].startpos.x), (this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y))
 		this.playerOne = this.physics.add.image(
-			this.Rooms[this.actualroom].x + this.Rooms[this.actualroom].startpos.x,
-			this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y,
+			this.Rooms[this.actualroom].x + this.Rooms[this.actualroom].startpos.x + (this.playerDatas.w / 2),
+			this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y + (this.playerDatas.h / 2),
 			'playerOne'
-		).setOrigin(0)
+		).setOrigin(.5, .5)
 
 		this.playerOne.setCollideWorldBounds(true);
 	}
@@ -215,6 +217,10 @@ class Tools extends Phaser.Scene {
 		// this.myconsole.setInteractive()
 	}
 	refreshconsole() {
-		this.myconsole.setText('X: ' + this.cameras.main.scrollX + ' / Y: ' + parseInt(this.cameras.main.scrollY))
+		// this.myconsole.setText('X: ' + this.cameras.main.scrollX + ' / Y: ' + parseInt(this.cameras.main.scrollY))
+		this.myconsole.setText(
+			'Player X: ' + this.playerOne.x + ' Y: ' + this.playerOne.y +
+			'(x:' + (this.playerOne.x - this.Rooms[this.actualroom].x) + ',y:' + (this.playerOne.y - this.Rooms[this.actualroom].y) +
+			')')
 	}
 }
