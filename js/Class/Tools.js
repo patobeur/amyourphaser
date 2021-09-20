@@ -160,13 +160,13 @@ class Tools extends Phaser.Scene {
 						}
 					}
 					if (addthisone === true) {
+						let PortalName = 'portal' + roomImmat + '_' + portalImmat
 						// add portal to game
 						this['portal' + roomImmat + '_' + portalImmat] = this.physics.add.image(
 							this.Rooms[roomImmat].portals[portalImmat].x + this.Rooms[roomImmat].x,
 							this.Rooms[roomImmat].portals[portalImmat].y + this.Rooms[roomImmat].y,
-							'portal' + roomImmat + '_' + portalImmat
+							PortalName
 						).setOrigin(0)
-
 
 						// ADD COLLIDER TO PORTAL WITH TELEPORTATION
 
@@ -174,9 +174,11 @@ class Tools extends Phaser.Scene {
 
 							console.log('adding collider portal[room' + roomImmat + 'portal:' + portalImmat + '] action:' + this.Rooms[roomImmat].portals[portalImmat].action)
 
-							let portal = this['portal' + roomImmat + '_' + portalImmat]
+							// new ??
+							this[PortalName].body.collideWorldBounds = true;
+							//-
 							this.physics.add.collider(
-								portal,
+								this[PortalName],
 								this.playerOne,
 								this.teleportationTo(roomImmat, portalImmat),
 								null,
@@ -218,7 +220,9 @@ class Tools extends Phaser.Scene {
 		console.log(
 			'Beam me up, Scotty ! teleporting from',
 			'Room[' + roomImmat + ']Portal[' + roomImmat + '] to',
-			'Room[' + this.Rooms[roomImmat].portals[portalImmat].dest.room + ']Portal[' + this.Rooms[roomImmat].portals[portalImmat].dest.portal + ']')
+			'Room[' + this.Rooms[roomImmat].portals[portalImmat].dest.room +
+			']Portal[' + this.Rooms[roomImmat].portals[portalImmat].dest.portal +
+			']')
 
 		// change room
 		// this.actualroom = this.Rooms[roomImmat].portals[portalImmat].dest.room
@@ -242,7 +246,15 @@ class Tools extends Phaser.Scene {
 	// TEMPORARY DEV CONSOLE ___________________________//__/
 	addconsole() {
 		// this.myconsole = this.physics.add.text(1, 1, '', this.myconsolestyle)
+		// this.physics.startSystem(Phaser.Physics.ARCADE);
 		this.myconsole = this.add.text(1, 1, '', this.myconsolestyle)
+		this.myconsole.stroke = "#de77ae";
+		this.myconsole.strokeThickness = 16;
+		this.myconsole.setShadow(2, 2, "#333333", 2, true, false);
+		// this.physics.arcade.enable([this.myconsole]);
+		// this.myconsole.body.collideWorldBounds = true;
+
+		// this.physics.myconsole.startFollow(this.playerOne);
 		// this.myconsole.setInteractive()
 		// this.myconsole.setCollideWorldBounds(true);
 	}
@@ -250,7 +262,10 @@ class Tools extends Phaser.Scene {
 		// this.myconsole.setText('X: ' + this.cameras.main.scrollX + ' / Y: ' + parseInt(this.cameras.main.scrollY))
 		this.myconsole.setText(
 			'Player X: ' + this.playerOne.x + ' Y: ' + this.playerOne.y +
-			'(x:' + (this.playerOne.x - this.Rooms[this.actualroom].x) + ',y:' + (this.playerOne.y - this.Rooms[this.actualroom].y) +
-			')')
+			'(x:' + (this.playerOne.x - this.Rooms[this.actualroom].x) +
+			',y:' + (this.playerOne.y - this.Rooms[this.actualroom].y) + ')')
+		this.myconsole.x = 1
+		this.myconsole.y = 1
+
 	}
 }
