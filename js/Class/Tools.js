@@ -3,7 +3,7 @@ class Tools extends Phaser.Scene {
 		super()
 		
 		this.panda
-		this.actualRoomImmat = 1
+		this.actualRoomImmat = 1 // (immat is like id)
 		this.zoOom = {
 			step: .1,
 			max: 3,
@@ -36,20 +36,39 @@ class Tools extends Phaser.Scene {
 		}
 		this.Rooms = [
 			{
-				x: 1, y: 1, w: 256, h: 256, image: 'assets/floor_256-0.png'
+				x: 1, y: 1, w: 256, h: 256, image: 'assets/floor_256-0.png',
+				portals: [
+					{ action: 'out', x: 1, y: 1, w: 64, h: 64,
+						image: 'assets/p_out.png',
+					},
+					{ action: 'in', x: 192, y: 1, w: 64, h: 64,
+						image: 'assets/p_in.png',
+						dest: { room: 1, portal: 0 }
+					},
+				]
 			},
 			{
 				x: 257, y: 256, w: 256, h: 256, image: 'assets/floor_256-1.png', startpos: { x: 124, y: 124 },
 				portals: [
-					{ action: 'out', x: 1, y: 1, w: 64, h: 64, image: 'assets/p_out.png', norigin: { x: 0.5, y: 0.5 } },
-					{ action: 'in', x: 192, y: 192, w: 64, h: 64, image: 'assets/p_in.png', norigin: { x: 0.5, y: 0.5 }, dest: { room: 2, portal: 0 } },
+					{ action: 'out', x: 1, y: 128, w: 64, h: 64, 
+						image: 'assets/p_out.png', norigin: { x: 0.5, y: 0.5 }
+					},
+					{ action: 'in', x: 192, y: 128, w: 64, h: 64, 
+						image: 'assets/p_in.png', norigin: { x: 0.5, y: 0.5 },
+						dest: { room: 2, portal: 0 }
+					},
 				]
 			},
 			{
 				x: 513, y: 1, w: 256, h: 256, image: 'assets/floor_256-2.png',
 				portals: [
-					{ action: 'out', x: 1, y: 1, w: 64, h: 64, image: 'assets/p_out.png', norigin: { x: 0.5, y: 0.5 } },
-					{ action: 'in', x: 192, y: 192, w: 64, h: 64, image: 'assets/p_in.png', norigin: { x: 0.5, y: 0.5 }, dest: { room: 1, portal: 0 } },
+					{ action: 'out', x: 1, y: 1, w: 64, h: 64,
+						image: 'assets/p_out.png', norigin: { x: 0.5, y: 0.5 }
+					},
+					{ action: 'in', x: 192, y: 1, w: 64, h: 64,
+						image: 'assets/p_in.png', norigin: { x: 0.5, y: 0.5 },
+						dest: { room: 0, portal: 0 }
+					},
 				]
 			},
 		];
@@ -122,24 +141,9 @@ class Tools extends Phaser.Scene {
 		for (let roomImmat = 0; roomImmat < this.Rooms.length; roomImmat++) {
 			// ADD TO GAMESCENE
 			this['room' + roomImmat] = this.add.image(this.Rooms[roomImmat].x, this.Rooms[roomImmat].y, 'room' + roomImmat).setOrigin(0)
-			// add roomImmat/id to roomè
-			this['room' + roomImmat].roomImmat = roomImmat
 
-			// // only room where playerOne is
-			// if (roomImmat === this.actualRoomImmat) {
-			// 	this['room' + roomImmat].setInteractive()
-			// 	this['room' + roomImmat].on('pointerdown', () => { this.roomClickedByImmat(roomImmat) }, this)
-			// 	// if portals exists
-			// 	if (typeof this.Rooms[roomImmat].portals === 'object') {
-			// 		this.addPortalsByRoomImmat(roomImmat, { only: 'all' })
-			// 	}
-			// }
-			// else {
-			// 	// only room where playerOne is NOT and portals exists
-			// 	if (typeof this.Rooms[roomImmat].portals === 'object') {
-			// 		this.addPortalsByRoomImmat(roomImmat, { only: 'out' })
-			// 	}
-			// }
+			// add roomImmat to room
+			this['room' + roomImmat].roomImmat = roomImmat
 		}
 	}
 	clearActualRoomPortals() {
