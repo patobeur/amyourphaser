@@ -28,6 +28,7 @@ class SceneMain extends Tools {
 
 		// testing collider
 		this.addPanda()
+		this.addBlock()
 
 		// event
 		this.input.keyboard.on('keydown', this.onKeyDown, this);
