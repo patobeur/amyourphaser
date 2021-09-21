@@ -1,7 +1,9 @@
 class Tools extends Phaser.Scene {
 	constructor() {
 		super()
-		this.actualroom = 1
+		
+		this.panda
+		this.actualRoomImmat = 1
 		this.zoOom = {
 			step: .1,
 			max: 3,
@@ -123,21 +125,59 @@ class Tools extends Phaser.Scene {
 			// add roomImmat/id to roomè
 			this['room' + roomImmat].roomImmat = roomImmat
 
-			// only room where playerOne is
-			if (roomImmat === this.actualroom) {
-				this['room' + roomImmat].setInteractive()
-				this['room' + roomImmat].on('pointerdown', () => { this.roomClickedByImmat(roomImmat) }, this)
-				// if portals exists
-				if (typeof this.Rooms[roomImmat].portals === 'object') {
-					this.addPortalsByRoomImmat(roomImmat, { only: 'all' })
+			// // only room where playerOne is
+			// if (roomImmat === this.actualRoomImmat) {
+			// 	this['room' + roomImmat].setInteractive()
+			// 	this['room' + roomImmat].on('pointerdown', () => { this.roomClickedByImmat(roomImmat) }, this)
+			// 	// if portals exists
+			// 	if (typeof this.Rooms[roomImmat].portals === 'object') {
+			// 		this.addPortalsByRoomImmat(roomImmat, { only: 'all' })
+			// 	}
+			// }
+			// else {
+			// 	// only room where playerOne is NOT and portals exists
+			// 	if (typeof this.Rooms[roomImmat].portals === 'object') {
+			// 		this.addPortalsByRoomImmat(roomImmat, { only: 'out' })
+			// 	}
+			// }
+		}
+	}
+	clearActualRoomPortals() {
+		if (typeof this.Rooms[this.actualRoomImmat].portals === 'object') {
+			if (this.Rooms[this.actualRoomImmat].portals.length > 0) {
+				for (let portalImmat = 0; portalImmat < this.Rooms[this.actualRoomImmat].portals.length; portalImmat++)
+				{
+					let PortalName = 'portal' + this.actualRoomImmat + '_' + portalImmat
+					this[PortalName].destroy()
 				}
 			}
-			else {
-				// only room where playerOne is NOT and portals exists
-				if (typeof this.Rooms[roomImmat].portals === 'object') {
-					this.addPortalsByRoomImmat(roomImmat, { only: 'out' })
+		}
+	}
+	addActualRoomPortals() {
+		if (typeof this.Rooms[this.actualRoomImmat].portals === 'object') {
+			if (this.Rooms[this.actualRoomImmat].portals.length > 0) {
+				for (let portalImmat = 0; portalImmat < this.Rooms[this.actualRoomImmat].portals.length; portalImmat++)
+				{
+					let PortalName = 'portal' + this.actualRoomImmat + '_' + portalImmat
+
+					// add portal to game in no exist
+					// if (typeof this[PortalName] == 'undefined'){
+						this[PortalName] = this.physics.add.image(
+							this.Rooms[this.actualRoomImmat].portals[portalImmat].x + this.Rooms[this.actualRoomImmat].x,
+							this.Rooms[this.actualRoomImmat].portals[portalImmat].y + this.Rooms[this.actualRoomImmat].y,
+							PortalName
+						).setOrigin(0)
+
+						// adding OVERLAP EVENT TELEPORTATION on IN PORTAL
+						if (this.Rooms[this.actualRoomImmat].portals[portalImmat].action == 'in') {
+							this.physics.add.overlap(this[PortalName], this.playerOne, () => this.teleportationTo(portalImmat), null, this);
+						}
+
+					// }
+
 				}
 			}
+			this.playerOne.depth = 1000
 		}
 	}
 	addPortalsByRoomImmat(roomImmat, rules = false) {
@@ -176,14 +216,28 @@ class Tools extends Phaser.Scene {
 
 							// new ??
 							this[PortalName].body.collideWorldBounds = true;
-							//-
-							this.physics.add.collider(
-								this[PortalName],
-								this.playerOne,
-								this.teleportationTo(roomImmat, portalImmat),
-								null,
-								this
-							);
+							
+		this.physics.add.collider(
+			this[PortalName],
+			this.playerOne)
+							
+		// this.physics.add.collider(this[PortalName],this.playerOne)
+		// this.physics.add.overlap(
+		// 	this[PortalName],
+		// 	this.playerOne,
+		// 	this.teleportationTo(roomImmat, portalImmat),
+		// 	null,
+		// 	this
+		// );
+		
+		this.physics.add.collider(
+			this[PortalName],
+			this.playerOne,
+			this.collidingPanda,
+			{toto:'titi'},
+			this
+		);
+							
 						}
 					}
 
@@ -192,47 +246,40 @@ class Tools extends Phaser.Scene {
 		}
 	}
 	addplayer() {
-		// console.log('player pos: ', (this.Rooms[this.actualroom].x + this.Rooms[this.actualroom].startpos.x), (this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y))
 		this.playerOne = this.physics.add.image(
-			this.Rooms[this.actualroom].x + this.Rooms[this.actualroom].startpos.x + (this.playerDatas.w / 2),
-			this.Rooms[this.actualroom].y + this.Rooms[this.actualroom].startpos.y + (this.playerDatas.h / 2),
+			this.Rooms[this.actualRoomImmat].x + this.Rooms[this.actualRoomImmat].startpos.x + (this.playerDatas.w / 2),
+			this.Rooms[this.actualRoomImmat].y + this.Rooms[this.actualRoomImmat].startpos.y + (this.playerDatas.h / 2),
 			'playerOne'
-		).setOrigin(.5, .5)
-
-		this.playerOne.setCollideWorldBounds(true);
+		)
+		.setOrigin(.5, .5)
+		.setCollideWorldBounds(true);
 	}
 	// _____________________________________________
 	// FUNCTIONS __________________________________/
-	setWorldBounds() {
+	setWorldBoundsByActualRoom() {
 		this.physics.world.setBounds(
-			this.Rooms[this.actualroom].x,
-			this.Rooms[this.actualroom].y,
-			this.Rooms[this.actualroom].w,
-			this.Rooms[this.actualroom].h
-			// this.Rooms[2].x,
-			// this.Rooms[2].y,
-			// this.Rooms[2].w,
-			// this.Rooms[2].h
+			this.Rooms[this.actualRoomImmat].x,
+			this.Rooms[this.actualRoomImmat].y,
+			this.Rooms[this.actualRoomImmat].w,
+			this.Rooms[this.actualRoomImmat].h
 		);
-
 	}
-	teleportationTo = (roomImmat, portalImmat) => {		// get room dest portal pos 
-		console.log(
-			'Beam me up, Scotty ! teleporting from',
-			'Room[' + roomImmat + ']Portal[' + roomImmat + '] to',
-			'Room[' + this.Rooms[roomImmat].portals[portalImmat].dest.room +
-			']Portal[' + this.Rooms[roomImmat].portals[portalImmat].dest.portal +
-			']')
+	teleportationTo = (portalImmat) => {		
+		// get target room & target portal immats 
+		let targetRoomImmat=this.Rooms[this.actualRoomImmat].portals[portalImmat].dest.room
+		let targetPortalImmat=this.Rooms[this.actualRoomImmat].portals[portalImmat].dest.portal
 
-		// change room
-		// this.actualroom = this.Rooms[roomImmat].portals[portalImmat].dest.room
+		// change player pos ?
+		this.playerOne.x = this.Rooms[targetRoomImmat].x + this.Rooms[targetRoomImmat].portals[targetPortalImmat].x +(this.Rooms[targetRoomImmat].portals[targetPortalImmat].w/2);
+		this.playerOne.y = this.Rooms[targetRoomImmat].y + this.Rooms[targetRoomImmat].portals[targetPortalImmat].y +(this.Rooms[targetRoomImmat].portals[targetPortalImmat].h/2);
 
-		// wtf ?
-		// this.playerOne.x = this.Rooms[this.actualroom].portals[portalImmat].x;
-		// this.playerOne.y = this.Rooms[this.actualroom].portals[portalImmat].y;
+		// clear ROOM
+		this.clearActualRoomPortals()
 
 		// refresh worlds bound
-		// this.setWorldBounds()
+		this.actualRoomImmat = this.Rooms[this.actualRoomImmat].portals[portalImmat].dest.room
+		this.setWorldBoundsByActualRoom()
+		this.addActualRoomPortals()
 	}
 	roomClickedByImmat = (immat) => {
 		var tx = this['room' + immat].input.localX
@@ -245,27 +292,49 @@ class Tools extends Phaser.Scene {
 	// ______________________________________________________
 	// TEMPORARY DEV CONSOLE ___________________________//__/
 	addconsole() {
-		// this.myconsole = this.physics.add.text(1, 1, '', this.myconsolestyle)
-		// this.physics.startSystem(Phaser.Physics.ARCADE);
 		this.myconsole = this.add.text(1, 1, '', this.myconsolestyle)
 		this.myconsole.stroke = "#de77ae";
 		this.myconsole.strokeThickness = 16;
 		this.myconsole.setShadow(2, 2, "#333333", 2, true, false);
-		// this.physics.arcade.enable([this.myconsole]);
-		// this.myconsole.body.collideWorldBounds = true;
-
-		// this.physics.myconsole.startFollow(this.playerOne);
-		// this.myconsole.setInteractive()
-		// this.myconsole.setCollideWorldBounds(true);
 	}
 	refreshconsole() {
-		// this.myconsole.setText('X: ' + this.cameras.main.scrollX + ' / Y: ' + parseInt(this.cameras.main.scrollY))
 		this.myconsole.setText(
 			'Player X: ' + this.playerOne.x + ' Y: ' + this.playerOne.y +
-			'(x:' + (this.playerOne.x - this.Rooms[this.actualroom].x) +
-			',y:' + (this.playerOne.y - this.Rooms[this.actualroom].y) + ')')
+			'(x:' + (this.playerOne.x - this.Rooms[this.actualRoomImmat].x) +
+			',y:' + (this.playerOne.y - this.Rooms[this.actualRoomImmat].y) + ')')
 		this.myconsole.x = 1
 		this.myconsole.y = 1
 
+	}
+	// ________________________
+	// TESTS ______________/__/
+	loadPandaImage() {
+		// testing collider
+		this.load.image('panda', 'assets/panda.png')
+		this.load.image('block', 'assets/block.png')
+	}
+	addPanda() {
+		// testing collider
+		this.panda = this.physics.add.image(
+			this.Rooms[this.actualRoomImmat].x + 65,
+			this.Rooms[this.actualRoomImmat].y + 1,
+			'panda'
+		).setOrigin(0)
+
+		this.physics.add.overlap(this.panda, this.playerOne, this.collidingPanda, null, this);
+
+		this.block = this.physics.add.image(
+			this.Rooms[this.actualRoomImmat].x + 129,
+			this.Rooms[this.actualRoomImmat].y + 1,
+			'block'
+		).setOrigin(0)//.setScale(2)
+
+		this.physics.add.overlap(this.playerOne, this.block, this.collidingPanda, null, this);
+	}
+	collidingPanda() {
+		this.panda.destroy()
+		this.block.destroy()
+		// create a new one at random room and pos
+		// or not
 	}
 }

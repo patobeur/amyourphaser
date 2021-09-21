@@ -1,14 +1,4 @@
 let GAME = Object
-//                                     __
-//    ________     ________      _____/\_\
-//   /\       \   /\   __  \    /\   / / /
-//  /  \       \ /  \  \_\  \__/_ \  \/_/ \
-// /    \_______\ /\ \_______\___\ \_______\
-// \    /       / \/ /  __   /___/ /  __   /
-//  \  /       / \  /  /_/  /  \  /  /\ \ /
-//   \/_______/   \/_______/    \/___\ \_\
-//                                    \/_/
-//   
 window.onload = () => {
 	var config = {
 		type: Phaser.CANVAS,
@@ -19,7 +9,7 @@ window.onload = () => {
 			default: 'arcade',
 			arcade: {
 				// gravity: { y: 0 },
-				debug: true
+				// debug: false
 			}
 		},
 		scene: [SceneMain],// SceneTwo],
