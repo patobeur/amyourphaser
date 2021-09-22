@@ -177,8 +177,8 @@ class Tools extends Phaser.Scene {
 
 	}
 	refreshElementsInRoom() {
+		// console.log('actualRoomImmat;', typeof this.actualRoomImmat, this.actualRoomImmat)
 		if (typeof this.actualRoomImmat === 'number' && this.actualRoomImmat === 1) {
-			console.log('actualRoomImmat;', typeof this.actualRoomImmat, this.actualRoomImmat)
 			// testing
 			this.setRoomVisibility('panda', true)
 			this.setRoomVisibility('block', true)

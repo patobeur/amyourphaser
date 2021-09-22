@@ -1,7 +1,45 @@
+:root {
+	--loaderW: 13px;
+}
 @font-face {
 	font-family: "quikhand";
 	src: url("../assets/fonts/quikhand/Quikhand.ttf") format("truetype");
 }
+*,
+::before,
+::after {
+	margin: 0;
+	padding: 0;
+	-webkit-user-select: none; /* Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
+	box-sizing: border-box;
+}
+button {
+	border: none;
+	margin: 0;
+	padding: 0;
+	width: auto;
+	overflow: visible;
+	background: transparent;
+	/* inherit font & color from ancestor */
+	color: inherit;
+	font: inherit;
+	/* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+	line-height: normal;
+	/* Corrects font smoothing for webkit */
+	-webkit-font-smoothing: inherit;
+	-moz-osx-font-smoothing: inherit;
+	/* Corrects inability to style clickable `input` types in iOS */
+	-webkit-appearance: none;
+	/* Remove excess padding and border in Firefox 4+ */
+	&::-moz-focus-inner {
+		border: 0;
+		padding: 0;
+	}
+}
+
 body {
 	background-color: black;
 	margin: 0;
@@ -9,30 +47,31 @@ body {
 	overflow: hidden;
 	#loader {
 		// display: none;
-		// width: 50%;
-		// height: 50%;
-		top: 0;
-		left: 50%;
-		transform: translate(-50%, calc(-100% + 50px));
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
 		position: absolute;
-		overflow: hidden;
+		width: max-content;
+		height: max-content;
+		max-width: 90%;
+		max-height: 90%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 		background-color: rgba(3, 61, 22, 0.548);
 		border: 5px solid rgb(255, 255, 255);
 		border-radius: 0.5rem;
 		z-index: 999999999;
 		font-size: 2rem;
 		color: white;
-		font-family: quikhand;
-		padding: 1rem;
-		transition: top 2s ease;
+		font-family: monospace;
+		padding: 0.5rem;
 		font-size: 1rem;
+		transition: top 3s ease;
+
+		display: none;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
 		&.active {
-			top: 100%;
-			transition: top 20s ease;
+			display: flex;
 			// https://loading.io/css/
 			.lds-ellipsis {
 				top: 0;
@@ -45,8 +84,8 @@ body {
 			.lds-ellipsis div {
 				position: absolute;
 				// top: 33px;
-				width: 13px;
-				height: 13px;
+				width: var(--loaderW);
+				height: var(--loaderW);
 				border-radius: 50%;
 				background: rgb(255, 255, 255);
 				animation-timing-function: cubic-bezier(0, 1, 1, 0);
@@ -56,30 +95,51 @@ body {
 				animation: lds-ellipsis1 0.6s infinite;
 			}
 			.lds-ellipsis div:nth-child(2) {
-				left: 8px;
+				left: calc(var(--loaderW) * 1);
 				animation: lds-ellipsis2 0.6s infinite;
 			}
 			.lds-ellipsis div:nth-child(3) {
-				left: 32px;
+				left: calc(var(--loaderW) * 3);
 				animation: lds-ellipsis2 0.6s infinite;
 			}
 			.lds-ellipsis div:nth-child(4) {
-				left: 56px;
+				left: calc(var(--loaderW) * 4);
 				animation: lds-ellipsis3 0.6s infinite;
 			}
 		}
-		.done {
+		#doneload {
+			font-size: 3rem;
+		}
+		// .done {
+		// 	position: relative;
+		// 	width: 100%;
+		// 	// animation: fadeOut 1s;
+		// 	// transition: transform 20s;
+		// 	margin-right: 5rem;
+		// 	&:after {
+		// 		position: absolute;
+		// 		right: 0%;
+		// 		content: "✔️";
+		// 	}
+		// 	&.error:after {
+		// 		content: "🛑";
+		// 	}
+		// }
+		#ok {
 			width: max-content;
-			animation: fadeOut 1s;
-			// transition: transform 20s;
-			padding-right: 1rem;
+
+			padding: 0 0.5rem;
+			border: 2px solid white;
+			border-radius: 13px;
+			background-color: rgba(0, 0, 0, 0.719);
+			color: rgb(255, 255, 255);
 			&:after {
-				position: relative;
-				right: 0;
-				content: "✔️";
+				content: "Loading Done !";
 			}
-			&.error:after {
-				content: "🛑";
+			&:hover {
+				border: 2px solid black;
+				background-color: white;
+				color: black;
 			}
 		}
 	}
@@ -116,18 +176,10 @@ body {
 		transform: translate(0, 0);
 	}
 	100% {
-		transform: translate(calc(2 * 13px), 0);
+		transform: translate(calc(var(--loaderW)), 0);
 	}
 }
 @keyframes lds-ellipsis3 {
-	0% {
-		transform: translate(0, 0);
-	}
-	100% {
-		transform: translate(0, 0) scale(0);
-	}
-}
-@keyframes lds-ellipsis4 {
 	0% {
 		transform: scale(1);
 	}

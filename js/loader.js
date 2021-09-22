@@ -4,6 +4,7 @@ window.onload = () => {
 	// definitions
 	const template = 'patobeur'
 	const jsFilesList = [
+		{ pathfile: 'js/patoChat.js', idname: 'chat-js' },
 		{ pathfile: 'js/' + template + '/config.js', idname: 'config-js' },
 		{ pathfile: 'https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js', idname: 'phaser-js' },
 		{ pathfile: 'js/phaserconfig.js', idname: 'phaserconfig-js' },
@@ -37,7 +38,7 @@ window.onload = () => {
 			// loader is Close and switch bool is requested
 			|| isLoaderOpen === false && bool === false
 		) {
-			isLoaderOpen = (bool)
+			isLoaderOpen = bool
 				? bool[0]
 				: !isLoaderOpen
 		}
@@ -60,11 +61,15 @@ window.onload = () => {
 						mountScriptJs(start)
 					}
 					// if start is least
-					switch_LoaderClass([(start === jsFilesList.length)])
+					if ((start === jsFilesList.length)) {
+						switch_LoaderClass([true])
+						ChatBot.add_message("Let take a break and let's find a .... 🥥, better try to find a 🥑...", 'text')
+					}
 				})
 				.catch(() => {
 					setLoaderInfoDone(jsFilesList[start].idname, true)
 					console.error("Hum ! We'r inda mood !!! ");
+					ChatBot.add_message("Hum ! We'r inda mood !!! ", 'text')
 				});
 		}
 	}
@@ -78,10 +83,11 @@ window.onload = () => {
 			: document.getElementById('loader').classList.add('active')
 	}
 	setLoaderInfoDone = (idname, error = false) => {
-		let validationLoader = document.createElement('div')
-		validationLoader.className = (error ? 'done error' : 'done')
-		validationLoader.textContent = '[' + idname + ']' + (error ? '' : '')
-		document.getElementById('doneload').appendChild(validationLoader)
+		ChatBot.add_message('script ' + idname + '' + (error ? '' : ' is well mounted !'), 'text')
+		// let validationLoader = document.createElement('div')
+		// validationLoader.className = (error ? 'done error' : 'done')
+		// validationLoader.textContent = '[' + idname + ']' + (error ? '' : '')
+		// document.getElementById('doneload').appendChild(validationLoader)
 	}
 	//
 	switch_LoaderClass()

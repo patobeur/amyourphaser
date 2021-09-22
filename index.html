@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="icon" type="image/png" href="assets/favicon.ico">
 		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/chatgrid.css">
 		<title>AmYourPhaser</title>
 		<!--
 		<script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
@@ -19,17 +20,32 @@
 	<body>
 		<div id="amyourphaser"></div>
 		<div id="loader" class="active">
-			<div>LOADING</div>
-			<div id='doneload'>
-
-			</div>
+			<div id='doneload'>⏲️</div>
 			<div class="lds-ellipsis">
 				<div></div>
 				<div></div>
 				<div></div>
 				<div></div>
 			</div>
-
+			<!-- <button id="ok"></button> -->
+		</div>
+		<div id="chat-container">
+			<div class="chat-header">
+				<div class="one">&#128172;PatoChat</div>
+				<div class="two"><button id="bigger" title="Click to change size">🗛</button></div>
+				<div class="three"><button id="fixchat" title="Click to fixe menu or not">📌</button></div>
+				<div class="four"><button id="clearstorage" title="Click to trash localtorage">🔨
+						<!-- ⚙️ -->
+					</button></div>
+			</div>
+			<div id="messages-box" class="messages">
+			</div>
+			<div class="chat-form">
+				<div class="form-box">
+					<div class="input"><input id="chatput" type="text" value="" placeholder="type texte"></div>
+					<div class="submit"><button id="chatbit">Go</button></div>
+				</div>
+			</div>
 		</div>
 	</body>
 
