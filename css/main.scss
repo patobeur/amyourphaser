@@ -9,15 +9,17 @@ body {
 	overflow: hidden;
 	#loader {
 		// display: none;
+		// width: 50%;
+		// height: 50%;
+		top: 0;
+		left: 50%;
+		transform: translate(-50%, calc(-100% + 50px));
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		position: absolute;
 		overflow: hidden;
-		top: -50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
 		background-color: rgba(3, 61, 22, 0.548);
 		border: 5px solid rgb(255, 255, 255);
 		border-radius: 0.5rem;
@@ -26,11 +28,11 @@ body {
 		color: white;
 		font-family: quikhand;
 		padding: 1rem;
-		transition: top 2s ease-in-out;
+		transition: top 2s ease;
 		font-size: 1rem;
 		&.active {
-			top: 50%;
-			transition: top 2s ease;
+			top: 100%;
+			transition: top 20s ease;
 			// https://loading.io/css/
 			.lds-ellipsis {
 				top: 0;
@@ -66,6 +68,20 @@ body {
 				animation: lds-ellipsis3 0.6s infinite;
 			}
 		}
+		.done {
+			width: max-content;
+			animation: fadeOut 1s;
+			// transition: transform 20s;
+			padding-right: 1rem;
+			&:after {
+				position: relative;
+				right: 0;
+				content: "✔️";
+			}
+			&.error:after {
+				content: "🛑";
+			}
+		}
 	}
 	#center {
 		position: absolute;
@@ -79,6 +95,14 @@ body {
 	}
 }
 //
+@keyframes fadeOut {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 @keyframes lds-ellipsis1 {
 	0% {
 		transform: scale(0);

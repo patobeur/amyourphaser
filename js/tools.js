@@ -2,31 +2,12 @@ class Tools extends Phaser.Scene {
 	constructor() {
 		super()
 
-		this.panda
 		this.actualRoomImmat = 1 // (immat is like id)
-		this.zoOom = {
-			step: .1,
-			max: 3,
-			min: .5
-		}
 		// this.centerX = GAME.config.width / 2
 		// this.centerY = GAME.config.height / 2
-		this.keys = {
-			keyUp: [90, 38], // 'z', arrowUp
-			keyDown: [83, 40], // 's', arrowDown
-			keyLeft: [81, 37], // 'q', arrowLeft
-			keyRight: [68, 39], // 'd', arrowRight
-			keySpace: [32], // space
-			keyEnter: [13], // enter
-			keyEscape: [27], // escape
-			keyTilde: [222], // ² tilde/square
-			keyPlus: [107], // +
-			keyMinus: [109], // -
-			keyShift: [13], // shift
-		}
 		this.ObjectsBounds = {
-			world: { w: 777, h: 512 },
-			camera: { w: 777, h: 512, ww: window.innerWidth, wh: window.innerHeight }
+			world: { w: 256, h: 256 },
+			// camera: { w: 256, h: 256 }
 		}
 		this.myconsolestyle = {
 			font: "bold 32px quikhand",
@@ -34,76 +15,67 @@ class Tools extends Phaser.Scene {
 			boundsAlignH: "center",
 			boundsAlignV: "middle"
 		}
-		this.Rooms = Rooms;
-		this.playerDatas = {
-			objname: 'playerOne',
-			startPos: {},
-			media: { x: 1, y: 1 },
-			picture: 'assets/playerface.png',
-			w: 20,
-			h: 31,
-			speed: 5
-		}
+		this.allRooms = allRooms;
 	}
 	// ______________________________________________________
 	// SOMES LISTENERS ____________________________//_______/
 	onKeyDown(event) {
-		if (this.keys.keyUp.indexOf(event.keyCode) > -1) {
+		if (keys.keyUp.indexOf(event.keyCode) > -1) {
 			// this.cameras.main.scrollY -= this.playerDatas.speed;
-			this.myconsole.y -= this.playerDatas.speed;
-			this.playerOne.y -= this.playerDatas.speed;
+			this.myconsole.y -= allPlayer.speed;
+			this.playerOne.y -= allPlayer.speed;
 		}
-		else if (this.keys.keyDown.indexOf(event.keyCode) > -1) {
-			// this.cameras.main.scrollY += this.playerDatas.speed;
-			this.myconsole.y += this.playerDatas.speed;
-			this.playerOne.y += this.playerDatas.speed;
+		else if (keys.keyDown.indexOf(event.keyCode) > -1) {
+			// this.cameras.main.scrollY += allPlayer.speed;
+			this.myconsole.y += allPlayer.speed;
+			this.playerOne.y += allPlayer.speed;
 		}
-		else if (this.keys.keyLeft.indexOf(event.keyCode) > -1) {
-			// this.cameras.main.scrollX -= this.playerDatas.speed;
-			this.myconsole.x -= this.playerDatas.speed;
-			this.playerOne.x -= this.playerDatas.speed;
+		else if (keys.keyLeft.indexOf(event.keyCode) > -1) {
+			// this.cameras.main.scrollX -= allPlayer.speed;
+			this.myconsole.x -= allPlayer.speed;
+			this.playerOne.x -= allPlayer.speed;
 		}
-		else if (this.keys.keyRight.indexOf(event.keyCode) > -1) {
-			// this.cameras.main.scrollX += this.playerDatas.speed;
-			this.myconsole.x += this.playerDatas.speed;
-			this.playerOne.x += this.playerDatas.speed;
+		else if (keys.keyRight.indexOf(event.keyCode) > -1) {
+			// this.cameras.main.scrollX += allPlayer.speed;
+			this.myconsole.x += allPlayer.speed;
+			this.playerOne.x += allPlayer.speed;
 		}
 		this.refreshconsole()
 	}
 	onWheelScroll(event) {
 		event.deltaY > 0
-			? this.cameras.main.zoom > this.zoOom.min ? this.cameras.main.zoom -= this.zoOom.step : ''
-			: this.cameras.main.zoom < this.zoOom.max ? this.cameras.main.zoom += this.zoOom.step : '';
+			? this.cameras.main.zoom > zooom.min ? this.cameras.main.zoom -= zooom.step : ''
+			: this.cameras.main.zoom < zooom.max ? this.cameras.main.zoom += zooom.step : '';
 	}
 	// ______________________________________________________
 	// GAMESCENE PRELOADS _________________________//_______/
 	preloadRoomsImages() {
-		for (let number = 0; number < this.Rooms.length; number++) {
-			this.load.image('room' + number, this.Rooms[number].image)
+		for (let number = 0; number < this.allRooms.length; number++) {
+			this.load.image('room' + number, this.allRooms[number].image)
 		}
 	}
 	preloadPortalsImages() {
-		for (let roomImmat = 0; roomImmat < this.Rooms.length; roomImmat++) {
-			if (this.Rooms[roomImmat].portals) {
-				for (let portalImmat = 0; portalImmat < this.Rooms[roomImmat].portals.length; portalImmat++) {
+		for (let roomImmat = 0; roomImmat < this.allRooms.length; roomImmat++) {
+			if (this.allRooms[roomImmat].portals) {
+				for (let portalImmat = 0; portalImmat < this.allRooms[roomImmat].portals.length; portalImmat++) {
 					this.load.image(
 						'portal' + roomImmat + '_' + portalImmat,
-						this.Rooms[roomImmat].portals[portalImmat].image
+						this.allRooms[roomImmat].portals[portalImmat].image
 					);
 				}
 			}
 		}
 	}
 	preloadPlayerImages() {
-		this.load.image(this.playerDatas.objname, this.playerDatas.picture)
+		this.load.image(allPlayer.objName, allPlayer['basic'].image)
 		// next : need some later changes to match sprite object for animations moves
 	}
 	// _____________________________________________
 	// GAMESCENE ADDS _____________________________/
 	addRooms() {
-		for (let roomImmat = 0; roomImmat < this.Rooms.length; roomImmat++) {
+		for (let roomImmat = 0; roomImmat < this.allRooms.length; roomImmat++) {
 			// ADD TO GAMESCENE
-			this['room' + roomImmat] = this.add.image(this.Rooms[roomImmat].x, this.Rooms[roomImmat].y, 'room' + roomImmat).setOrigin(0)
+			this['room' + roomImmat] = this.add.image(this.allRooms[roomImmat].x, this.allRooms[roomImmat].y, 'room' + roomImmat).setOrigin(0)
 
 			// add roomImmat to room
 			this['room' + roomImmat].roomImmat = roomImmat
@@ -115,9 +87,9 @@ class Tools extends Phaser.Scene {
 		}
 	}
 	clearActualRoomPortals() {
-		if (typeof this.Rooms[this.actualRoomImmat].portals === 'object') {
-			if (this.Rooms[this.actualRoomImmat].portals.length > 0) {
-				for (let portalImmat = 0; portalImmat < this.Rooms[this.actualRoomImmat].portals.length; portalImmat++) {
+		if (typeof this.allRooms[this.actualRoomImmat].portals === 'object') {
+			if (this.allRooms[this.actualRoomImmat].portals.length > 0) {
+				for (let portalImmat = 0; portalImmat < this.allRooms[this.actualRoomImmat].portals.length; portalImmat++) {
 					let PortalName = 'portal' + this.actualRoomImmat + '_' + portalImmat
 					this[PortalName].destroy()
 				}
@@ -125,21 +97,21 @@ class Tools extends Phaser.Scene {
 		}
 	}
 	addActualRoomPortals() {
-		if (typeof this.Rooms[this.actualRoomImmat].portals === 'object') {
-			if (this.Rooms[this.actualRoomImmat].portals.length > 0) {
-				for (let portalImmat = 0; portalImmat < this.Rooms[this.actualRoomImmat].portals.length; portalImmat++) {
+		if (typeof this.allRooms[this.actualRoomImmat].portals === 'object') {
+			if (this.allRooms[this.actualRoomImmat].portals.length > 0) {
+				for (let portalImmat = 0; portalImmat < this.allRooms[this.actualRoomImmat].portals.length; portalImmat++) {
 					let PortalName = 'portal' + this.actualRoomImmat + '_' + portalImmat
 
 					// add portal to game in no exist
 					// if (typeof this[PortalName] == 'undefined'){
 					this[PortalName] = this.physics.add.image(
-						this.Rooms[this.actualRoomImmat].portals[portalImmat].x + this.Rooms[this.actualRoomImmat].x,
-						this.Rooms[this.actualRoomImmat].portals[portalImmat].y + this.Rooms[this.actualRoomImmat].y,
+						this.allRooms[this.actualRoomImmat].portals[portalImmat].x + this.allRooms[this.actualRoomImmat].x,
+						this.allRooms[this.actualRoomImmat].portals[portalImmat].y + this.allRooms[this.actualRoomImmat].y,
 						PortalName
 					).setOrigin(0)
 
 					// adding OVERLAP EVENT TELEPORTATION on IN PORTAL
-					if (this.Rooms[this.actualRoomImmat].portals[portalImmat].action == 'in') {
+					if (this.allRooms[this.actualRoomImmat].portals[portalImmat].action == 'in') {
 						this.physics.add.overlap(this[PortalName], this.playerOne, () => this.teleportationTo(portalImmat), null, this);
 					}
 
@@ -150,76 +122,11 @@ class Tools extends Phaser.Scene {
 			this.playerOne.depth = 1000
 		}
 	}
-	// addPortalsByRoomImmat(roomImmat, rules = false) {
-	// 	if (typeof this.Rooms[roomImmat].portals === 'object') {
-	// 		if (this.Rooms[roomImmat].portals.length > 0) {
-	// 			for (let portalImmat = 0; portalImmat < this.Rooms[roomImmat].portals.length; portalImmat++) {
-	// 				let addthisone = false
-	// 				if (rules === false) {
-	// 					addthisone = true
-	// 				}
-	// 				else {
-	// 					if (rules.only && rules.only === 'all') {
-	// 						addthisone = true
-	// 					}
-	// 					else if (rules.only && rules.only === 'in' && this.Rooms[roomImmat].portals[portalImmat].action === 'in') {
-	// 						addthisone = true
-	// 					}
-	// 					else if (rules.only && rules.only === 'out' && this.Rooms[roomImmat].portals[portalImmat].action === 'out') {
-	// 						addthisone = true
-	// 					}
-	// 				}
-	// 				if (addthisone === true) {
-	// 					let PortalName = 'portal' + roomImmat + '_' + portalImmat
-	// 					// add portal to game
-	// 					this['portal' + roomImmat + '_' + portalImmat] = this.physics.add.image(
-	// 						this.Rooms[roomImmat].portals[portalImmat].x + this.Rooms[roomImmat].x,
-	// 						this.Rooms[roomImmat].portals[portalImmat].y + this.Rooms[roomImmat].y,
-	// 						PortalName
-	// 					).setOrigin(0)
-
-	// 					// ADD COLLIDER TO PORTAL WITH TELEPORTATION
-
-	// 					if (this.Rooms[roomImmat].portals[portalImmat].action == 'in') {
-
-	// 						console.log('adding collider portal[room' + roomImmat + 'portal:' + portalImmat + '] action:' + this.Rooms[roomImmat].portals[portalImmat].action)
-
-	// 						// new ??
-	// 						this[PortalName].body.collideWorldBounds = true;
-
-	// 	this.physics.add.collider(
-	// 		this[PortalName],
-	// 		this.playerOne)
-
-	// 	// this.physics.add.collider(this[PortalName],this.playerOne)
-	// 	// this.physics.add.overlap(
-	// 	// 	this[PortalName],
-	// 	// 	this.playerOne,
-	// 	// 	this.teleportationTo(roomImmat, portalImmat),
-	// 	// 	null,
-	// 	// 	this
-	// 	// );
-
-	// 	this.physics.add.collider(
-	// 		this[PortalName],
-	// 		this.playerOne,
-	// 		this.collidingPanda,
-	// 		{toto:'titi'},
-	// 		this
-	// 	);
-
-	// 					}
-	// 				}
-
-	// 			}
-	// 		}
-	// 	}
-	// }
 	addplayer() {
 		this.playerOne = this.physics.add.image(
-			this.Rooms[this.actualRoomImmat].x + this.Rooms[this.actualRoomImmat].startpos.x + (this.playerDatas.w / 2),
-			this.Rooms[this.actualRoomImmat].y + this.Rooms[this.actualRoomImmat].startpos.y + (this.playerDatas.h / 2),
-			'playerOne'
+			this.allRooms[this.actualRoomImmat].x + this.allRooms[this.actualRoomImmat].startpos.x + (allPlayer.w / 2),
+			this.allRooms[this.actualRoomImmat].y + this.allRooms[this.actualRoomImmat].startpos.y + (allPlayer.h / 2),
+			allPlayer.objName
 		)
 			.setOrigin(.5, .5)
 			.setCollideWorldBounds(true);
@@ -228,10 +135,10 @@ class Tools extends Phaser.Scene {
 	// FUNCTIONS __________________________________/
 	setWorldBoundsByActualRoom() {
 		this.physics.world.setBounds(
-			this.Rooms[this.actualRoomImmat].x,
-			this.Rooms[this.actualRoomImmat].y,
-			this.Rooms[this.actualRoomImmat].w,
-			this.Rooms[this.actualRoomImmat].h
+			this.allRooms[this.actualRoomImmat].x,
+			this.allRooms[this.actualRoomImmat].y,
+			this.allRooms[this.actualRoomImmat].w,
+			this.allRooms[this.actualRoomImmat].h
 		);
 	}
 	setRoomVisibility(obj = false, visible = true) {
@@ -243,12 +150,12 @@ class Tools extends Phaser.Scene {
 	}
 	teleportationTo = (portalImmat) => {
 		// get target room & target portal immats 
-		let targetRoomImmat = this.Rooms[this.actualRoomImmat].portals[portalImmat].dest.room
-		let targetPortalImmat = this.Rooms[this.actualRoomImmat].portals[portalImmat].dest.portal
+		let targetRoomImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.room
+		let targetPortalImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.portal
 
 		// change player pos ?
-		this.playerOne.x = this.Rooms[targetRoomImmat].x + this.Rooms[targetRoomImmat].portals[targetPortalImmat].x + (this.Rooms[targetRoomImmat].portals[targetPortalImmat].w / 2);
-		this.playerOne.y = this.Rooms[targetRoomImmat].y + this.Rooms[targetRoomImmat].portals[targetPortalImmat].y + (this.Rooms[targetRoomImmat].portals[targetPortalImmat].h / 2);
+		this.playerOne.x = this.allRooms[targetRoomImmat].x + this.allRooms[targetRoomImmat].portals[targetPortalImmat].x + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].w / 2);
+		this.playerOne.y = this.allRooms[targetRoomImmat].y + this.allRooms[targetRoomImmat].portals[targetPortalImmat].y + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].h / 2);
 
 		// clear ROOM
 		this.clearActualRoomPortals()
@@ -257,7 +164,7 @@ class Tools extends Phaser.Scene {
 		this.setRoomVisibility('room' + this.actualRoomImmat, false)
 		this.setRoomVisibility('room' + targetRoomImmat, true)
 
-		this.actualRoomImmat = this.Rooms[this.actualRoomImmat].portals[portalImmat].dest.room
+		this.actualRoomImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.room
 
 		// refresh worlds bound
 		this.setWorldBoundsByActualRoom()
@@ -301,8 +208,8 @@ class Tools extends Phaser.Scene {
 	refreshconsole() {
 		this.myconsole.setText(
 			'Player X: ' + this.playerOne.x + ' Y: ' + this.playerOne.y +
-			'(x:' + (this.playerOne.x - this.Rooms[this.actualRoomImmat].x) +
-			',y:' + (this.playerOne.y - this.Rooms[this.actualRoomImmat].y) + ')')
+			'(x:' + (this.playerOne.x - this.allRooms[this.actualRoomImmat].x) +
+			',y:' + (this.playerOne.y - this.allRooms[this.actualRoomImmat].y) + ')')
 		this.myconsole.x = 1
 		this.myconsole.y = 1
 
@@ -311,14 +218,14 @@ class Tools extends Phaser.Scene {
 	// TESTS ______________/__/
 	loadPandaImage() {
 		// testing collider
-		this.load.image('panda', 'assets/panda.png')
-		this.load.image('block', 'assets/grass_32.png')
+		this.load.image(allItems['panda'].objName, allItems['panda'].image)
+		this.load.image(allBlocks['simple'].objName, allBlocks['simple'].image)
 	}
 	addBlock() {
 		this.block = this.physics.add.image(
-			this.Rooms[this.actualRoomImmat].x + 128,
-			this.Rooms[this.actualRoomImmat].y,
-			'block'
+			this.allRooms[this.actualRoomImmat].x + 128,
+			this.allRooms[this.actualRoomImmat].y,
+			allBlocks['simple'].objName
 		).setOrigin(0)//.setScale(2)
 		// Overlaping action
 		this.physics.add.overlap(this.playerOne, this.block, this.collidingPandaOrBlock, null, this);
@@ -326,9 +233,9 @@ class Tools extends Phaser.Scene {
 	addPanda() {
 		// testing collider
 		this.panda = this.physics.add.image(
-			this.Rooms[this.actualRoomImmat].x + 65,
-			this.Rooms[this.actualRoomImmat].y + 1,
-			'panda'
+			this.allRooms[this.actualRoomImmat].x + 65,
+			this.allRooms[this.actualRoomImmat].y + 1,
+			allItems['panda'].objName
 		).setOrigin(0).setScale(.5)
 		// Overlaping action
 		this.physics.add.overlap(this.panda, this.playerOne, this.collidingPandaOrBlock, null, this);
