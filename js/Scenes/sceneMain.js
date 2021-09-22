@@ -2,6 +2,7 @@ class SceneMain extends Tools {
 	constructor() {
 		super(SceneMain)
 		// this.camera
+		this.test = 'SceneMain test ok'
 		this.myconsole
 	}
 	preload() {
@@ -10,14 +11,13 @@ class SceneMain extends Tools {
 		this.preloadPlayerImages()
 		this.preloadPortalsImages()
 
-
 		// testing collider
 		this.loadPandaImage()
 	}
 	create() {
 		// re set physics.world.setBounds with actual room size
-		if (GAME.config.physics.arcade.debug){
-			this.physics.world.debugGraphic.defaultStrokeWidth = 2;
+		if (GAME.myPhaserConfig && GAME.myPhaserConfig.physics.arcade.debug) {
+			this.physics.world.debugGraphic.defaultStrokeWidth = 10;
 		}
 
 		this.addRooms()

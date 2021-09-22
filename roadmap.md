@@ -21,3 +21,9 @@
 ### ideas
 - [x] add items 'bag small/medium/huge' to give inventory skill
 - [x] worldlimite to the player actual room
+
+
+
+
+### thx 
+thx for your free easy fast copy/past css loader : https://loading.io/css/
