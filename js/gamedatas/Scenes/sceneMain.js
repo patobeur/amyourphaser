@@ -26,6 +26,11 @@ class SceneMain extends Tools {
 		this.addActualRoomPortals() // need addplayer
 		this.addconsole()
 
+		// add ITEMSHOP
+		// let itemsOfthisRoom = ITEMSHOP.get_article('pandabagsmall')
+		this.addActualRoomItems()
+		this.addActualRoomBlocks()
+
 		// testing collider
 		this.addPanda()
 		this.addBlock()

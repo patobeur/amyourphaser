@@ -25,8 +25,11 @@
 ### bugs ?
 - [ ] prevent player from mooving while writing in the chat !!
 
+### how to ?
+- [ ] How to make screen recenter when event.resize
+
 ### ideas
-- [x] add items 'bag small/medium/huge' to give inventory skill
+- [] add items 'bag small/medium/huge' to give inventory skill
 - [x] worldlimite to the player actual room
 
 

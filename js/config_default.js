@@ -16,12 +16,12 @@ let configDefault = {
 		},
 	},
 	blocks: {
-		simple: {
+		blocksimple: {
 			image: 'assets/img/grass_32.png',
 		}
 	},
 	items: {
-		panda: {
+		pandabagsmall: {
 			image: 'assets/img/panda.png',
 		}
 	},

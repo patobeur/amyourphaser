@@ -1,5 +1,5 @@
 
-console.log('v1')
+console.log('v2')
 const TEMPLATE = 'client_1'
 const CLIENTIMGURL = 'themes/' + TEMPLATE + '/assets/img'
 const CLIENTJSURL = 'themes/' + TEMPLATE + '/js'
@@ -14,6 +14,7 @@ window.onload = () => {
 		// distant phaser script
 		{ pathfile: 'https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js', idname: 'phaser-js' },
 		{ pathfile: 'js/gamedatas/phaserconfig.js', idname: 'phaserconfig-js' },
+		{ pathfile: 'js/gamedatas/itemShop.js', idname: 'datas-js' },
 		{ pathfile: 'js/gamedatas/gamedatas.js', idname: 'datas-js' },
 		{ pathfile: 'js/gamedatas/tools.js', idname: 'tools-js' },
 		{ pathfile: 'js/gamedatas/Scenes/sceneMain.js', idname: 'sceneMain-js' },

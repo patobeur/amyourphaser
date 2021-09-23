@@ -1,6 +1,6 @@
 let allRooms = [
 	{
-		x: 1, y: 1, w: 256, h: 256, image: configClient.rooms[0].image ?? configDefault.rooms[0].image,
+		x: 1, y: 1, image: configClient.rooms[0].image ?? configDefault.rooms[0].image,
 		portals: [
 			{
 				action: 'out', x: 1, y: 1, w: 64, h: 64,
@@ -16,7 +16,7 @@ let allRooms = [
 	{
 		// START PLAYER POS
 		startpos: { x: 124, y: 124 },
-		x: 257, y: 256, w: 256, h: 256, image: configClient.rooms[1].image ?? configDefault.rooms[1].image,
+		x: 257, y: 256, image: configClient.rooms[1].image ?? configDefault.rooms[1].image,
 		portals: [
 			{
 				action: 'out', x: 1, y: 128, w: 64, h: 64,
@@ -27,10 +27,16 @@ let allRooms = [
 				image: configClient.portals.in.image ?? configDefault.portals.in.image,
 				dest: { room: 2, portal: 0 }
 			},
+		],
+		items: [
+			{ id: 0, name: 'pandabagsmall', x: 50, y: 68 }
+		],
+		blocks: [
+			{ id: 0, name: 'blocksimple', x: 150, y: 250 }
 		]
 	},
 	{
-		x: 513, y: 1, w: 256, h: 256, image: configClient.rooms[2].image ?? configDefault.rooms[2].image,
+		x: 513, y: 1, image: configClient.rooms[2].image ?? configDefault.rooms[2].image,
 		portals: [
 			{
 				action: 'out', x: 1, y: 1, w: 64, h: 64,
@@ -44,19 +50,38 @@ let allRooms = [
 		]
 	},
 ];
+let allBlocksByRoom = {
+	0: {},
+	1: {
+		objid: 'simpleblock', x: 50, y: 86
+	},
+	2: {},
+}
 let allBlocks = {
-	simple: {
-		objName: 'simpleblock',
-		image: configClient.blocks.simple.image ?? configDefault.blocks.simple.image,
+	simpleblock: {
+		objName: 'simple block',
+		image: configClient.blocks.blocksimple.image ?? configDefault.blocks.blocksimple.image,
+		body: {
+			enable: true,
+			immovable: true,
+			moves: false
+		}
 	}
 }
 
+let allItemsByRoom = {
+	0: {},
+	1: {
+		objid: 'pandabagsmall',
+	},
+	2: {},
+}
 let allItems = {
-	panda: {
-		objName: 'pandabag',
+	pandabagsmall: {
+		objName: 'panda bag',
 		type: 'bag',
 		skills: ['smallbag'],
-		image: configClient.items.panda.image ?? configDefault.items.panda.image,
+		image: configClient.items.pandabagsmall.image ?? configDefault.items.pandabagsmall.image,
 	},
 }
 

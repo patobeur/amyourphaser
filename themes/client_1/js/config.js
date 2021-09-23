@@ -1,7 +1,7 @@
 let configClient = {
 	rooms: {
 		'0': { image: CLIENTIMGURL + '/floor_256-0.png' },
-		'1': { image: CLIENTIMGURL + '/map_1.png', size: { w: 512, h: 512 } },
+		'1': { image: CLIENTIMGURL + '/map_1.png' },
 		'2': { image: CLIENTIMGURL + '/floor_256-2.png' },
 		'3': { image: CLIENTIMGURL + '/floor_256-3.png' },
 		'4': { image: CLIENTIMGURL + '/floor_256-4.png' },
@@ -16,12 +16,12 @@ let configClient = {
 		},
 	},
 	blocks: {
-		simple: {
+		blocksimple: {
 			image: CLIENTIMGURL + '/grass_32.png',
 		}
 	},
 	items: {
-		panda: {
+		pandabagsmall: {
 			image: CLIENTIMGURL + '/panda.png',
 		}
 	},
