@@ -1,7 +1,7 @@
 
 const TEMPLATE = 'client_1'
-const CLIENTIMGURL = '../themes/' + TEMPLATE + '/assets/img'
-const CLIENTJSURL = '../themes/' + TEMPLATE + '/js'
+const CLIENTIMGURL = '/themes/' + TEMPLATE + '/assets/img'
+const CLIENTJSURL = '/themes/' + TEMPLATE + '/js'
 window.onload = () => {
 	// definitions
 	const jsFilesList = [
