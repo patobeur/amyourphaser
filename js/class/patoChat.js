@@ -20,7 +20,7 @@ class ChatBit {
 		this.temporaryName = 'User'
 
 		// check if first comming ?
-		this.icons = { bot: '🧙', me: '🕹️' }
+		this.icons = { bot: '💡', me: '🕹️' }//🧙
 
 		this.chatInput = document.getElementById('chatput')
 		this.chatDiv = document.getElementById('chat-container')
