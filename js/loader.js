@@ -5,11 +5,11 @@ window.onload = () => {
 	// definitions
 	const jsFilesList = [
 		{ pathfile: 'js/class/patoChat.js', idname: 'chat-js' },
+		{ pathfile: 'js/config_' + TEMPLATE + '.js', idname: 'config-js' },
 		// local phaser script
-		// { pathfile: 'js/config_' + TEMPLATE + '.js', idname: 'config-js' },
+		// { pathfile: 'js/phaser/phaser.3.55.2.min.js', idname: 'phaser-js' },
 		// distant phaser script
 		{ pathfile: 'https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js', idname: 'phaser-js' },
-		{ pathfile: 'js/phaser/phaser.3.55.2.min.js', idname: 'phaser-js' },
 		{ pathfile: 'js/gamedatas/phaserconfig.js', idname: 'phaserconfig-js' },
 		{ pathfile: 'js/gamedatas/gamedatas.js', idname: 'datas-js' },
 		{ pathfile: 'js/gamedatas/tools.js', idname: 'tools-js' },
