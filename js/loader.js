@@ -1,11 +1,13 @@
 
 const TEMPLATE = 'client_1'
-const THEMEURL = 'assets/theme/' + TEMPLATE
+const CLIENTIMGURL = '../themes/' + TEMPLATE + '/assets/img'
+const CLIENTJSURL = '../themes/' + TEMPLATE + '/js'
 window.onload = () => {
 	// definitions
 	const jsFilesList = [
 		{ pathfile: 'js/class/patoChat.js', idname: 'chat-js' },
-		{ pathfile: 'js/config_' + TEMPLATE + '.js', idname: 'config-js' },
+		{ pathfile: 'js/config_default.js', idname: 'configdefault-js' },
+		{ pathfile: CLIENTJSURL + '/config.js', idname: 'config-js' },
 		// local phaser script
 		// { pathfile: 'js/phaser/phaser.3.55.2.min.js', idname: 'phaser-js' },
 		// distant phaser script
@@ -55,28 +57,29 @@ window.onload = () => {
 			addScriptsJs2Body(jsFilesList[start].pathfile, jsFilesList[start].idname)
 				.then(() => {
 
-					//refresh loader info 
-					setLoaderInfoDone(jsFilesList[start].idname)
-
 					// if start is not least
 					if (start < jsFilesList.length) {
 						start++
 						mountScriptJs(start)
 					}
 					// if start is least
+					// WE ARE DONE
 					if ((start === jsFilesList.length)) {
-						switch_LoaderDisplay([true])
+
+						setTimeout(switch_LoaderDisplay, 1000, [false])
 
 						ChatBot.is_known()
 						// ChatBot.add_message("Let take a break and let's find a .... 🥥, better try to find a 🥑...", 'text')
 					}
 				})
 				.catch(() => {
-					setLoaderInfoDone(jsFilesList[start].idname, true)
 					console.error("Hum ! We'r inda mood !!! ");
 					ChatBot.add_message("Hum ! We'r inda mood !!! ", 'text')
 				});
 		}
+	}
+	chabtbot = () => {
+
 	}
 	set_LoaderDisplay = (bool = false) => {
 		if (bool) {
@@ -95,6 +98,5 @@ window.onload = () => {
 		// document.getElementById('doneload').appendChild(validationLoader)
 	}
 	//
-	switch_LoaderDisplay()
 	mountScriptJs();
 }

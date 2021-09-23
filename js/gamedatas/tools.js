@@ -20,23 +20,23 @@ class Tools extends Phaser.Scene {
 	// ______________________________________________________
 	// SOMES LISTENERS ____________________________//_______/
 	onKeyDown(event) {
-		console.log(event.keyCode)
-		if (keys.keyUp.indexOf(event.keyCode) > -1) {
+		// console.log(event.keyCode)
+		if (allkeys.keyUp.indexOf(event.keyCode) > -1) {
 			// this.cameras.main.scrollY -= this.playerDatas.speed;
 			this.myconsole.y -= allPlayer.speed;
 			this.playerOne.y -= allPlayer.speed;
 		}
-		else if (keys.keyDown.indexOf(event.keyCode) > -1) {
+		else if (allkeys.keyDown.indexOf(event.keyCode) > -1) {
 			// this.cameras.main.scrollY += allPlayer.speed;
 			this.myconsole.y += allPlayer.speed;
 			this.playerOne.y += allPlayer.speed;
 		}
-		else if (keys.keyLeft.indexOf(event.keyCode) > -1) {
+		else if (allkeys.keyLeft.indexOf(event.keyCode) > -1) {
 			// this.cameras.main.scrollX -= allPlayer.speed;
 			this.myconsole.x -= allPlayer.speed;
 			this.playerOne.x -= allPlayer.speed;
 		}
-		else if (keys.keyRight.indexOf(event.keyCode) > -1) {
+		else if (allkeys.keyRight.indexOf(event.keyCode) > -1) {
 			// this.cameras.main.scrollX += allPlayer.speed;
 			this.myconsole.x += allPlayer.speed;
 			this.playerOne.x += allPlayer.speed;

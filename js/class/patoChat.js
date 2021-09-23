@@ -38,7 +38,6 @@ class ChatBit {
 		this.clearStorageActionDiv.addEventListener('click', this.clearStorage, false)
 		this.get_biggerChat()
 		// this.is_known()
-
 	}
 
 	is_known = () => {
@@ -66,9 +65,13 @@ class ChatBit {
 		this.chatDiv.classList.add(this.chatSize.sizes[this.chatSize.num])
 	}
 	add_message = (content, type, who = 'bot', uid = false, sentence = false) => {
+		// need to be cleaned 
+		// need to be cleaned 
 		let cleancontent = content // need to be cleaned 
 		let cleantype = type // need to be cleaned 
 		let cleanwho = who // need to be cleaned 
+		// need to be cleaned 
+		// need to be cleaned 
 		// ---
 		let newcontentDiv = document.createElement('div')
 		newcontentDiv.className = cleantype
@@ -109,13 +112,16 @@ class ChatBit {
 	// ---
 
 	reroot_add_message = (content, type, who, uid) => {
+		// EXPERIMENTAL BUG
 		content = this.regex_input(content)
 		this.add_message(content, type, who, uid)
 		// check respons correlation
-		if (this.botQuestionsStack.name && this.botQuestionsStack.sentence) {
+		if (this.botQuestionsStack.name && this.botQuestionsStack.sentence && this.botQuestionsStack.name[0]) {
 			localStorage.setItem('mls_user', content)
 			this.add_message(content + ", " + this.botQuestionsStack.sentence, 'text')
-			this.botQuestionsStack = { id: 2, name: [false], sentence: ' Oops sorry ' + content + ' i can\'t save this right now... Class is pretty broken and Dev is ... ? Well ! Don\'t know where he is !?!. Just Empty [🔨] your localStorage and refresh [F5] to clear your name.', answers: { y: '', n: '' } }
+			this.botQuestionsStack = { id: 2, name: [true], sentence: ' Oops sorry ' + content + ' i can\'t save this right now... Class is pretty broken and Dev is ... ? Well ! Don\'t know where he is !?!. Just Empty [🔨] your localStorage and refresh [F5] to clear your name.', answers: { y: '', n: '' } }
+			setTimeout(() => { this.add_message('see you later !!!', 'text') }, 5000, false)
+			setTimeout(() => { document.getElementById('chat-container').remove() }, 7000, false)
 		}
 	}
 	// submit_question = () => {
