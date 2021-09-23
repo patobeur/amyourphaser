@@ -1,7 +1,7 @@
 
 const TEMPLATE = 'client_1'
-const CLIENTIMGURL = '/themes/' + TEMPLATE + '/assets/img'
-const CLIENTJSURL = '/themes/' + TEMPLATE + '/js'
+const CLIENTIMGURL = '../themes/' + TEMPLATE + '/assets/img'
+const CLIENTJSURL = '../themes/' + TEMPLATE + '/js'
 window.onload = () => {
 	// definitions
 	const jsFilesList = [
@@ -31,7 +31,7 @@ window.onload = () => {
 		// asynchronous function
 		return new Promise((good, bad) => {
 			script.onload = function () { good(); }
-			script.onerror = function () { bad(console.log('-----> ERROR <-----')); }
+			script.onerror = function () { bad(console.log('-----> ERROR <-----', scriptUrl)); }
 		});
 	}
 	switch_LoaderDisplay = (bool = false) => {
