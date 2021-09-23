@@ -14,7 +14,9 @@ let allRooms = [
 		]
 	},
 	{
-		x: 257, y: 256, w: 256, h: 256, image: dataz.rooms[1].image, startpos: { x: 124, y: 124 },
+		// START PLAYER POS
+		startpos: { x: 124, y: 124 },
+		x: 257, y: 256, w: 256, h: 256, image: dataz.rooms[1].image,
 		portals: [
 			{
 				action: 'out', x: 1, y: 128, w: 64, h: 64,

@@ -15,12 +15,12 @@ class ChatBit {
 		// Targets
 		// store current bot question
 		this.botQuestionsStack = { id: false, name: false, sentence: false }
+		this.pendingQuestionsStack = { id: false, name: false, sentence: false }
 		// tempo datas
-		this.temporaryName = 'patobeur'
+		this.temporaryName = 'User'
 
 		// check if first comming ?
 		this.icons = { bot: '🧙', me: '🕹️' }
-		this.is_known()
 
 		this.chatInput = document.getElementById('chatput')
 		this.chatDiv = document.getElementById('chat-container')
@@ -37,6 +37,7 @@ class ChatBit {
 		this.fixchatActionDiv.addEventListener('click', this.get_fixedChat, false)
 		this.clearStorageActionDiv.addEventListener('click', this.clearStorage, false)
 		this.get_biggerChat()
+		// this.is_known()
 
 	}
 
@@ -46,10 +47,10 @@ class ChatBit {
 			// console.log('welcome back ! ' + mls_user)
 			this.add_message('welcome back ! ' + mls_user, 'text')
 		} else {
-			localStorage.setItem('mls_user', this.temporaryName)
+			// localStorage.setItem('mls_user', this.temporaryName)
 			// console.log('need profil creation ! ')
 			this.add_message('New around ? what is your name ?', 'text')
-			this.botQuestionsStack = { id: 1, name: 'name', sentence: ' is your name ? (y/n)' }
+			this.botQuestionsStack = { id: 1, name: [true], sentence: ' is your name ? (y/n)', answers: { 'y': 'save', 'n': 'exit' } }
 		}
 	}
 	clearStorage = () => {
@@ -61,7 +62,7 @@ class ChatBit {
 	}
 	get_biggerChat = (eve) => {
 		this.chatDiv.classList.remove(this.chatSize.sizes[this.chatSize.num])
-		this.chatSize.num = (this.chatSize.num < this.chatSize.sizes.length) ? this.chatSize.num + 1 : 0
+		this.chatSize.num = (this.chatSize.num < this.chatSize.sizes.length - 1) ? this.chatSize.num + 1 : 0
 		this.chatDiv.classList.add(this.chatSize.sizes[this.chatSize.num])
 	}
 	add_message = (content, type, who = 'bot', uid = false, sentence = false) => {
@@ -112,8 +113,9 @@ class ChatBit {
 		this.add_message(content, type, who, uid)
 		// check respons correlation
 		if (this.botQuestionsStack.name && this.botQuestionsStack.sentence) {
+			localStorage.setItem('mls_user', content)
 			this.add_message(content + ", " + this.botQuestionsStack.sentence, 'text')
-			this.botQuestionsStack = { id: 2, name: 'name', sentence: ' sorry cant save this right now... Dev is sleeping...' }
+			this.botQuestionsStack = { id: 2, name: [false], sentence: ' Oops sorry ' + content + ' i can\'t save this right now... Class is pretty broken and Dev is ... ? Well ! Don\'t know where he is !?!. Just Empty [🔨] your localStorage and refresh [F5] to clear your name.', answers: { y: '', n: '' } }
 		}
 	}
 	// submit_question = () => {

@@ -20,6 +20,7 @@ class Tools extends Phaser.Scene {
 	// ______________________________________________________
 	// SOMES LISTENERS ____________________________//_______/
 	onKeyDown(event) {
+		console.log(event.keyCode)
 		if (keys.keyUp.indexOf(event.keyCode) > -1) {
 			// this.cameras.main.scrollY -= this.playerDatas.speed;
 			this.myconsole.y -= allPlayer.speed;

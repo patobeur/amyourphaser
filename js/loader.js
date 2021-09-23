@@ -1,18 +1,19 @@
 
-const template = 'patobeur'
+const TEMPLATE = 'client_1'
+const THEMEURL = 'assets/theme/' + TEMPLATE
 window.onload = () => {
 	// definitions
-	const template = 'patobeur'
 	const jsFilesList = [
-		{ pathfile: 'js/patoChat.js', idname: 'chat-js' },
-		{ pathfile: 'js/' + template + '/config.js', idname: 'config-js' },
-		{ pathfile: 'https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js', idname: 'phaser-js' },
-		{ pathfile: 'js/phaserconfig.js', idname: 'phaserconfig-js' },
+		{ pathfile: 'js/class/patoChat.js', idname: 'chat-js' },
+		{ pathfile: 'js/config_' + TEMPLATE + '.js', idname: 'config-js' },
+		// { pathfile: 'https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js', idname: 'phaser-js' },
+		{ pathfile: 'js/phaser/phaser.3.55.2.min.js', idname: 'phaser-js' },
+		{ pathfile: 'js/gamedatas/phaserconfig.js', idname: 'phaserconfig-js' },
 		{ pathfile: 'js/gamedatas/gamedatas.js', idname: 'datas-js' },
-		{ pathfile: 'js/tools.js', idname: 'tools-js' },
-		{ pathfile: 'js/Scenes/sceneMain.js', idname: 'sceneMain-js' },
-		{ pathfile: 'js/Scenes/sceneOuterSpace.js', idname: 'sceneOuterSpace-js' },
-		{ pathfile: 'js/main.js', idname: 'main-js' },
+		{ pathfile: 'js/gamedatas/tools.js', idname: 'tools-js' },
+		{ pathfile: 'js/gamedatas/Scenes/sceneMain.js', idname: 'sceneMain-js' },
+		{ pathfile: 'js/gamedatas/Scenes/sceneOuterSpace.js', idname: 'sceneOuterSpace-js' },
+		{ pathfile: 'js/gamedatas/main.js', idname: 'main-js' },
 	];
 	let isLoaderOpen = true
 	// functions 
@@ -29,7 +30,7 @@ window.onload = () => {
 			script.onerror = function () { bad(console.log('-----> ERROR <-----')); }
 		});
 	}
-	switch_LoaderClass = (bool = false) => {
+	switch_LoaderDisplay = (bool = false) => {
 		if (
 			// loader is Open and requeste is to remove loader
 			isLoaderOpen === true && (bool && bool[0] === true)
@@ -62,8 +63,10 @@ window.onload = () => {
 					}
 					// if start is least
 					if ((start === jsFilesList.length)) {
-						switch_LoaderClass([true])
-						ChatBot.add_message("Let take a break and let's find a .... 🥥, better try to find a 🥑...", 'text')
+						switch_LoaderDisplay([true])
+
+						ChatBot.is_known()
+						// ChatBot.add_message("Let take a break and let's find a .... 🥥, better try to find a 🥑...", 'text')
 					}
 				})
 				.catch(() => {
@@ -73,7 +76,7 @@ window.onload = () => {
 				});
 		}
 	}
-	setLoaderClass = (bool = false) => {
+	set_LoaderDisplay = (bool = false) => {
 		if (bool) {
 			isloader = true
 		}
@@ -83,13 +86,13 @@ window.onload = () => {
 			: document.getElementById('loader').classList.add('active')
 	}
 	setLoaderInfoDone = (idname, error = false) => {
-		ChatBot.add_message('script ' + idname + '' + (error ? '' : ' is well mounted !'), 'text')
+		// ChatBot.add_message('script ' + idname + '' + (error ? '' : ' is well mounted !'), 'text')
 		// let validationLoader = document.createElement('div')
 		// validationLoader.className = (error ? 'done error' : 'done')
 		// validationLoader.textContent = '[' + idname + ']' + (error ? '' : '')
 		// document.getElementById('doneload').appendChild(validationLoader)
 	}
 	//
-	switch_LoaderClass()
+	switch_LoaderDisplay()
 	mountScriptJs();
 }

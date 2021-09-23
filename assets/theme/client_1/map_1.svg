@@ -1,0 +1,10 @@
+<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<g id="XMLID_53_">
+	<path id="XMLID_69_" style="fill:#FFFFFF;" d="M17,511c-8.8,0-16-7.2-16-16V17C1,8.2,8.2,1,17,1h478c8.8,0,16,7.2,16,16v478
+		c0,8.8-7.2,16-16,16H17z"/>
+	<path id="XMLID_66_" style="fill:#1D1D1B;" d="M495,2c8.3,0,15,6.7,15,15v478c0,8.3-6.7,15-15,15H17c-8.3,0-15-6.7-15-15V17
+		C2,8.7,8.7,2,17,2H495 M495,0H17C7.7,0,0,7.7,0,17v478c0,9.4,7.7,17,17,17h478c9.4,0,17-7.7,17-17V17C512,7.7,504.3,0,495,0L495,0z
+		"/>
+</g>
+</svg>

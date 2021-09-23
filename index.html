@@ -18,7 +18,9 @@
 	</head>
 
 	<body>
-		<div id="amyourphaser"></div>
+
+		<div id="amyourphaser" name="playground"></div>
+
 		<div id="loader" class="active">
 			<div id='doneload'>⏲️</div>
 			<div class="lds-ellipsis">
@@ -27,19 +29,18 @@
 				<div></div>
 				<div></div>
 			</div>
-			<!-- <button id="ok"></button> -->
 		</div>
+
 		<div id="chat-container">
 			<div class="chat-header">
-				<div class="one">&#128172;PatoChat</div>
-				<div class="two"><button id="bigger" title="Click to change size">🗛</button></div>
-				<div class="three"><button id="fixchat" title="Click to fixe menu or not">📌</button></div>
-				<div class="four"><button id="clearstorage" title="Click to trash localtorage">🔨
+				<div class="chatlogo">&#128172;</div>
+				<div class="size"><button id="bigger" title="Click to change size">🗛</button></div>
+				<div class="pins"><button id="fixchat" title="Click to fixe menu or not">📌</button></div>
+				<div class="tools"><button id="clearstorage" title="Click to trash localtorage">🔨
 						<!-- ⚙️ -->
 					</button></div>
 			</div>
-			<div id="messages-box" class="messages">
-			</div>
+			<div id="messages-box" class="messages"></div>
 			<div class="chat-form">
 				<div class="form-box">
 					<div class="input"><input id="chatput" type="text" value="" placeholder="type texte"></div>
@@ -47,6 +48,7 @@
 				</div>
 			</div>
 		</div>
+
 	</body>
 
 </html>
