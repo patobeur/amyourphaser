@@ -169,6 +169,7 @@ body #chat-container .messages .me .text:after {
 body #chat-container:hover, body #chat-container.active, body #chat-container.open {
   width: 250px;
   height: 250px;
+  max-height: 100%;
   -webkit-transition: height 0.5s ease, width 0.5s ease;
   transition: height 0.5s ease, width 0.5s ease;
 }
@@ -248,7 +249,7 @@ body #chat-container:hover .chat-header .tools, body #chat-container.active .cha
 body #chat-container:hover.sm, body #chat-container.active.sm, body #chat-container.open.sm {
   width: 250px;
   height: 250px;
-  max-height: unset;
+  max-height: 100%;
 }
 
 body #chat-container:hover.sm .messages .me .text,
@@ -261,7 +262,7 @@ body #chat-container.open.sm .messages .bot .text {
 body #chat-container:hover.md, body #chat-container.active.md, body #chat-container.open.md {
   width: 400px;
   height: 500px;
-  max-height: unset;
+  max-height: 100%;
 }
 
 body #chat-container:hover.md .messages .me .text,
@@ -274,7 +275,7 @@ body #chat-container.open.md .messages .bot .text {
 body #chat-container:hover.xl, body #chat-container.active.xl, body #chat-container.open.xl {
   width: 50%;
   height: 90%;
-  max-height: unset;
+  max-height: 100%;
 }
 
 body #chat-container:hover.xl .messages .me .text,
@@ -290,7 +291,7 @@ body #chat-container:hover .messages {
 
 body #chat-container.active {
   width: 300px;
-  height: 300px;
+  max-height: 100%;
 }
 
 body #chat-container .chat-form {
