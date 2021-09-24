@@ -6,13 +6,10 @@ class SceneMain extends Tools {
 		this.myconsole
 	}
 	preload() {
-		// !localStorage.getItem('phaser-data') ? localStorage.setItem('phaser-data', 0) : '';
-		this.preloadRoomsImages()
-		this.preloadPlayerImages()
-		this.preloadPortalsImages()
+		this.preloadAllRoomsImages()
 
 		// testing collider
-		this.loadPandaImage()
+		this.loadPandaImagetest()
 	}
 	create() {
 		// re set physics.world.setBounds with actual room size
@@ -30,10 +27,10 @@ class SceneMain extends Tools {
 		// let itemsOfthisRoom = ITEMSHOP.get_article('pandabagsmall')
 		this.addActualRoomItems()
 		this.addActualRoomBlocks()
-
+		console.log('A_CurrentLibrarie', this.A_CurrentLibrarie)
 		// testing collider
-		this.addPanda()
-		this.addBlock()
+		this.addPandatest()
+		this.addBlocktest()
 
 		// event
 		this.input.keyboard.on('keydown', this.onKeyDown, this);

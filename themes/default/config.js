@@ -1,28 +1,28 @@
-let configClient = {
+let configDefault = {
 	rooms: {
-		'0': { image: CLIENTIMGURL + '/floor_256-0.png' },
-		'1': { image: CLIENTIMGURL + '/map_1.png' },
-		'2': { image: CLIENTIMGURL + '/floor_256-2.png' },
-		'3': { image: CLIENTIMGURL + '/floor_256-3.png' },
-		'4': { image: CLIENTIMGURL + '/floor_256-4.png' },
+		'0': { image: THEMEPATHIMG + 'floor_256-0.png' },
+		'1': { image: THEMEPATHIMG + 'map_1.png' },//floor_256-1.png' },
+		'2': { image: THEMEPATHIMG + 'floor_256-2.png' },
+		'3': { image: THEMEPATHIMG + 'floor_256-3.png' },
+		'4': { image: THEMEPATHIMG + 'floor_256-4.png' },
 	},
 	portals: {
-		'in': { image: CLIENTIMGURL + '/p_in.png' },
-		'out': { image: CLIENTIMGURL + '/p_out.png' },
+		'in': { image: THEMEPATHIMG + 'p_in.png' },
+		'out': { image: THEMEPATHIMG + 'p_out.png' },
 	},
 	player: {
 		basic: {
-			image: CLIENTIMGURL + '/playerface.png',
+			image: THEMEPATHIMG + 'playerface.png',
 		},
 	},
 	blocks: {
 		blocksimple: {
-			image: CLIENTIMGURL + '/grass_32.png',
+			image: THEMEPATHIMG + 'grass_32.png',
 		}
 	},
 	items: {
 		pandabagsmall: {
-			image: CLIENTIMGURL + '/panda.png',
+			image: THEMEPATHIMG + 'panda.png',
 		}
 	},
 	zooom: {
@@ -45,3 +45,4 @@ let configClient = {
 		keyTalk: [84], // t to talk in the chat
 	}
 }
+

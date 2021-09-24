@@ -7,17 +7,17 @@ class ItemShop extends Phaser.Scene {
 		let articleliste = {
 			items: {
 				pandabagsmall: {
-					objName: 'panda bag',
+					name: 'pandabagsmall',
 					type: 'bag',
-					skills: ['smallbag'],
-					image: (configClient.items.pandabagsmall.image) ?? configDefault.items.pandabagsmall.image,
+					skills: ['pandabagsmall'],
+					image: configDefault.items.pandabagsmall.image,
 				},
 			},
 			blocks: {
 				blocksimple: {
-					objName: 'block simple',
+					name: 'blocksimple',
 					type: 'block',
-					image: (configClient.blocks.blocksimple.image) ?? configDefault.blocks.blocksimple.image,
+					image: configDefault.blocks.blocksimple.image,
 				},
 			}
 		}

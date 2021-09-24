@@ -1,14 +1,14 @@
 
 console.log('v2')
-const TEMPLATE = 'client_1'
-const CLIENTIMGURL = 'themes/' + TEMPLATE + '/assets/img'
-const CLIENTJSURL = 'themes/' + TEMPLATE + '/js'
+const TEMPLATE = 'default'
+const THEMEPATH = 'themes/' + TEMPLATE + '/'
+const THEMEPATHIMG = 'themes/' + TEMPLATE + '/assets/img/'
 window.onload = () => {
 	// definitions
 	const jsFilesList = [
 		{ pathfile: 'js/class/patoChat.js', idname: 'chat-js' },
-		{ pathfile: 'js/config_default.js', idname: 'configdefault-js' },
-		{ pathfile: CLIENTJSURL + '/config.js', idname: 'config-js' },
+		// { pathfile: 'js/config_default.js', idname: 'configdefault-js' },
+		{ pathfile: THEMEPATH + 'config.js', idname: 'config-js' },
 		// local phaser script
 		// { pathfile: 'js/phaser/phaser.3.55.2.min.js', idname: 'phaser-js' },
 		// distant phaser script
