@@ -22,9 +22,6 @@ class Tools extends Phaser.Scene {
 			portals: [],
 			loadedimages: []
 		}
-		this.itemStack = [];
-		this.blockStack = [];
-		this.portalStack = [];
 
 		this.imagesStacksToLoad = ['portals', 'items', 'blocks']
 	}
@@ -57,30 +54,6 @@ class Tools extends Phaser.Scene {
 	}
 	// ______________________________________________________
 	// GAMESCENE PRELOADS _________________________//_______/
-	// preloadAllImages() {
-	// 	// load player image
-	// 	this.load.image(allPlayer.name, allPlayer['basic'].image)
-	// 	// load room image
-
-	// 	// load stacks image
-	// 	for (let stacksnum = 0; stacksnum < this.imagesStacksToLoad.length; stacksnum++) {
-	// 		let CurrentStack = this.imagesStacksToLoad[stacksnum]
-	// 		let CurrentRoom = this.allRooms[this.actualRoomImmat]
-	// 		if (typeof CurrentRoom[CurrentStack] === 'object') {
-	// 			if (CurrentRoom[CurrentStack].length > 0) {
-	// 				for (let immat = 0; immat < CurrentRoom[CurrentStack].length; immat++) {
-
-	// 					let CurrentName = CurrentStack + this.actualRoomImmat + '_' + immat
-	// 					console.log('loadind [' + CurrentName + ']:', CurrentRoom[CurrentStack][immat].image)
-	// 					this.load.image(
-	// 						CurrentName,
-	// 						CurrentRoom[CurrentStack][immat].image
-	// 					);
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
 	preloadAllRoomsImages() {
 		// use imagesloaded[] to avoid loading twice the same
 		// load player image
@@ -146,11 +119,13 @@ class Tools extends Phaser.Scene {
 				// items
 				for (let itemImmat = 0; itemImmat < this.allRooms[this.actualRoomImmat].items.length; itemImmat++) {
 					let ItemName = 'items' + this.actualRoomImmat + '_' + itemImmat
-					this.A_CurrentLibrarie.items[ItemName] = this.physics.add.image(
-						this.allRooms[this.actualRoomImmat].items[itemImmat].x + this.allRooms[this.actualRoomImmat].x,
-						this.allRooms[this.actualRoomImmat].items[itemImmat].y + this.allRooms[this.actualRoomImmat].y,
-						this.allRooms[this.actualRoomImmat].items[itemImmat].name
-					)
+					if (typeof this.A_CurrentLibrarie.items[ItemName] == 'undefined') {
+						this.A_CurrentLibrarie.items[ItemName] = this.physics.add.image(
+							this.allRooms[this.actualRoomImmat].items[itemImmat].x + this.allRooms[this.actualRoomImmat].x,
+							this.allRooms[this.actualRoomImmat].items[itemImmat].y + this.allRooms[this.actualRoomImmat].y,
+							this.allRooms[this.actualRoomImmat].items[itemImmat].name
+						)
+					}
 				}
 			}
 		}
@@ -160,12 +135,13 @@ class Tools extends Phaser.Scene {
 			if (this.allRooms[this.actualRoomImmat].blocks.length > 0) {
 				for (let blocksImmat = 0; blocksImmat < this.allRooms[this.actualRoomImmat].blocks.length; blocksImmat++) {
 					let BlockName = 'blocks' + this.actualRoomImmat + '_' + blocksImmat
-
-					this.A_CurrentLibrarie.blocks[BlockName] = this.physics.add.image(
-						this.allRooms[this.actualRoomImmat].blocks[blocksImmat].x + this.allRooms[this.actualRoomImmat].x,
-						this.allRooms[this.actualRoomImmat].blocks[blocksImmat].y + this.allRooms[this.actualRoomImmat].y,
-						this.allRooms[this.actualRoomImmat].blocks[blocksImmat].name
-					)
+					if (typeof this.A_CurrentLibrarie.blocks[BlockName] == 'undefined') {
+						this.A_CurrentLibrarie.blocks[BlockName] = this.physics.add.image(
+							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].x + this.allRooms[this.actualRoomImmat].x,
+							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].y + this.allRooms[this.actualRoomImmat].y,
+							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].name
+						)
+					}
 				}
 			}
 		}
@@ -176,22 +152,22 @@ class Tools extends Phaser.Scene {
 				for (let portalImmat = 0; portalImmat < this.allRooms[this.actualRoomImmat].portals.length; portalImmat++) {
 					let PortalUName = 'portals' + this.actualRoomImmat + '_' + portalImmat
 					// add portal to game in no exist
-					// if (typeof this[PortalUName] == 'undefined'){
-					this.A_CurrentLibrarie.portals[PortalUName] = this.physics.add.image(
-						this.allRooms[this.actualRoomImmat].portals[portalImmat].x + this.allRooms[this.actualRoomImmat].x,
-						this.allRooms[this.actualRoomImmat].portals[portalImmat].y + this.allRooms[this.actualRoomImmat].y,
-						this.allRooms[this.actualRoomImmat].portals[portalImmat].name
-					).setOrigin(0)
+					if (typeof this.A_CurrentLibrarie.portals[PortalUName] == 'undefined') {
+						this.A_CurrentLibrarie.portals[PortalUName] = this.physics.add.image(
+							this.allRooms[this.actualRoomImmat].portals[portalImmat].x + this.allRooms[this.actualRoomImmat].x,
+							this.allRooms[this.actualRoomImmat].portals[portalImmat].y + this.allRooms[this.actualRoomImmat].y,
+							this.allRooms[this.actualRoomImmat].portals[portalImmat].name
+						).setOrigin(0)
 
-					// adding OVERLAP EVENT TELEPORTATION on IN PORTAL
-					if (this.allRooms[this.actualRoomImmat].portals[portalImmat].action == 'in') {
-						this.physics.add.overlap(
-							this.A_CurrentLibrarie.portals[PortalUName],
-							this.playerOne,
-							() => this.teleportationTo(portalImmat), null, this);
+						// adding OVERLAP EVENT TELEPORTATION on IN PORTAL
+						if (this.allRooms[this.actualRoomImmat].portals[portalImmat].action == 'in') {
+							this.physics.add.overlap(
+								this.A_CurrentLibrarie.portals[PortalUName],
+								this.playerOne,
+								() => this.teleportationTo(portalImmat), null, this);
+						}
+
 					}
-
-					// }
 
 				}
 			}
@@ -307,13 +283,13 @@ class Tools extends Phaser.Scene {
 	loadPandaImagetest() {
 		// testing collider
 		this.load.image(allItems['pandabagsmall'].name, allItems['pandabagsmall'].image)
-		this.load.image(allBlocks['simpleblock'].name, allBlocks['simpleblock'].image)
+		this.load.image(allBlocks['blocksimple'].name, allBlocks['blocksimple'].image)
 	}
 	addBlocktest() {
 		this.block = this.physics.add.image(
 			this.allRooms[this.actualRoomImmat].x + 128,
 			this.allRooms[this.actualRoomImmat].y,
-			allBlocks['simpleblock'].name
+			allBlocks['blocksimple'].name
 		).setOrigin(0)//.setScale(2)
 		// Overlaping action
 		this.physics.add.overlap(this.playerOne, this.block, this.collidingPandaOrBlock, null, this);

@@ -1,29 +1,19 @@
 let configDefault = {
-	rooms: {
-		'0': { image: THEMEPATHIMG + 'floor_256-0.png' },
-		'1': { image: THEMEPATHIMG + 'map_1.png' },//floor_256-1.png' },
-		'2': { image: THEMEPATHIMG + 'floor_256-2.png' },
-		'3': { image: THEMEPATHIMG + 'floor_256-3.png' },
-		'4': { image: THEMEPATHIMG + 'floor_256-4.png' },
-	},
-	portals: {
-		'in': { image: THEMEPATHIMG + 'p_in.png' },
-		'out': { image: THEMEPATHIMG + 'p_out.png' },
+	images: {
+		room0: { image: THEMEPATHIMG + 'floor_256-0.png' },
+		room1: { image: THEMEPATHIMG + 'map_1.png' },//floor_256-1.png' },
+		room2: { image: THEMEPATHIMG + 'floor_256-2.png' },
+		room3: { image: THEMEPATHIMG + 'floor_256-3.png' },
+		room4: { image: THEMEPATHIMG + 'floor_256-4.png' },
+		portalin: { image: THEMEPATHIMG + 'p_in.png' },
+		portalout: { image: THEMEPATHIMG + 'p_out.png' },
+		blocksimple: { image: THEMEPATHIMG + 'grass_32.png' },
+		pandabagsmall: { image: THEMEPATHIMG + 'panda.png' }
 	},
 	player: {
 		basic: {
 			image: THEMEPATHIMG + 'playerface.png',
 		},
-	},
-	blocks: {
-		blocksimple: {
-			image: THEMEPATHIMG + 'grass_32.png',
-		}
-	},
-	items: {
-		pandabagsmall: {
-			image: THEMEPATHIMG + 'panda.png',
-		}
 	},
 	zooom: {
 		step: .1,

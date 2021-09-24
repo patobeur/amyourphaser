@@ -10,14 +10,14 @@ class ItemShop extends Phaser.Scene {
 					name: 'pandabagsmall',
 					type: 'bag',
 					skills: ['pandabagsmall'],
-					image: configDefault.items.pandabagsmall.image,
+					image: configDefault.images['pandabagsmall'].image,
 				},
 			},
 			blocks: {
 				blocksimple: {
 					name: 'blocksimple',
 					type: 'block',
-					image: configDefault.blocks.blocksimple.image,
+					image: configDefault.images['blocksimple'].image,
 				},
 			}
 		}

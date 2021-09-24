@@ -28,7 +28,9 @@ class SceneMain extends Tools {
 		this.addActualRoomItems()
 		this.addActualRoomBlocks()
 		console.log('A_CurrentLibrarie', this.A_CurrentLibrarie)
+
 		// testing collider
+		// this'll be remove
 		this.addPandatest()
 		this.addBlocktest()
 

@@ -140,7 +140,7 @@ body #chat-container .messages .me .text {
 body #chat-container .messages .bot .text:after,
 body #chat-container .messages .me .text:after {
   position: absolute;
-  bottom: -16px;
+  top: calc(100% - 0.5rem);
   right: 16px;
   content: url(../assets/svg/phyl_bot_b.svg);
   width: 16px;
@@ -168,8 +168,7 @@ body #chat-container .messages .me .text:after {
 
 body #chat-container:hover, body #chat-container.active, body #chat-container.open {
   width: 250px;
-  height: 250px;
-  max-height: 100%;
+  height: 80%;
   -webkit-transition: height 0.5s ease, width 0.5s ease;
   transition: height 0.5s ease, width 0.5s ease;
 }
@@ -259,10 +258,17 @@ body #chat-container.open.sm .messages .bot .text {
   font-size: 1.2rem;
 }
 
+body #chat-container:hover.sm .messages .me .text:after,
+body #chat-container:hover.sm .messages .bot .text:after, body #chat-container.active.sm .messages .me .text:after,
+body #chat-container.active.sm .messages .bot .text:after, body #chat-container.open.sm .messages .me .text:after,
+body #chat-container.open.sm .messages .bot .text:after {
+  top: calc(100%);
+}
+
 body #chat-container:hover.md, body #chat-container.active.md, body #chat-container.open.md {
   width: 400px;
   height: 500px;
-  max-height: 100%;
+  max-height: 80%;
 }
 
 body #chat-container:hover.md .messages .me .text,
