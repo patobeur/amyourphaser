@@ -14,7 +14,8 @@ window.onload = () => {
 		// distant phaser script
 		{ pathfile: 'https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js', idname: 'phaser-js' },
 		{ pathfile: 'js/gamedatas/phaserconfig.js', idname: 'phaserconfig-js' },
-		{ pathfile: 'js/gamedatas/itemShop.js', idname: 'itemShop-js' },
+		{ pathfile: 'js/gamedatas/playerFactory.js', idname: 'playerFactory-js' },
+		{ pathfile: 'js/gamedatas/itemFactory.js', idname: 'itemFactory-js' },
 		{ pathfile: 'js/gamedatas/gamedatas.js', idname: 'gamedatas-js' },
 		{ pathfile: 'js/gamedatas/tools.js', idname: 'tools-js' },
 		{ pathfile: 'js/gamedatas/Scenes/sceneMain.js', idname: 'sceneMain-js' },
