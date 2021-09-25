@@ -17,7 +17,6 @@ class SceneMain extends Tools {
 		this.addRooms()
 		this.setWorldBoundsByActualRoom()
 		this.addplayer()
-		this.addActualRoomPortals() // need addplayer
 		this.addconsole()
 
 		// add ITEMSHOP
