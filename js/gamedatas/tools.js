@@ -45,15 +45,25 @@ class Tools extends Phaser.Scene {
 
 		// set Visibility of last and new room
 		this.setRoomVisibility('rooms', 'rooms' + this.actualRoomImmat, false)
-		console.log('All datas was [rased/destroyed] by teleportation !!!!')
-		console.log('- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ')
 		this.setRoomVisibility('rooms', 'rooms' + targetRoomImmat, true)
+
+		// console.log('All datas was [erased/destroyed] by teleportation !!!!')
+		// console.log('- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ')
+
+
 		// NEW ROUND 
 		// SET NEW actualRoomImmat IMMAT
 		this.actualRoomImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.room
 
-		// refresh elements in the room (panda and block testing)
-		this.refreshElementsInRoom()
+		// refresh worlds bound
+		this.setWorldBoundsByActualRoom()
+		// refresh 
+		this.refreshActualRoomPortals()
+		this.refreshActualRoomItems()
+		this.refreshActualRoomBlocks()
+
+		console.log('Room:', this.actualRoomImmat, 'is smell clean !')
+		console.log('CurrentRoom', allRooms[this.actualRoomImmat])
 		console.log('A_CurrentLibrarie', this.A_CurrentLibrarie)
 
 	}
@@ -167,10 +177,12 @@ class Tools extends Phaser.Scene {
 
 						// adding OVERLAP EVENT TELEPORTATION on IN PORTAL
 						if (this.allRooms[this.actualRoomImmat].portals[portalImmat].action == 'in') {
+							// if (typeof this.allRooms[this.actualRoomImmat].portals[portalImmat].dest == 'object') {
 							this.physics.add.overlap(
 								this.A_CurrentLibrarie.portals[PortalUName],
 								this.playerOne,
 								() => this.teleportationTo(portalImmat), null, this);
+							// }
 						}
 
 					}
@@ -352,15 +364,6 @@ class Tools extends Phaser.Scene {
 		}
 	}
 	refreshElementsInRoom() {
-		// refresh worlds bound
-		this.setWorldBoundsByActualRoom()
-		// refresh 
-		this.refreshActualRoomPortals()
-		this.refreshActualRoomItems()
-		this.refreshActualRoomBlocks()
-
-		console.log('Room:', this.actualRoomImmat, 'is smell clean !')
-
 		// if (typeof this.actualRoomImmat === 'number' && this.actualRoomImmat === 1) {
 		// 	// testing
 		// 	this.setRoomVisibility('items', 'panda', true)
@@ -370,7 +373,6 @@ class Tools extends Phaser.Scene {
 		// 	this.setRoomVisibility('items', 'panda', false)
 		// 	this.setRoomVisibility('blocks', 'block', false)
 		// }
-
 	}
 	// _____________________________________________
 	// GAMESCENE CLEAR Stuff byRoom ____librarie-__/
@@ -432,12 +434,21 @@ class Tools extends Phaser.Scene {
 	// _____________________________________________
 	// FUNCTIONS __________________________________/
 	setWorldBoundsByActualRoom() {
+		console.log('setWorldBoundsByActualRoom(',
+			this.allRooms[this.actualRoomImmat].x,
+			this.allRooms[this.actualRoomImmat].y,
+			this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].width,
+			this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].height,
+			')'
+		)
+
 		this.physics.world.setBounds(
 			this.allRooms[this.actualRoomImmat].x,
 			this.allRooms[this.actualRoomImmat].y,
 			this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].width,
 			this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].height
 		);
+
 	}
 	setRoomVisibility(type = false, objname = false, visible = true) {
 		if (objname) {
@@ -476,14 +487,14 @@ class Tools extends Phaser.Scene {
 	// TESTS ______________/__/
 	loadPandaImagetest() {
 		// testing collider
-		this.load.image(allItems['pandabagsmall'].uname, allItems['pandabagsmall'].image)
-		this.load.image(allBlocks['blocksimple'].uname, allBlocks['blocksimple'].image)
+		this.load.image(ITEMSHOP.get_itemFromShop('items', 'pandabagsmall').uname, ITEMSHOP.get_itemFromShop('items', 'pandabagsmall').image)
+		this.load.image(ITEMSHOP.get_itemFromShop('blocks', 'blocksimple').uname, ITEMSHOP.get_itemFromShop('blocks', 'blocksimple').image)
 	}
 	addBlocktest() {
 		this.block = this.physics.add.image(
 			this.allRooms[this.actualRoomImmat].x + 128,
 			this.allRooms[this.actualRoomImmat].y,
-			allBlocks['blocksimple'].uname
+			ITEMSHOP.get_itemFromShop('blocks', 'blocksimple').uname
 		).setOrigin(0)//.setScale(2)
 		// Overlaping action
 		this.physics.add.overlap(this.playerOne, this.block, this.collidingPandaOrBlock, null, this);
@@ -493,7 +504,7 @@ class Tools extends Phaser.Scene {
 		this.panda = this.physics.add.image(
 			this.allRooms[this.actualRoomImmat].x + 65,
 			this.allRooms[this.actualRoomImmat].y + 1,
-			ITEMSHOP.get_itemFromShop('items', 'pandabagsmall').uName
+			ITEMSHOP.get_itemFromShop('items', 'pandabagsmall').uname
 		).setOrigin(0).setScale(.5)
 		// Overlaping action
 		this.physics.add.overlap(this.panda, this.playerOne, this.collidingPandaOrBlock, null, this);
