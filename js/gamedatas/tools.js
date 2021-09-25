@@ -17,6 +17,7 @@ class Tools extends Phaser.Scene {
 		}
 		this.allRooms = allRooms;
 		this.A_CurrentLibrarie = {
+			rooms: [],
 			items: [],
 			blocks: [],
 			portals: [],
@@ -24,6 +25,36 @@ class Tools extends Phaser.Scene {
 		}
 
 		this.imagesStacksToLoad = ['portals', 'items', 'blocks']
+	}
+	// _____________________________________________
+	// CURRENT IN-DEV FUNCTIONS ___________________/
+	teleportationTo = (portalImmat) => {
+		// get target room & target portal immats 
+		let targetRoomImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.room
+		let targetPortalImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.portal
+
+		// change player pos ?
+		this.playerOne.x = this.allRooms[targetRoomImmat].x + this.allRooms[targetRoomImmat].portals[targetPortalImmat].x + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].w / 2);
+		this.playerOne.y = this.allRooms[targetRoomImmat].y + this.allRooms[targetRoomImmat].portals[targetPortalImmat].y + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].h / 2);
+
+		// clear ROOM portals
+		this.clearActualRoomPortals()
+
+		// set Visibility of last and new room
+		this.setRoomVisibility('rooms', 'rooms' + this.actualRoomImmat, false)
+		this.setRoomVisibility('rooms', 'rooms' + targetRoomImmat, true)
+
+		this.actualRoomImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.room
+
+		// refresh worlds bound
+		this.setWorldBoundsByActualRoom()
+
+		// add portal in the room
+		this.addActualRoomPortals()
+
+		// refresh elements in the room (panda and block testing)
+		this.refreshElementsInRoom()
+
 	}
 	// ______________________________________________________
 	// SOMES LISTENERS ____________________________//_______/
@@ -101,13 +132,18 @@ class Tools extends Phaser.Scene {
 	addRooms() {
 		for (let roomImmat = 0; roomImmat < this.allRooms.length; roomImmat++) {
 			// ADD TO GAMESCENE
-			this['rooms' + roomImmat] = this.add.image(this.allRooms[roomImmat].x, this.allRooms[roomImmat].y, 'rooms' + roomImmat).setOrigin(0)
-
+			let RoomUname = 'rooms' + roomImmat
+			console.log('adding to rooms : ' + '[' + RoomUname + ']')
+			this.A_CurrentLibrarie.rooms[RoomUname] = this.add.image(
+				this.allRooms[roomImmat].x,
+				this.allRooms[roomImmat].y,
+				RoomUname
+			).setOrigin(0)
 			// add roomImmat to room
-			this['rooms' + roomImmat].roomImmat = roomImmat
+			this.A_CurrentLibrarie.rooms[RoomUname].roomImmat = roomImmat
 
 			if (roomImmat != this.actualRoomImmat) {
-				this['rooms' + roomImmat].setVisible(false)
+				this.A_CurrentLibrarie.rooms[RoomUname].setVisible(false)
 			}
 		}
 	}
@@ -120,6 +156,8 @@ class Tools extends Phaser.Scene {
 				for (let itemImmat = 0; itemImmat < this.allRooms[this.actualRoomImmat].items.length; itemImmat++) {
 					let ItemName = 'items' + this.actualRoomImmat + '_' + itemImmat
 					if (typeof this.A_CurrentLibrarie.items[ItemName] == 'undefined') {
+
+						console.log('adding to items : ' + '[' + ItemName + ']')
 						this.A_CurrentLibrarie.items[ItemName] = this.physics.add.image(
 							this.allRooms[this.actualRoomImmat].items[itemImmat].x + this.allRooms[this.actualRoomImmat].x,
 							this.allRooms[this.actualRoomImmat].items[itemImmat].y + this.allRooms[this.actualRoomImmat].y,
@@ -134,9 +172,11 @@ class Tools extends Phaser.Scene {
 		if (typeof this.allRooms[this.actualRoomImmat].blocks === 'object') {
 			if (this.allRooms[this.actualRoomImmat].blocks.length > 0) {
 				for (let blocksImmat = 0; blocksImmat < this.allRooms[this.actualRoomImmat].blocks.length; blocksImmat++) {
-					let BlockName = 'blocks' + this.actualRoomImmat + '_' + blocksImmat
-					if (typeof this.A_CurrentLibrarie.blocks[BlockName] == 'undefined') {
-						this.A_CurrentLibrarie.blocks[BlockName] = this.physics.add.image(
+					let BlockUName = 'blocks' + this.actualRoomImmat + '_' + blocksImmat
+					if (typeof this.A_CurrentLibrarie.blocks[BlockUName] == 'undefined') {
+
+						console.log('adding to blocks : ' + '[' + BlockUName + ']')
+						this.A_CurrentLibrarie.blocks[BlockUName] = this.physics.add.image(
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].x + this.allRooms[this.actualRoomImmat].x,
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].y + this.allRooms[this.actualRoomImmat].y,
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].name
@@ -152,7 +192,10 @@ class Tools extends Phaser.Scene {
 				for (let portalImmat = 0; portalImmat < this.allRooms[this.actualRoomImmat].portals.length; portalImmat++) {
 					let PortalUName = 'portals' + this.actualRoomImmat + '_' + portalImmat
 					// add portal to game in no exist
+
 					if (typeof this.A_CurrentLibrarie.portals[PortalUName] == 'undefined') {
+
+						console.log('adding to portal : ' + '[' + PortalUName + ']')
 						this.A_CurrentLibrarie.portals[PortalUName] = this.physics.add.image(
 							this.allRooms[this.actualRoomImmat].portals[portalImmat].x + this.allRooms[this.actualRoomImmat].x,
 							this.allRooms[this.actualRoomImmat].portals[portalImmat].y + this.allRooms[this.actualRoomImmat].y,
@@ -179,9 +222,7 @@ class Tools extends Phaser.Scene {
 			this.allRooms[this.actualRoomImmat].x + this.allRooms[this.actualRoomImmat].startpos.x + (allPlayer.w / 2),
 			this.allRooms[this.actualRoomImmat].y + this.allRooms[this.actualRoomImmat].startpos.y + (allPlayer.h / 2),
 			allPlayer.name
-		)
-			.setOrigin(.5, .5)
-			.setCollideWorldBounds(true);
+		).setOrigin(.5, .5).setCollideWorldBounds(true);
 	}
 	// _____________________________________________
 	// GAMESCENE CLEAR Stuff byRoom _______________/
@@ -191,6 +232,7 @@ class Tools extends Phaser.Scene {
 				for (let portalImmat = 0; portalImmat < this.allRooms[this.actualRoomImmat].portals.length; portalImmat++) {
 					let PortalName = 'portals' + this.actualRoomImmat + '_' + portalImmat
 					this.A_CurrentLibrarie.portals[PortalName].destroy()
+					console.log(PortalName, 'destroyed')
 				}
 			}
 		}
@@ -201,56 +243,30 @@ class Tools extends Phaser.Scene {
 		this.physics.world.setBounds(
 			this.allRooms[this.actualRoomImmat].x,
 			this.allRooms[this.actualRoomImmat].y,
-			this['rooms' + this.actualRoomImmat].width,
-			this['rooms' + this.actualRoomImmat].height
+			this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].width,
+			this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].height
 		);
 	}
-	setRoomVisibility(obj = false, visible = true) {
-		if (obj) {
-			if (this[obj]) {
-				this[obj].setVisible(visible)
+	setRoomVisibility(type = false, objname = false, visible = true) {
+		if (objname) {
+			if (this.A_CurrentLibrarie[type][objname]) {
+				console.log('setRoomVisibility :(' + objname + ') Visible=' + (visible ? true : 'false') + ' - type=' + (type ?? 'false'))
+				// console.log(this.A_CurrentLibrarie[type][objname])
+				this.A_CurrentLibrarie[type][objname].setVisible(visible)
 			}
 		}
 	}
-	teleportationTo = (portalImmat) => {
-		// get target room & target portal immats 
-		let targetRoomImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.room
-		let targetPortalImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.portal
-
-		// change player pos ?
-		this.playerOne.x = this.allRooms[targetRoomImmat].x + this.allRooms[targetRoomImmat].portals[targetPortalImmat].x + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].w / 2);
-		this.playerOne.y = this.allRooms[targetRoomImmat].y + this.allRooms[targetRoomImmat].portals[targetPortalImmat].y + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].h / 2);
-
-		// clear ROOM
-		this.clearActualRoomPortals()
-
-		// set Visibility of last and new room
-		this.setRoomVisibility('rooms' + this.actualRoomImmat, false)
-		this.setRoomVisibility('rooms' + targetRoomImmat, true)
-
-		this.actualRoomImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.room
-
-		// refresh worlds bound
-		this.setWorldBoundsByActualRoom()
-
-		// add portal in the room
-		this.addActualRoomPortals()
-
-		// refresh elements in the room (panda and block testing)
-		this.refreshElementsInRoom()
-
-	}
 	refreshElementsInRoom() {
 		// console.log('actualRoomImmat;', typeof this.actualRoomImmat, this.actualRoomImmat)
-		if (typeof this.actualRoomImmat === 'number' && this.actualRoomImmat === 1) {
-			// testing
-			this.setRoomVisibility('panda', true)
-			this.setRoomVisibility('block', true)
-		}
-		else {
-			this.setRoomVisibility('panda', false)
-			this.setRoomVisibility('block', false)
-		}
+		// if (typeof this.actualRoomImmat === 'number' && this.actualRoomImmat === 1) {
+		// 	// testing
+		// 	this.setRoomVisibility('items', 'panda', true)
+		// 	this.setRoomVisibility('blocks', 'block', true)
+		// }
+		// else {
+		// 	this.setRoomVisibility('items', 'panda', false)
+		// 	this.setRoomVisibility('blocks', 'block', false)
+		// }
 
 	}
 	roomClickedByImmat = (immat) => {

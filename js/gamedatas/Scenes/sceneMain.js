@@ -27,7 +27,6 @@ class SceneMain extends Tools {
 		// let itemsOfthisRoom = ITEMSHOP.get_article('pandabagsmall')
 		this.addActualRoomItems()
 		this.addActualRoomBlocks()
-		console.log('A_CurrentLibrarie', this.A_CurrentLibrarie)
 
 		// testing collider
 		// this'll be remove
@@ -40,6 +39,10 @@ class SceneMain extends Tools {
 
 		// cameras.main follow player
 		this.cameras.main.startFollow(this.playerOne);
+
+
+		console.log('A_CurrentLibrarie', this.A_CurrentLibrarie)
+
 	}
 	update() {
 	}
