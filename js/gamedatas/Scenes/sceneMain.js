@@ -7,9 +7,6 @@ class SceneMain extends Tools {
 	}
 	preload() {
 		this.preloadAllRoomsImages()
-
-		// testing collider
-		this.loadPandaImagetest()
 	}
 	create() {
 		// re set physics.world.setBounds with actual room size
@@ -24,11 +21,9 @@ class SceneMain extends Tools {
 		this.addconsole()
 
 		// add ITEMSHOP
-		// let itemsOfthisRoom = ITEMSHOP.get_article('pandabagsmall')
+		this.addActualRoomPortals()
 		this.addActualRoomItems()
 		this.addActualRoomBlocks()
-		// add portal in the room
-		this.addActualRoomPortals()
 
 		// testing collider
 		// this'll be remove

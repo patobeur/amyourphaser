@@ -24,7 +24,7 @@ class Tools extends Phaser.Scene {
 			loadedimages: []
 		}
 
-		this.imagesStacksToLoad = ['portals', 'items', 'blocks']
+		this.stacksListeNames = ['portals', 'items', 'blocks']
 	}
 	// _____________________________________________
 	// CURRENT IN-DEV FUNCTIONS ___________________/
@@ -45,7 +45,7 @@ class Tools extends Phaser.Scene {
 
 		// set Visibility of last and new room
 		this.setRoomVisibility('rooms', 'rooms' + this.actualRoomImmat, false)
-		console.log('All datas was erased/destroy by teleportation !!!!')
+		console.log('All datas was [rased/destroyed] by teleportation !!!!')
 		console.log('- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ')
 		this.setRoomVisibility('rooms', 'rooms' + targetRoomImmat, true)
 		// NEW ROUND 
@@ -104,10 +104,10 @@ class Tools extends Phaser.Scene {
 					this.A_CurrentLibrarie.loadedimages[RoomName] = this.load.image(RoomName, CurrentRoom.image)
 				}
 				// load all image
-				for (let stacksnum = 0; stacksnum < this.imagesStacksToLoad.length; stacksnum++) {
+				for (let stacksnum = 0; stacksnum < this.stacksListeNames.length; stacksnum++) {
 
 					// CurrentStack is the new  stack name to load
-					let CurrentStack = this.imagesStacksToLoad[stacksnum]
+					let CurrentStack = this.stacksListeNames[stacksnum]
 
 					if (typeof CurrentRoom[CurrentStack] === 'object') { // .isArray()
 						if (CurrentRoom[CurrentStack].length > 0) {
@@ -117,7 +117,7 @@ class Tools extends Phaser.Scene {
 									// ADD THIS IMAGE
 									this.A_CurrentLibrarie.loadedimages[imagename] = this.load.image(
 										imagename,
-										CurrentRoom[CurrentStack][immat].image
+										ITEMSHOP.get_itemFromShop(CurrentStack, imagename).image
 									);
 								}
 
@@ -149,43 +149,6 @@ class Tools extends Phaser.Scene {
 		}
 	}
 	// GAMESCENE ADDS Stuff byRoom _____librarie+__/
-	addActualRoomItems() {
-		if (typeof this.allRooms[this.actualRoomImmat].items === 'object') {
-			if (this.allRooms[this.actualRoomImmat].items.length > 0) {
-				// items
-				for (let itemImmat = 0; itemImmat < this.allRooms[this.actualRoomImmat].items.length; itemImmat++) {
-					let ItemName = 'items' + this.actualRoomImmat + '_' + itemImmat
-					if (typeof this.A_CurrentLibrarie.items[ItemName] == 'undefined') {
-
-						console.log('(thisroomonly) adding to CurrentLibrarie[items] : ' + '[' + ItemName + ']')
-						this.A_CurrentLibrarie.items[ItemName] = this.physics.add.image(
-							this.allRooms[this.actualRoomImmat].items[itemImmat].x + this.allRooms[this.actualRoomImmat].x,
-							this.allRooms[this.actualRoomImmat].items[itemImmat].y + this.allRooms[this.actualRoomImmat].y,
-							this.allRooms[this.actualRoomImmat].items[itemImmat].uname
-						)
-					}
-				}
-			}
-		}
-	}
-	addActualRoomBlocks() {
-		if (typeof this.allRooms[this.actualRoomImmat].blocks === 'object') {
-			if (this.allRooms[this.actualRoomImmat].blocks.length > 0) {
-				for (let blocksImmat = 0; blocksImmat < this.allRooms[this.actualRoomImmat].blocks.length; blocksImmat++) {
-					let BlockUName = 'blocks' + this.actualRoomImmat + '_' + blocksImmat
-					if (typeof this.A_CurrentLibrarie.blocks[BlockUName] == 'undefined') {
-
-						console.log('(thisroomonly) adding to CurrentLibrarie[blocks] : ' + '[' + BlockUName + ']')
-						this.A_CurrentLibrarie.blocks[BlockUName] = this.physics.add.image(
-							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].x + this.allRooms[this.actualRoomImmat].x,
-							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].y + this.allRooms[this.actualRoomImmat].y,
-							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname
-						)
-					}
-				}
-			}
-		}
-	}
 	addActualRoomPortals() {
 		if (typeof this.allRooms[this.actualRoomImmat].portals === 'object') {
 			if (this.allRooms[this.actualRoomImmat].portals.length > 0) {
@@ -217,6 +180,48 @@ class Tools extends Phaser.Scene {
 			this.playerOne.depth = 1000
 		}
 	}
+	addActualRoomItems() {
+		if (typeof this.allRooms[this.actualRoomImmat].items === 'object') {
+			if (this.allRooms[this.actualRoomImmat].items.length > 0) {
+				// items
+				for (let itemImmat = 0; itemImmat < this.allRooms[this.actualRoomImmat].items.length; itemImmat++) {
+
+					let currentItem = ITEMSHOP.get_itemFromShop('items', this.allRooms[this.actualRoomImmat].items[itemImmat].uname)
+
+
+					let ItemUName = 'items' + this.actualRoomImmat + '_' + itemImmat
+					if (typeof this.A_CurrentLibrarie.items[ItemUName] == 'undefined') {
+
+						console.log('(thisroomonly) adding to CurrentLibrarie[items] : ' + '[' + ItemUName + ']')
+						this.A_CurrentLibrarie.items[ItemUName] = this.physics.add.image(
+							this.allRooms[this.actualRoomImmat].items[itemImmat].x + this.allRooms[this.actualRoomImmat].x,
+							this.allRooms[this.actualRoomImmat].items[itemImmat].y + this.allRooms[this.actualRoomImmat].y,
+							this.allRooms[this.actualRoomImmat].items[itemImmat].uname
+						)
+					}
+				}
+			}
+		}
+	}
+	addActualRoomBlocks() {
+		if (typeof this.allRooms[this.actualRoomImmat].blocks === 'object') {
+			if (this.allRooms[this.actualRoomImmat].blocks.length > 0) {
+				for (let blocksImmat = 0; blocksImmat < this.allRooms[this.actualRoomImmat].blocks.length; blocksImmat++) {
+					let BlockUName = 'blocks' + this.actualRoomImmat + '_' + blocksImmat
+					if (typeof this.A_CurrentLibrarie.blocks[BlockUName] == 'undefined') {
+
+						console.log('(thisroomonly) adding to CurrentLibrarie[blocks] : ' + '[' + BlockUName + ']')
+						this.A_CurrentLibrarie.blocks[BlockUName] = this.physics.add.image(
+							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].x + this.allRooms[this.actualRoomImmat].x,
+							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].y + this.allRooms[this.actualRoomImmat].y,
+							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname
+						)
+					}
+				}
+			}
+		}
+	}
+	// GAMESCENE ADDS Stuff byRoom _______________/
 	addplayer() {
 		this.playerOne = this.physics.add.image(
 			this.allRooms[this.actualRoomImmat].x + this.allRooms[this.actualRoomImmat].startpos.x + (allPlayer.w / 2),
@@ -488,7 +493,7 @@ class Tools extends Phaser.Scene {
 		this.panda = this.physics.add.image(
 			this.allRooms[this.actualRoomImmat].x + 65,
 			this.allRooms[this.actualRoomImmat].y + 1,
-			allItems['pandabagsmall'].uname
+			ITEMSHOP.get_itemFromShop('items', 'pandabagsmall').uName
 		).setOrigin(0).setScale(.5)
 		// Overlaping action
 		this.physics.add.overlap(this.panda, this.playerOne, this.collidingPandaOrBlock, null, this);

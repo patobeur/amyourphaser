@@ -64,7 +64,7 @@ let allRooms = [
 		items: [
 			{
 				uname: 'pandabagsmall', x: 50, y: 68,
-				image: configDefault.images['pandabagsmall'].image,
+				//image: configDefault.images['pandabagsmall'].image,
 			}
 		],
 		blocks: [
