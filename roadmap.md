@@ -7,6 +7,7 @@
 - [x] add player
 - [x] add portals in
 - [x] add portals out
+- [ ] add class ItemShop (to manage items and/or blocks)
 
 ### Functions/Methodes/Classes
 - [x] add JsScriptLoader for futurs Class loads while playing
@@ -29,9 +30,15 @@
 - [ ] How to make screen recenter when event.resize
 
 ### ideas
-- [] add items 'bag small/medium/huge' to give inventory skill
+- [ ] add items 'bag small/medium/huge' to give inventory skill
 - [x] worldlimite to the player actual room
 
+
+### Glossary
+- [ ] Items 
+- - it's swords, assault rifles, tennis rackets, or apple pie or potatoes
+- [ ] Blocks
+- - these are the elements of the decor
 
 
 
