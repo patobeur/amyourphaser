@@ -31,7 +31,7 @@ class Tools extends Phaser.Scene {
 			loadedimages: []
 		}
 
-		this.stacksListeNames = ['portals', 'items', 'blocks']
+		this.stacksListeNames = ['portals', 'items', 'blocks'];
 	}
 	// _____________________________________________
 	// CURRENT IN-DEV FUNCTIONS ___________________/
@@ -51,22 +51,29 @@ class Tools extends Phaser.Scene {
 	onKeyDown(event) {
 		if (!ChatBot.isChatFocused) {
 			// if(LOGON) console.log(event.keyCode)
+			this.up_player = false;
+			this.down_player = false;
+			this.left_player = false;
+			this.right_player = false;
 			if (this.allkeys.keyUp.indexOf(event.keyCode) > -1) {
 				this.myconsole.y -= PLAYERFACTORY.player.speed;
 				PLAYERFACTORY.playerPhaser.y -= PLAYERFACTORY.player.speed;
-
+				this.up_player = true;
 			}
 			else if (this.allkeys.keyDown.indexOf(event.keyCode) > -1) {
 				this.myconsole.y += PLAYERFACTORY.player.speed;
 				PLAYERFACTORY.playerPhaser.y += PLAYERFACTORY.player.speed;
+				this.down_player = true;
 			}
 			else if (this.allkeys.keyLeft.indexOf(event.keyCode) > -1) {
 				this.myconsole.x -= PLAYERFACTORY.player.speed;
 				PLAYERFACTORY.playerPhaser.x -= PLAYERFACTORY.player.speed;
+				this.left_player = true;
 			}
 			else if (this.allkeys.keyRight.indexOf(event.keyCode) > -1) {
 				this.myconsole.x += PLAYERFACTORY.player.speed;
 				PLAYERFACTORY.playerPhaser.x += PLAYERFACTORY.player.speed;
+				this.right_player = true;
 			}
 			this.refreshconsole()
 		}
@@ -211,82 +218,89 @@ class Tools extends Phaser.Scene {
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].y + this.allRooms[this.actualRoomImmat].y,
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname
 						)
+						
+						
+						// this.A_CurrentLibrarie.blocks[blockUname].body.collideWorldBounds = true;
+
 						// try to make this not crossable like a wall
 						// this.A_CurrentLibrarie.blocks[blockUname].body.collideWorldBounds = true;
-						this.physics.collide(
-							this.A_CurrentLibrarie.blocks[blockUname],
-							PLAYERFACTORY.playerPhaser
-						);
+						
 						// and test 
-
+						
 						// attibutes enable/immovable/moves
 						// let currentblock = ITEMFACTORY.get_itemFromShop('blocks', this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname)
 						let currentblock = this.allRooms[this.actualRoomImmat].blocks[blocksImmat]
-
+						
 						// testing body object
 						if (currentblock && typeof currentblock.body == 'object') {
+
+							//test collision
+							this.collide_object(this.A_CurrentLibrarie.blocks['blocks1_1'], PLAYERFACTORY.playerPhaser);
+
 							// https://github.com/photonstorm/phaser/blob/v3.51.0/src/gameobjects/components/Transform.js
 							console.log('> . . . . . . . . . . . . . . TRYING TO MAKE WALLS Impassable')
 							console.log('Testing Walls . . . . . . . . [' + this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname + '] . . . . . . . . . ')
 
-							// collideWorldBounds
-							if (currentblock.body.collideWorldBounds) {
-								this.A_CurrentLibrarie.blocks[blockUname].body.collideWorldBounds = currentblock.body.collideWorldBounds
-								console.log('body.collideWorldBounds', currentblock.body.collideWorldBounds)
-							}
+							// // collideWorldBounds
+							// console.log(currentblock.body)
+							// if (currentblock.body.collideWorldBounds) {
+							// 	this.A_CurrentLibrarie.blocks[blockUname].body.collideWorldBounds = currentblock.body.collideWorldBounds
+							// 	console.log('body.collideWorldBounds', currentblock.body.collideWorldBounds)
+							// }
 
-							// immovable
-							if (currentblock.body.immovable) {
-								this.A_CurrentLibrarie.blocks[blockUname].body.immovable = currentblock.body.immovable
-								console.log('body.immovable', currentblock.body.immovable)
-							}
+							// // immovable
+							// if (currentblock.body.immovable) {
+							// 	this.A_CurrentLibrarie.blocks[blockUname].body.immovable = currentblock.body.immovable
+							// 	console.log('body.immovable', currentblock.body.immovable)
+							// }
 
-							// enable
-							if (currentblock.body.enable) {
-								this.A_CurrentLibrarie.blocks[blockUname].body.enable = currentblock.body.enable
-								console.log('body.enable', currentblock.body.enable)
-							}
+							// // enable
+							// if (currentblock.body.enable) {
+							// 	this.A_CurrentLibrarie.blocks[blockUname].body.enable = currentblock.body.enable
+							// 	console.log('body.enable', currentblock.body.enable)
+							// }
 
-							// moves
-							if (currentblock.body.moves) {
-								this.A_CurrentLibrarie.blocks[blockUname].body.moves = currentblock.body.moves
-								console.log('body.moves', currentblock.body.moves)
-							}
+							// // moves
+							// if (currentblock.body.moves) {
+							// 	this.A_CurrentLibrarie.blocks[blockUname].body.moves = currentblock.body.moves
+							// 	console.log('body.moves', currentblock.body.moves)
+							// }
 
-							// pushable
-							if (currentblock.body.pushable) {
-								this.A_CurrentLibrarie.blocks[blockUname].body.pushable = currentblock.body.pushable
-								console.log('body.pushable', currentblock.body.pushable)
-							}
+							// // pushable
+							// if (currentblock.body.pushable) {
+							// 	this.A_CurrentLibrarie.blocks[blockUname].body.pushable = currentblock.body.pushable
+							// 	console.log('body.pushable', currentblock.body.pushable)
+							// }
 
-							// rotation
-							if (currentblock.body.rotation) {
-								console.log('body.rotation ', currentblock.body.rotation, 'but no body.rotation ???')
-								console.log('body.transform.rotation ', currentblock.body.rotation, 'but no transform.rotation ???')
-								this.A_CurrentLibrarie.blocks[blockUname].body.rotation = currentblock.body.rotation
-								this.A_CurrentLibrarie.blocks[blockUname].body.transform.rotation = currentblock.body.rotation
-							}
-							// angle
-							if (currentblock.body.angle) {
-								console.log('body.angle', currentblock.body.angle)
-								this.A_CurrentLibrarie.blocks[blockUname].body.angle = currentblock.body.angle
-							}
-							// checkCollision object
-							if (typeof currentblock.body.checkCollision == 'object') {
-								if (currentblock.body.checkCollision.none) {
-									console.log('body.checkCollision', currentblock.body.checkCollision.none)
-									this.A_CurrentLibrarie.blocks[blockUname].body.checkCollision.none = currentblock.body.checkCollision.none
-								}
-							}
-							// blocked object
-							if (typeof currentblock.body.blocked == 'object') {
-								if (currentblock.body.blocked.none) {
-									console.log('body.blocked.none', currentblock.body.blocked.none)
-									this.A_CurrentLibrarie.blocks[blockUname].body.blocked.none = currentblock.body.blocked.none
-								}
-							}
-							console.log(this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname, this.A_CurrentLibrarie.blocks[blockUname])
-							console.log('body:', this.A_CurrentLibrarie.blocks[blockUname].body)
+							// // rotation
+							// if (currentblock.body.rotation) {
+							// 	console.log('body.rotation ', currentblock.body.rotation, 'but no body.rotation ???')
+							// 	console.log('body.transform.rotation ', currentblock.body.rotation, 'but no transform.rotation ???')
+							// 	this.A_CurrentLibrarie.blocks[blockUname].body.rotation = currentblock.body.rotation
+							// 	this.A_CurrentLibrarie.blocks[blockUname].body.transform.rotation = currentblock.body.rotation
+							// }
+							// // angle
+							// if (currentblock.body.angle) {
+							// 	console.log('body.angle', currentblock.body.angle)
+							// 	this.A_CurrentLibrarie.blocks[blockUname].body.angle = currentblock.body.angle
+							// }
+							// // checkCollision object
+							// if (typeof currentblock.body.checkCollision == 'object') {
+							// 	if (currentblock.body.checkCollision.none) {
+							// 		console.log('body.checkCollision', currentblock.body.checkCollision.none)
+							// 		this.A_CurrentLibrarie.blocks[blockUname].body.checkCollision.none = currentblock.body.checkCollision.none
+							// 	}
+							// }
+							// // blocked object
+							// if (typeof currentblock.body.blocked == 'object') {
+							// 	if (currentblock.body.blocked.none) {
+							// 		console.log('body.blocked.none', currentblock.body.blocked.none)
+							// 		this.A_CurrentLibrarie.blocks[blockUname].body.blocked.none = currentblock.body.blocked.none
+							// 	}
+							// }
+							// console.log(this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname, this.A_CurrentLibrarie.blocks[blockUname])
+							// console.log('body:', this.A_CurrentLibrarie.blocks[blockUname].body)
+
 						}
 
 					}
@@ -302,6 +316,7 @@ class Tools extends Phaser.Scene {
 			this.allRooms[this.actualRoomImmat].y + this.allRooms[this.actualRoomImmat].startpos.y + (PLAYERFACTORY.player.h / 2),
 			PLAYERFACTORY.player.uname
 		).setOrigin(.5, .5).setCollideWorldBounds(true);
+		console.log(PLAYERFACTORY.playerPhaser)
 	}
 	// _____________________________________________
 	// GAMESCENE REFRESH Stuff byRoom __librarie=__/
@@ -571,5 +586,29 @@ class Tools extends Phaser.Scene {
 	collidingPandaOrBlock() {
 		if (this.panda) { this.panda.destroy() }
 		if (this.block) { this.block.destroy() }
+	}
+	collide_object(object1, player) {
+		this.physics.add.collider(
+			object1,
+			player,
+			() => {
+				if(this.up_player) {
+					//here on stop le player dans la direction du haut
+				}
+				if(this.down_player) {
+					//here on stop le player dans la direction du bas
+				}
+				if(this.right_player) {
+					//here on stop le player dans la direction de droite
+				}
+				if(this.left_player) {
+					//here on stop le player dans la direction de gauche
+				}
+				console.log(this.up_player);
+				console.log(this.down_player);
+				console.log(this.right_player);
+				console.log(this.left_player);
+			}
+		);
 	}
 }
