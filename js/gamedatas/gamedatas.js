@@ -74,9 +74,12 @@ let allRooms = [
 					immovable: true,
 					moves: false,
 					pushable: false,
-					blocked: { none: true },
-					rotate: 45,
-					angle: 45
+					blocked: { none: false },
+					rotation: 45,
+					angle: 45,
+					checkCollision: { none: true },
+					collideWorldBounds: true
+					// transform: { rotation: true },
 				}
 			}
 		]

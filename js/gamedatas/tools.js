@@ -219,52 +219,70 @@ class Tools extends Phaser.Scene {
 						// let currentblock = ITEMFACTORY.get_itemFromShop('blocks', this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname)
 						let currentblock = this.allRooms[this.actualRoomImmat].blocks[blocksImmat]
 
-						// testing 
-						// https://github.com/photonstorm/phaser/blob/v3.51.0/src/gameobjects/components/Transform.js
+						// testing body object
 						if (currentblock && typeof currentblock.body == 'object') {
-
+							// https://github.com/photonstorm/phaser/blob/v3.51.0/src/gameobjects/components/Transform.js
 							console.log('> . . . . . . . . . . . . . . TRYING TO MAKE WALLS Impassable')
 							console.log('Testing Walls . . . . . . . . [' + this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname + '] . . . . . . . . . ')
-							console.log('body.pushable', currentblock.body.pushable)
 
+							// collideWorldBounds
+							if (currentblock.body.collideWorldBounds) {
+								this.A_CurrentLibrarie.blocks[blockUname].body.collideWorldBounds = currentblock.body.collideWorldBounds
+								console.log('body.collideWorldBounds', currentblock.body.collideWorldBounds)
+							}
 
 							// immovable
-							this.A_CurrentLibrarie.blocks[blockUname].body.immovable = currentblock.body.immovable
-							console.log('body.immovable', currentblock.body.immovable)
+							if (currentblock.body.immovable) {
+								this.A_CurrentLibrarie.blocks[blockUname].body.immovable = currentblock.body.immovable
+								console.log('body.immovable', currentblock.body.immovable)
+							}
 
 							// enable
-							this.A_CurrentLibrarie.blocks[blockUname].body.enable = currentblock.body.enable
-							console.log('body.enable', currentblock.body.enable)
+							if (currentblock.body.enable) {
+								this.A_CurrentLibrarie.blocks[blockUname].body.enable = currentblock.body.enable
+								console.log('body.enable', currentblock.body.enable)
+							}
 
 							// moves
-							this.A_CurrentLibrarie.blocks[blockUname].body.moves = currentblock.body.moves
-							console.log('body.moves', currentblock.body.moves)
+							if (currentblock.body.moves) {
+								this.A_CurrentLibrarie.blocks[blockUname].body.moves = currentblock.body.moves
+								console.log('body.moves', currentblock.body.moves)
+							}
 
 							// pushable
-							this.A_CurrentLibrarie.blocks[blockUname].body.pushable = currentblock.body.pushable
-							console.log('body.pushable', currentblock.body.pushable)
+							if (currentblock.body.pushable) {
+								this.A_CurrentLibrarie.blocks[blockUname].body.pushable = currentblock.body.pushable
+								console.log('body.pushable', currentblock.body.pushable)
+							}
 
-							// rotate
-							if (currentblock.body.rotate) {
-								console.log('body.rotate', currentblock.body.rotate)
-								this.A_CurrentLibrarie.blocks[blockUname].body.rotate = currentblock.body.rotate
+							// rotation
+							if (currentblock.body.rotation) {
+								console.log('body.rotation ', currentblock.body.rotation, 'but no body.rotation ???')
+								console.log('body.transform.rotation ', currentblock.body.rotation, 'but no transform.rotation ???')
+								this.A_CurrentLibrarie.blocks[blockUname].body.rotation = currentblock.body.rotation
+								this.A_CurrentLibrarie.blocks[blockUname].body.transform.rotation = currentblock.body.rotation
 							}
 							// angle
 							if (currentblock.body.angle) {
 								console.log('body.angle', currentblock.body.angle)
 								this.A_CurrentLibrarie.blocks[blockUname].body.angle = currentblock.body.angle
 							}
-							// checkCollision
+							// checkCollision object
 							if (typeof currentblock.body.checkCollision == 'object') {
-								console.log('body.checkCollision', currentblock.body.checkCollision.none)
-								this.A_CurrentLibrarie.blocks[blockUname].body.checkCollision.none = currentblock.body.checkCollision.none
+								if (currentblock.body.checkCollision.none) {
+									console.log('body.checkCollision', currentblock.body.checkCollision.none)
+									this.A_CurrentLibrarie.blocks[blockUname].body.checkCollision.none = currentblock.body.checkCollision.none
+								}
 							}
-							// blocked
+							// blocked object
 							if (typeof currentblock.body.blocked == 'object') {
-								console.log('body.blocked', currentblock.body.blocked.none)
-								this.A_CurrentLibrarie.blocks[blockUname].body.blocked.none = currentblock.body.blocked.none
+								if (currentblock.body.blocked.none) {
+									console.log('body.blocked.none', currentblock.body.blocked.none)
+									this.A_CurrentLibrarie.blocks[blockUname].body.blocked.none = currentblock.body.blocked.none
+								}
 							}
-							if (LOGON) console.log(this.A_CurrentLibrarie.blocks[blockUname].body)
+							console.log(this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname, this.A_CurrentLibrarie.blocks[blockUname])
+							console.log('body:', this.A_CurrentLibrarie.blocks[blockUname].body)
 						}
 
 					}
