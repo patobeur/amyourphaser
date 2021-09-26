@@ -32,6 +32,7 @@
 ### ideas
 - [ ] add items 'bag small/medium/huge' to give inventory skill
 - [x] worldlimite to the player actual room
+- [ ] Fog of War Effect (https://blog.ourcade.co/posts/2020/phaser3-fog-of-war-field-of-view-roguelike/)
 
 
 ### Glossary

@@ -1,3 +1,8 @@
+// default datas
+// supposed to be modified by any
+// playerdata, zoom is supposed to remove et set back to appropriate class
+// all this datas is extracted to gamedatas.js
+
 let configDefault = {
 	images: {
 		room0: { image: THEMEPATHIMG + 'floor_256-0.png' },
@@ -12,9 +17,9 @@ let configDefault = {
 		},
 	},
 	zooom: {
-		origin: 1,
+		origin: 1,//not used
 		step: .1,
-		max: 3,
+		max: 5,
 		min: .5
 	},
 	keys: {

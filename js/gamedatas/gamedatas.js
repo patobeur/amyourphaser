@@ -1,5 +1,7 @@
 // this is all the game lv datas
-
+// first - if new item you have to add it in file ItemFactory.js->get_articleliste()
+// second ad it here
+// room image are still imported from themes/default/config.js file but this must change !
 let allRooms = [
 	{
 		uname: 'endroom',
@@ -110,6 +112,7 @@ let allRooms = [
 	},
 ];
 
+// extracted from themes/default/config.js file
 let allzooom = {
 	origin: configDefault.zooom.origin,
 	step: configDefault.zooom.step,

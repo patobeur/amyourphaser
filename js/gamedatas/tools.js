@@ -515,7 +515,12 @@ class Tools extends Phaser.Scene {
 		var tx = this.A_CurrentLibrarie.rooms[roomUname].input.localX
 		var ty = this.A_CurrentLibrarie.rooms[roomUname].input.localY
 		// if (LOGON) 
-		console.log(roomUname + ': ', tx, ty)
+		PLAYERFACTORY.player.clickedDest = {
+			x: tx,
+			y: ty
+		}
+		console.log(roomUname + ' click: ', tx, ty)
+		// console.log(PLAYERFACTORY.player)
 	}
 	toDegrees(angle) {
 		return angle * (180 / Math.PI)
