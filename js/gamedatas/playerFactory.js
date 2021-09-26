@@ -19,6 +19,10 @@ class PlayerFactory extends Phaser.Scene {
 				ying: 0,
 				yang: 0,
 				madness: 0
+			},
+			clickedDest: {
+				x: false,
+				y: false
 			}
 		}
 		this.playerPhaser

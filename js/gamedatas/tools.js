@@ -133,9 +133,14 @@ class Tools extends Phaser.Scene {
 			this.A_CurrentLibrarie.rooms[roomUname].roomImmat = roomImmat
 
 			// set to invisible if not current room
+			// or clickable if current
 			if (roomImmat != this.actualRoomImmat) {
 				this.A_CurrentLibrarie.rooms[roomUname].setVisible(false)
 			}
+
+			// setInteractive && make clickable
+			this.A_CurrentLibrarie.rooms[roomUname].setInteractive()
+			this.A_CurrentLibrarie.rooms[roomUname].on('pointerdown', () => { this.roomClickedByImmat(roomUname) }, this)
 		}
 	}
 	// GAMESCENE ADDS Stuff byRoom _____librarie+__/
@@ -195,7 +200,6 @@ class Tools extends Phaser.Scene {
 		if (typeof this.allRooms[this.actualRoomImmat].blocks === 'object') {
 			if (this.allRooms[this.actualRoomImmat].blocks.length > 0) {
 				for (let blocksImmat = 0; blocksImmat < this.allRooms[this.actualRoomImmat].blocks.length; blocksImmat++) {
-
 
 					let blockUname = 'blocks' + this.actualRoomImmat + '_' + blocksImmat
 
@@ -507,10 +511,11 @@ class Tools extends Phaser.Scene {
 			}
 		}
 	}
-	roomClickedByImmat = (immat) => {
-		var tx = this['rooms' + immat].input.localX
-		var ty = this['rooms' + immat].input.localY
-		if (LOGON) console.log('rooms' + immat + ': ', tx, ty)
+	roomClickedByImmat = (roomUname) => {
+		var tx = this.A_CurrentLibrarie.rooms[roomUname].input.localX
+		var ty = this.A_CurrentLibrarie.rooms[roomUname].input.localY
+		// if (LOGON) 
+		console.log(roomUname + ': ', tx, ty)
 	}
 	toDegrees(angle) {
 		return angle * (180 / Math.PI)
