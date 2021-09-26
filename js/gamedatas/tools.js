@@ -47,25 +47,27 @@ class Tools extends Phaser.Scene {
 	// ______________________________________________________
 	// SOMES LISTENERS ____________________________//_______/
 	onKeyDown(event) {
-		// if(LOGON) console.log(event.keyCode)
-		if (this.allkeys.keyUp.indexOf(event.keyCode) > -1) {
-			this.myconsole.y -= PLAYERFACTORY.player.speed;
-			PLAYERFACTORY.playerPhaser.y -= PLAYERFACTORY.player.speed;
+		if (!ChatBot.isChatFocused) {
+			// if(LOGON) console.log(event.keyCode)
+			if (this.allkeys.keyUp.indexOf(event.keyCode) > -1) {
+				this.myconsole.y -= PLAYERFACTORY.player.speed;
+				PLAYERFACTORY.playerPhaser.y -= PLAYERFACTORY.player.speed;
 
+			}
+			else if (this.allkeys.keyDown.indexOf(event.keyCode) > -1) {
+				this.myconsole.y += PLAYERFACTORY.player.speed;
+				PLAYERFACTORY.playerPhaser.y += PLAYERFACTORY.player.speed;
+			}
+			else if (this.allkeys.keyLeft.indexOf(event.keyCode) > -1) {
+				this.myconsole.x -= PLAYERFACTORY.player.speed;
+				PLAYERFACTORY.playerPhaser.x -= PLAYERFACTORY.player.speed;
+			}
+			else if (this.allkeys.keyRight.indexOf(event.keyCode) > -1) {
+				this.myconsole.x += PLAYERFACTORY.player.speed;
+				PLAYERFACTORY.playerPhaser.x += PLAYERFACTORY.player.speed;
+			}
+			this.refreshconsole()
 		}
-		else if (this.allkeys.keyDown.indexOf(event.keyCode) > -1) {
-			this.myconsole.y += PLAYERFACTORY.player.speed;
-			PLAYERFACTORY.playerPhaser.y += PLAYERFACTORY.player.speed;
-		}
-		else if (this.allkeys.keyLeft.indexOf(event.keyCode) > -1) {
-			this.myconsole.x -= PLAYERFACTORY.player.speed;
-			PLAYERFACTORY.playerPhaser.x -= PLAYERFACTORY.player.speed;
-		}
-		else if (this.allkeys.keyRight.indexOf(event.keyCode) > -1) {
-			this.myconsole.x += PLAYERFACTORY.player.speed;
-			PLAYERFACTORY.playerPhaser.x += PLAYERFACTORY.player.speed;
-		}
-		this.refreshconsole()
 	}
 	onWheelScroll(event) {
 		event.deltaY > 0
@@ -202,6 +204,13 @@ class Tools extends Phaser.Scene {
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].y + this.allRooms[this.actualRoomImmat].y,
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname
 						)
+						// try to make this not crossable like a wall
+						// this.A_CurrentLibrarie.blocks[blockUname].body.collideWorldBounds = true;
+						this.physics.collide(
+							this.A_CurrentLibrarie.blocks[blockUname],
+							PLAYERFACTORY.playerPhaser
+						);
+						// and test 
 
 						// attibutes enable/immovable/moves
 						let currentblock = ITEMFACTORY.get_itemFromShop('blocks', this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname)

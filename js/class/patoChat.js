@@ -3,6 +3,7 @@ let nbMess = 0;
 // ------------------------ -----
 class ChatBit {
 	constructor() {
+		this.isChatFocused = false
 		// local Datas
 		// this.messages = {
 		// 	0: {
@@ -31,15 +32,21 @@ class ChatBit {
 		// local Datas
 		this.chatSize = { num: 0, sizes: ['sm', 'md', 'xl'] };
 		// this.chatDiv.classList.add(this.chatSize[this.chatSize.num].sizes)
+
 		// Targets Listeners	
 		this.submitActionDiv.addEventListener('click', this.checkSend, false)
 		this.biggerActionDiv.addEventListener('click', this.get_biggerChat)
 		this.fixchatActionDiv.addEventListener('click', this.get_fixedChat, false)
 		this.clearStorageActionDiv.addEventListener('click', this.clearStorage, false)
+		this.chatInput.addEventListener('focus', () => { this.chatin(true) }, false)
+		this.chatInput.addEventListener('focusout', () => { this.chatin(false) }, false)
 		this.get_biggerChat()
 		// this.is_known()
 	}
-
+	chatin = (bool) => {
+		if (LOGON) console.log('chatin', bool)
+		this.isChatFocused = bool
+	}
 	is_known = () => {
 		let mls_user = localStorage.getItem('mls_user')
 		if (mls_user) {

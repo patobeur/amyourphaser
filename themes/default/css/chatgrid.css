@@ -328,12 +328,14 @@ body #chat-container .chat-form .form-box .input {
   -webkit-box-pack: right;
       -ms-flex-pack: right;
           justify-content: right;
+  border-right: 0;
 }
 
 body #chat-container .chat-form .form-box .input input {
   padding-left: 0.5rem;
   width: 98%;
   border: 2px solid #ffffff;
+  border-right: 0;
   outline: unset;
   height: 80%;
   font-size: 1rem;
@@ -343,7 +345,24 @@ body #chat-container .chat-form .form-box .input input {
 }
 
 body #chat-container .chat-form .form-box .input input:focus {
-  border: 2px solid #1978f0;
+  border-color: #000000;
+  outline: unset;
+  border-right: 0;
+}
+
+body #chat-container .chat-form .form-box .input input:focus:hover {
+  border-color: #ffffff;
+  outline: unset;
+  background-color: black;
+  color: white;
+  -webkit-user-select: initial;
+     -moz-user-select: initial;
+      -ms-user-select: initial;
+          user-select: initial;
+}
+
+body #chat-container .chat-form .form-box .input input:hover {
+  border-color: #000000;
   outline: unset;
 }
 
@@ -361,7 +380,7 @@ body #chat-container .chat-form .form-box .submit {
           justify-content: left;
 }
 
-body #chat-container .chat-form .form-box .submit button {
+body #chat-container .chat-form .form-box .submit button#chatbit {
   width: 90%;
   height: 80%;
   border: 2px solid #ffffff;
@@ -378,6 +397,7 @@ body #chat-container .chat-form .form-box .submit button {
       -ms-flex-pack: center;
           justify-content: center;
   font-size: 1.3rem;
+  background-color: rgba(0, 0, 0, 0.87);
 }
 
 body .editable:hover {

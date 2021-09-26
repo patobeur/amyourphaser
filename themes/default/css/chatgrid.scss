@@ -228,10 +228,12 @@ body {
 					display: flex;
 					align-items: center;
 					justify-content: right;
+					border-right: 0;
 					input {
 						padding-left: 0.5rem;
 						width: 98%;
 						border: 2px solid #ffffff;
+						border-right: 0;
 						outline: unset;
 						height: 80%;
 						font-size: 1rem;
@@ -239,7 +241,19 @@ body {
 						border-top-right-radius: 0;
 						border-bottom-right-radius: 0;
 						&:focus {
-							border: 2px solid #1978f0;
+							border-color: #000000;
+							outline: unset;
+							border-right: 0;
+							&:hover {
+								border-color: #ffffff;
+								outline: unset;
+								background-color: black;
+								color: white;
+								user-select: initial;
+							}
+						}
+						&:hover {
+							border-color: #000000;
 							outline: unset;
 						}
 					}
@@ -249,7 +263,7 @@ body {
 					display: flex;
 					align-items: center;
 					justify-content: left;
-					button {
+					button#chatbit {
 						width: 90%;
 						height: 80%;
 						border: 2px solid #ffffff;
@@ -260,6 +274,7 @@ body {
 						align-items: center;
 						justify-content: center;
 						font-size: 1.3rem;
+						background-color: rgba(0, 0, 0, 0.87);
 					}
 				}
 			}
