@@ -1,7 +1,6 @@
 class Tools extends Phaser.Scene {
 	constructor() {
 		super()
-
 		this.actualRoomImmat = 1 // (immat is like id)
 		// this.centerX = GAME.config.width / 2
 		// this.centerY = GAME.config.height / 2
@@ -9,13 +8,21 @@ class Tools extends Phaser.Scene {
 			world: { w: 256, h: 256 },
 			// camera: { w: 256, h: 256 }
 		}
+
+		// this is temporary test
+		// i need to decide how to display ui and playerdatas
 		this.myconsolestyle = {
 			font: "bold 32px quikhand",
 			fill: "#fff",
 			boundsAlignH: "center",
 			boundsAlignV: "middle"
 		}
+
+		// datas from gamedatas.js
 		this.allRooms = allRooms;
+		this.allzooom = allzooom;
+		this.allkeys = allkeys;
+
 		this.A_CurrentLibrarie = {
 			rooms: [],
 			items: [],
@@ -28,72 +35,35 @@ class Tools extends Phaser.Scene {
 	}
 	// _____________________________________________
 	// CURRENT IN-DEV FUNCTIONS ___________________/
-	teleportationTo = (portalImmat) => {
-		console.clear()
-		// get target room & target portal immats 
-		let targetRoomImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.room
-		let targetPortalImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.portal
-
-		// change player pos ?
-
-		PLAYERFACTORY.playerPhaser.y = this.allRooms[targetRoomImmat].y + this.allRooms[targetRoomImmat].portals[targetPortalImmat].y + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].h / 2);
-		PLAYERFACTORY.playerPhaser.x = this.allRooms[targetRoomImmat].x + this.allRooms[targetRoomImmat].portals[targetPortalImmat].x + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].w / 2);
-		// this.playerOne.x = this.allRooms[targetRoomImmat].x + this.allRooms[targetRoomImmat].portals[targetPortalImmat].x + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].w / 2);
-		// this.playerOne.y = this.allRooms[targetRoomImmat].y + this.allRooms[targetRoomImmat].portals[targetPortalImmat].y + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].h / 2);
-
-		// clear ROOM portals
-		this.clearActualRoomPortals()
-		this.clearActualRoomItems()
-		this.clearActualRoomBlocks()
-
-		// set Visibility of last and new room
-		this.setRoomVisibility('rooms', 'rooms' + this.actualRoomImmat, false)
-		this.setRoomVisibility('rooms', 'rooms' + targetRoomImmat, true)
-
-		// console.log('All datas was [erased/destroyed] by teleportation !!!!')
-		// console.log('- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ')
 
 
-		// NEW ROUND 
-		// SET NEW actualRoomImmat IMMAT
-		this.actualRoomImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.room
 
-		// refresh worlds bound
-		this.setWorldBoundsByActualRoom()
-		// refresh 
-		this.refreshActualRoomPortals()
-		this.refreshActualRoomItems()
-		this.refreshActualRoomBlocks()
 
-		console.log('Room:', this.actualRoomImmat, 'is smelling clean !')
-		console.log('CurrentRoom', allRooms[this.actualRoomImmat])
-		console.log('A_CurrentLibrarie', this.A_CurrentLibrarie)
 
-	}
+
+
+
+
 	// ______________________________________________________
 	// SOMES LISTENERS ____________________________//_______/
 	onKeyDown(event) {
-		// console.log(event.keyCode)
-		if (allkeys.keyUp.indexOf(event.keyCode) > -1) {
-			this.myconsole.y -= allPlayer.speed;
-			// this.playerOne.y -= allPlayer.speed;
-			PLAYERFACTORY.playerPhaser.y -= allPlayer.speed;
+		// if(LOGON) console.log(event.keyCode)
+		if (this.allkeys.keyUp.indexOf(event.keyCode) > -1) {
+			this.myconsole.y -= PLAYERFACTORY.player.speed;
+			PLAYERFACTORY.playerPhaser.y -= PLAYERFACTORY.player.speed;
 
 		}
-		else if (allkeys.keyDown.indexOf(event.keyCode) > -1) {
-			this.myconsole.y += allPlayer.speed;
-			// this.playerOne.y += allPlayer.speed;
-			PLAYERFACTORY.playerPhaser.y += allPlayer.speed;
+		else if (this.allkeys.keyDown.indexOf(event.keyCode) > -1) {
+			this.myconsole.y += PLAYERFACTORY.player.speed;
+			PLAYERFACTORY.playerPhaser.y += PLAYERFACTORY.player.speed;
 		}
-		else if (allkeys.keyLeft.indexOf(event.keyCode) > -1) {
-			this.myconsole.x -= allPlayer.speed;
-			// this.playerOne.x -= allPlayer.speed;
-			PLAYERFACTORY.playerPhaser.x -= allPlayer.speed;
+		else if (this.allkeys.keyLeft.indexOf(event.keyCode) > -1) {
+			this.myconsole.x -= PLAYERFACTORY.player.speed;
+			PLAYERFACTORY.playerPhaser.x -= PLAYERFACTORY.player.speed;
 		}
-		else if (allkeys.keyRight.indexOf(event.keyCode) > -1) {
-			this.myconsole.x += allPlayer.speed;
-			// this.playerOne.x += allPlayer.speed;
-			PLAYERFACTORY.playerPhaser.x += allPlayer.speed;
+		else if (this.allkeys.keyRight.indexOf(event.keyCode) > -1) {
+			this.myconsole.x += PLAYERFACTORY.player.speed;
+			PLAYERFACTORY.playerPhaser.x += PLAYERFACTORY.player.speed;
 		}
 		this.refreshconsole()
 	}
@@ -148,7 +118,7 @@ class Tools extends Phaser.Scene {
 		for (let roomImmat = 0; roomImmat < this.allRooms.length; roomImmat++) {
 			// ADD TO GAMESCENE
 			let roomUname = 'rooms' + roomImmat
-			console.log('adding to CurrentLibrarie[rooms] : ' + '[' + roomUname + ']')
+			if (LOGON) console.log('adding to CurrentLibrarie[rooms] : ' + '[' + roomUname + ']')
 			this.A_CurrentLibrarie.rooms[roomUname] = this.add.image(
 				this.allRooms[roomImmat].x,
 				this.allRooms[roomImmat].y,
@@ -174,7 +144,7 @@ class Tools extends Phaser.Scene {
 					let PortalUName = 'portals' + this.actualRoomImmat + '_' + portalImmat
 					if (typeof this.A_CurrentLibrarie.portals[PortalUName] == 'undefined') {
 
-						console.log('(thisroomonly) adding to CurrentLibrarie[portal] : ' + '[' + PortalUName + ']')
+						if (LOGON) console.log('(thisroomonly) adding to CurrentLibrarie[portal] : ' + '[' + PortalUName + ']')
 						this.A_CurrentLibrarie.portals[PortalUName] = this.physics.add.image(
 							this.allRooms[this.actualRoomImmat].portals[portalImmat].x + this.allRooms[this.actualRoomImmat].x,
 							this.allRooms[this.actualRoomImmat].portals[portalImmat].y + this.allRooms[this.actualRoomImmat].y,
@@ -206,7 +176,7 @@ class Tools extends Phaser.Scene {
 
 					let ItemUName = 'items' + this.actualRoomImmat + '_' + itemImmat
 					if (typeof this.A_CurrentLibrarie.items[ItemUName] == 'undefined') {
-						console.log('(thisroomonly) adding to CurrentLibrarie[items] : ' + '[' + ItemUName + ']')
+						if (LOGON) console.log('(thisroomonly) adding to CurrentLibrarie[items] : ' + '[' + ItemUName + ']')
 						this.A_CurrentLibrarie.items[ItemUName] = this.physics.add.image(
 							this.allRooms[this.actualRoomImmat].items[itemImmat].x + this.allRooms[this.actualRoomImmat].x,
 							this.allRooms[this.actualRoomImmat].items[itemImmat].y + this.allRooms[this.actualRoomImmat].y,
@@ -221,14 +191,35 @@ class Tools extends Phaser.Scene {
 		if (typeof this.allRooms[this.actualRoomImmat].blocks === 'object') {
 			if (this.allRooms[this.actualRoomImmat].blocks.length > 0) {
 				for (let blocksImmat = 0; blocksImmat < this.allRooms[this.actualRoomImmat].blocks.length; blocksImmat++) {
-					let BlockUName = 'blocks' + this.actualRoomImmat + '_' + blocksImmat
-					if (typeof this.A_CurrentLibrarie.blocks[BlockUName] == 'undefined') {
-						console.log('(thisroomonly) adding to CurrentLibrarie[blocks] : ' + '[' + BlockUName + ']')
-						this.A_CurrentLibrarie.blocks[BlockUName] = this.physics.add.image(
+
+
+					let blockUname = 'blocks' + this.actualRoomImmat + '_' + blocksImmat
+
+					if (typeof this.A_CurrentLibrarie.blocks[blockUname] == 'undefined') {
+						if (LOGON) console.log('(thisroomonly) adding to CurrentLibrarie[blocks] : ' + '[' + blockUname + ']')
+						this.A_CurrentLibrarie.blocks[blockUname] = this.physics.add.image(
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].x + this.allRooms[this.actualRoomImmat].x,
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].y + this.allRooms[this.actualRoomImmat].y,
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname
 						)
+
+						// attibutes enable/immovable/moves
+						let currentblock = ITEMFACTORY.get_itemFromShop('blocks', this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname)
+						if (currentblock && typeof currentblock.body == 'object') {
+
+							this.A_CurrentLibrarie.blocks[blockUname].body.immovable = currentblock.body.immovable
+							this.A_CurrentLibrarie.blocks[blockUname].body.enable = currentblock.body.enable
+							this.A_CurrentLibrarie.blocks[blockUname].body.moves = currentblock.body.moves
+							this.A_CurrentLibrarie.blocks[blockUname].body.pushable = currentblock.body.pushable
+							if (typeof currentblock.body.checkCollision == 'object') {
+								this.A_CurrentLibrarie.blocks[blockUname].body.checkCollision.none = currentblock.body.checkCollision.none
+							}
+							if (typeof currentblock.body.blocked == 'object') {
+								this.A_CurrentLibrarie.blocks[blockUname].body.blocked.none = currentblock.body.blocked.none
+							}
+							if (LOGON) console.log(this.A_CurrentLibrarie.blocks[blockUname].body)
+						}
+
 					}
 				}
 			}
@@ -277,11 +268,11 @@ class Tools extends Phaser.Scene {
 				PLAYERFACTORY.playerPhaser.depth = 1000
 			}
 			else {
-				console.log('no portal to refresh in the list !')
+				if (LOGON) console.log('no portal to refresh in the list !')
 			}
 		}
 		else {
-			console.log('no portal list to refresh !')
+			if (LOGON) console.log('no portal list to refresh !')
 		}
 	}
 	refreshActualRoomItems() {
@@ -302,11 +293,11 @@ class Tools extends Phaser.Scene {
 				PLAYERFACTORY.playerPhaser.depth = 1000
 			}
 			else {
-				console.log('no item to refresh in the list !')
+				if (LOGON) console.log('no item to refresh in the list !')
 			}
 		}
 		else {
-			console.log('no item list to refresh !')
+			if (LOGON) console.log('no item list to refresh !')
 		}
 	}
 	refreshActualRoomBlocks() {
@@ -327,11 +318,11 @@ class Tools extends Phaser.Scene {
 				PLAYERFACTORY.playerPhaser.depth = 1000
 			}
 			else {
-				console.log('no block to refresh in the list !')
+				if (LOGON) console.log('no block to refresh in the list !')
 			}
 		}
 		else {
-			console.log('no block list to refresh !')
+			if (LOGON) console.log('no block list to refresh !')
 		}
 	}
 	// _____________________________________________
@@ -342,7 +333,7 @@ class Tools extends Phaser.Scene {
 				for (let portalImmat = 0; portalImmat < this.allRooms[this.actualRoomImmat].portals.length; portalImmat++) {
 					let portalUName = 'portals' + this.actualRoomImmat + '_' + portalImmat
 					this.A_CurrentLibrarie.portals[portalUName].destroy()
-					console.log(portalUName, 'destroyed')
+					if (LOGON) console.log(portalUName, 'destroyed')
 				}
 			}
 		}
@@ -356,17 +347,17 @@ class Tools extends Phaser.Scene {
 						this.A_CurrentLibrarie.items[itemUName].destroy()
 					}
 					else {
-						console.log(itemUName, ' did not existe and cant be destroyed')
+						if (LOGON) console.log(itemUName, ' did not existe and cant be destroyed')
 					}
-					console.log(itemUName, 'destroyed')
+					if (LOGON) console.log(itemUName, 'destroyed')
 				}
 			}
 			else {
-				console.log(' Not item to destroy in the list !')
+				if (LOGON) console.log(' Not item to destroy in the list !')
 			}
 		}
 		else {
-			console.log('No list item to destroy !')
+			if (LOGON) console.log('No list item to destroy !')
 		}
 	}
 	clearActualRoomBlocks() {
@@ -378,42 +369,75 @@ class Tools extends Phaser.Scene {
 						this.A_CurrentLibrarie.blocks[blockUName].destroy()
 					}
 					else {
-						console.log(blockUName, ' did not existe and cant be destroyed')
+						if (LOGON) console.log(blockUName, ' did not existe and cant be destroyed')
 					}
-					console.log(blockUName, 'destroyed')
+					if (LOGON) console.log(blockUName, 'destroyed')
 				}
 			}
 			else {
-				console.log(' Not block to destroy in the list !')
+				if (LOGON) console.log(' Not block to destroy in the list !')
 			}
 		}
 		else {
-			console.log('No list block to destroy !')
+			if (LOGON) console.log('No list block to destroy !')
 		}
 	}
 	// _____________________________________________
 	// FUNCTIONS __________________________________/
+	teleportationTo = (portalImmat) => {
+		console.clear()
+
+		// get target room & target portal immats 
+		let targetRoomImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.room
+		let targetPortalImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.portal
+
+		// change player pos ?
+		PLAYERFACTORY.playerPhaser.y = this.allRooms[targetRoomImmat].y + this.allRooms[targetRoomImmat].portals[targetPortalImmat].y + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].h / 2);
+		PLAYERFACTORY.playerPhaser.x = this.allRooms[targetRoomImmat].x + this.allRooms[targetRoomImmat].portals[targetPortalImmat].x + (this.allRooms[targetRoomImmat].portals[targetPortalImmat].w / 2);
+
+		// clear ROOM portals
+		this.clearActualRoomPortals()
+		this.clearActualRoomItems()
+		this.clearActualRoomBlocks()
+
+		// set Visibility of last and new room
+		this.setRoomVisibility('rooms', 'rooms' + this.actualRoomImmat, false)
+		this.setRoomVisibility('rooms', 'rooms' + targetRoomImmat, true)
+
+		// NEW ROUND SET NEW actualRoomImmat IMMAT
+		this.actualRoomImmat = this.allRooms[this.actualRoomImmat].portals[portalImmat].dest.room
+
+		// refresh worlds bound
+		this.setWorldBoundsByActualRoom()
+
+		// refresh stacks
+		this.refreshActualRoomPortals()
+		this.refreshActualRoomItems()
+		this.refreshActualRoomBlocks()
+
+		if (LOGON) console.log('Room:', this.actualRoomImmat, 'is smelling clean !')
+		if (LOGON) console.log('CurrentRoom', allRooms[this.actualRoomImmat])
+		if (LOGON) console.log('A_CurrentLibrarie', this.A_CurrentLibrarie)
+	}
 	setWorldBoundsByActualRoom() {
-		console.log('setWorldBoundsByActualRoom(',
+		if (LOGON) console.log('setWorldBoundsByActualRoom(',
 			this.allRooms[this.actualRoomImmat].x,
 			this.allRooms[this.actualRoomImmat].y,
 			this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].width,
 			this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].height,
 			')'
 		)
-
 		this.physics.world.setBounds(
 			this.allRooms[this.actualRoomImmat].x,
 			this.allRooms[this.actualRoomImmat].y,
 			this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].width,
 			this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].height
 		);
-
 	}
 	setRoomVisibility(type = false, objname = false, visible = true) {
 		if (objname) {
 			if (this.A_CurrentLibrarie[type][objname]) {
-				console.log('setRoomVisibility :(' + objname + ') Visible=' + (visible ? true : 'false') + ' - type=' + (type ?? 'false'))
+				if (LOGON) console.log('setRoomVisibility :(' + objname + ') Visible=' + (visible ? true : 'false') + ' - type=' + (type ?? 'false'))
 				this.A_CurrentLibrarie[type][objname].setVisible(visible)
 			}
 		}
@@ -421,7 +445,7 @@ class Tools extends Phaser.Scene {
 	roomClickedByImmat = (immat) => {
 		var tx = this['rooms' + immat].input.localX
 		var ty = this['rooms' + immat].input.localY
-		console.log('rooms' + immat + ': ', tx, ty)
+		if (LOGON) console.log('rooms' + immat + ': ', tx, ty)
 	}
 	toDegrees(angle) {
 		return angle * (180 / Math.PI)

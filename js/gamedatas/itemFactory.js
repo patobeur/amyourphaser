@@ -20,7 +20,9 @@ class ItemFactory extends Phaser.Scene {
 					body: {
 						enable: true,
 						immovable: true,
-						moves: false
+						moves: false,
+						pushable: false,
+						blocked: { none: true }
 					}
 				}
 			},

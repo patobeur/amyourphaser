@@ -1,4 +1,5 @@
 // this is all the game lv datas
+
 let allRooms = [
 	{
 		uname: 'endroom',
@@ -90,19 +91,8 @@ let allRooms = [
 	},
 ];
 
-let allPlayer = {
-	uname: 'playerOne',
-	startPos: {},
-	picture: configDefault.player.image,
-	w: 20,
-	h: 31,
-	speed: 5,
-	basic: {
-		image: configDefault.player.basic.image,
-	}
-}
-
 let allzooom = {
+	origin: configDefault.zooom.origin,
 	step: configDefault.zooom.step,
 	max: configDefault.zooom.max,
 	min: configDefault.zooom.min,

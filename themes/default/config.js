@@ -20,6 +20,7 @@ let configDefault = {
 		},
 	},
 	zooom: {
+		origin: 1,
 		step: .1,
 		max: 3,
 		min: .5
