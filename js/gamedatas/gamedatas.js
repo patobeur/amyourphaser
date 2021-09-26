@@ -102,7 +102,7 @@ let allRooms = [
 			},
 			{
 				uname: 'wall_32x64',
-				x: 20, y: 350,
+				x: 60, y: 350,
 				body: {
 					enable: true,
 					immovable: true,
