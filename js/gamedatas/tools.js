@@ -313,7 +313,7 @@ class Tools extends Phaser.Scene {
 				this.beat_off(this.A_CurrentLibrarie.blocks['blocks1_2'], PLAYERFACTORY.playerPhaser, 25);
 
 				//try game over
-				this.game_over_collider(this.A_CurrentLibrarie.blocks['blocks1_3'], PLAYERFACTORY.playerPhaser);
+				this.game_over_collider(this.A_CurrentLibrarie.blocks['blocks1_3'], PLAYERFACTORY.playerPhaser, 'red');
 
 				this.add.text(600, 650, 'This is a beat off wall !!', { font: "12px Arial Black", fill: "#000" });
 				this.add.text(290, 650, 'This is a', { font: "12px Arial Black", fill: "#000" });
@@ -685,14 +685,14 @@ class Tools extends Phaser.Scene {
 			}
 		);
 	}
-	game_over_collider(object1, player) {
+	game_over_collider(object1, player, colorText) {
 		this.physics.add.collider(
 			object1,
 			player,
 			() => {
 				this.beat_off(object1,player, 1);
 				PLAYERFACTORY.player.speed = 0;
-				this.add.text(PLAYERFACTORY.playerPhaser.x-250, PLAYERFACTORY.playerPhaser.y-50, 'GAME OVER', { font: "72px Arial Black", fill: "red" });
+				this.add.text(PLAYERFACTORY.playerPhaser.x-250, PLAYERFACTORY.playerPhaser.y-50, 'GAME OVER', { font: "72px Arial Black", fill: colorText });
 				setTimeout(function(){ location.reload(); }, 3000);
 			}
 		);
