@@ -604,10 +604,10 @@ class Tools extends Phaser.Scene {
 				if(this.left_player) {
 					//here on stop le player dans la direction de gauche
 				}
-				console.log(this.up_player);
-				console.log(this.down_player);
-				console.log(this.right_player);
-				console.log(this.left_player);
+				console.log('Quand je touche cet objet j\'appuie sur haut ? :'+this.up_player);
+				console.log('Quand je touche cet objet j\'appuie sur bas ? :'+this.down_player);
+				console.log('Quand je touche cet objet j\'appuie sur droite ? :'+this.right_player);
+				console.log('Quand je touche cet objet j\'appuie sur gauche ? :'+this.left_player);
 			}
 		);
 	}
