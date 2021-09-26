@@ -99,6 +99,22 @@ let allRooms = [
 					collideWorldBounds: true
 					// transform: { rotation: true },
 				}
+			},
+			{
+				uname: 'wall_32x64',
+				x: 20, y: 350,
+				body: {
+					enable: true,
+					immovable: true,
+					moves: false,
+					pushable: false,
+					blocked: { none: false },
+					rotation: 45,
+					angle: 45,
+					checkCollision: { none: true },
+					collideWorldBounds: true
+					// transform: { rotation: true },
+				}
 			}
 		]
 	},

@@ -310,9 +310,14 @@ class Tools extends Phaser.Scene {
 				this.collide_object(this.A_CurrentLibrarie.blocks['blocks1_1'], PLAYERFACTORY.playerPhaser);
 
 				//test objet qui repousse
-				this.beat_off(this.A_CurrentLibrarie.blocks['blocks1_2'], PLAYERFACTORY.playerPhaser);
+				this.beat_off(this.A_CurrentLibrarie.blocks['blocks1_2'], PLAYERFACTORY.playerPhaser, 25);
+
+				//try game over
+				this.game_over_collider(this.A_CurrentLibrarie.blocks['blocks1_3'], PLAYERFACTORY.playerPhaser);
 
 				this.add.text(600, 650, 'This is a beat off wall !!', { font: "12px Arial Black", fill: "#000" });
+				this.add.text(290, 650, 'This is a', { font: "12px Arial Black", fill: "#000" });
+				this.add.text(270, 670, 'game over wall !!', { font: "12px Arial Black", fill: "#000" });
 
 			}
 		}
@@ -620,7 +625,7 @@ class Tools extends Phaser.Scene {
 			}
 		);
 	}
-	beat_off(object1, player) {
+	beat_off(object1, player, beatOff) {
 		this.physics.add.collider(
 			object1,
 			player,
@@ -632,7 +637,7 @@ class Tools extends Phaser.Scene {
 						loop: 1,
 						tweens: [
 							{
-								y: PLAYERFACTORY.playerPhaser.y + 25,
+								y: PLAYERFACTORY.playerPhaser.y + beatOff,
 								duration: 25
 							}
 						]
@@ -645,7 +650,7 @@ class Tools extends Phaser.Scene {
 						loop: 1,
 						tweens: [
 							{
-								y: PLAYERFACTORY.playerPhaser.y - 25,
+								y: PLAYERFACTORY.playerPhaser.y - beatOff,
 								duration: 25
 							}
 						]
@@ -658,7 +663,7 @@ class Tools extends Phaser.Scene {
 						loop: 1,
 						tweens: [
 							{
-								x: PLAYERFACTORY.playerPhaser.x + 25,
+								x: PLAYERFACTORY.playerPhaser.x + beatOff,
 								duration: 25
 							}
 						]
@@ -671,12 +676,24 @@ class Tools extends Phaser.Scene {
 						loop: 1,
 						tweens: [
 							{
-								x: PLAYERFACTORY.playerPhaser.x - 25,
+								x: PLAYERFACTORY.playerPhaser.x - beatOff,
 								duration: 25
 							}
 						]
 					});
 				}
+			}
+		);
+	}
+	game_over_collider(object1, player) {
+		this.physics.add.collider(
+			object1,
+			player,
+			() => {
+				this.beat_off(object1,player, 1);
+				PLAYERFACTORY.player.speed = 0;
+				this.add.text(PLAYERFACTORY.playerPhaser.x-250, PLAYERFACTORY.playerPhaser.y-50, 'GAME OVER', { font: "72px Arial Black", fill: "red" });
+				setTimeout(function(){ location.reload(); }, 3000);
 			}
 		);
 	}
