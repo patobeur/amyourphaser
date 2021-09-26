@@ -56,6 +56,7 @@ class Tools extends Phaser.Scene {
 			this.left_player = false;
 			this.right_player = false;
 			if (this.allkeys.keyUp.indexOf(event.keyCode) > -1) {
+				console.log(PLAYERFACTORY.player.speed)
 				this.myconsole.y -= PLAYERFACTORY.player.speed;
 				PLAYERFACTORY.playerPhaser.y -= PLAYERFACTORY.player.speed;
 				this.up_player = true;
@@ -594,15 +595,19 @@ class Tools extends Phaser.Scene {
 			() => {
 				if(this.up_player) {
 					//here on stop le player dans la direction du haut
+					PLAYERFACTORY.playerPhaser.y -= -5;
 				}
 				if(this.down_player) {
 					//here on stop le player dans la direction du bas
-				}
-				if(this.right_player) {
-					//here on stop le player dans la direction de droite
+					PLAYERFACTORY.playerPhaser.y += -5;
 				}
 				if(this.left_player) {
 					//here on stop le player dans la direction de gauche
+					PLAYERFACTORY.playerPhaser.x -= -5;
+				}
+				if(this.right_player) {
+					//here on stop le player dans la direction de droite
+					PLAYERFACTORY.playerPhaser.x += -5;
 				}
 				console.log('Quand je touche cet objet j\'appuie sur haut ? :'+this.up_player);
 				console.log('Quand je touche cet objet j\'appuie sur bas ? :'+this.down_player);
