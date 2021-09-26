@@ -34,7 +34,7 @@ class SceneMain extends Tools {
 		// cameras.main follow player
 		this.cameras.main.startFollow(PLAYERFACTORY.playerPhaser);
 
-		console.log('A_CurrentLibrarie', this.A_CurrentLibrarie)
+		if (LOGON) console.log('A_CurrentLibrarie', this.A_CurrentLibrarie)
 
 	}
 	update() {

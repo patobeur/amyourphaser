@@ -10,13 +10,24 @@ class ItemFactory extends Phaser.Scene {
 					uname: 'pandabagsmall',
 					type: 'bag',
 					skills: ['pandabagsmall'],
-					image: configDefault.images['pandabagsmall'].image,
+					image: THEMEPATHIMG + 'panda.png',
 				},
 			},
 			blocks: {
 				blocksimple: {
 					uname: 'blocksimple',
-					image: configDefault.images['blocksimple'].image,
+					image: THEMEPATHIMG + 'grass_32.png',
+					body: {
+						enable: true,
+						immovable: true,
+						moves: false,
+						pushable: false,
+						blocked: { none: true }
+					}
+				},
+				wall_32x64: {
+					uname: 'blocksimple',
+					image: THEMEPATHIMG + 'wall_32x64.png',
 					body: {
 						enable: true,
 						immovable: true,
@@ -30,30 +41,31 @@ class ItemFactory extends Phaser.Scene {
 				portalout: {
 					uname: 'portalout',
 					action: 'out',
-					image: configDefault.images['portalout'].image,
+					image: THEMEPATHIMG + 'p_out.png',
 				},
 				portalin: {
 					uname: 'portalin',
 					action: 'in',
-					image: configDefault.images['portalin'].image,
+					image: THEMEPATHIMG + 'p_in.png',
 				},
 				tp_vert_out_19x19: {
 					uname: 'tp_vert_out_19x19',
 					action: 'out',
-					image: configDefault.images['tp_vert_out_19x19'].image
+					image: THEMEPATHIMG + 'tp_vert_out_19x19.png'
 				},
 				tp_vert_in_19x19: {
 					uname: 'tp_vert_in_19x19',
 					action: 'in',
-					image: configDefault.images['tp_vert_in_19x19'].image,
-					imageswitch: configDefault.images['tp_vert_in_19x19'].image,
+					image: THEMEPATHIMG + 'tp_vert_in_19x19.png',
+					// to test for switch img
+					imageswitch: THEMEPATHIMG + 'tp_vert_in_19x19.png'
 				},
 			},
 		}
 		return allItems
 	}
 	get_itemFromShop = (type, uname) => {
-		console.log('ITEMSHOP get_itemFromShop:', uname, '(' + type + ')')
+		if (LOGON) console.log('ITEMSHOP get_itemFromShop:', uname, '(' + type + ')')
 		return this.allItems[type][uname] ?? false
 	}
 }

@@ -8,14 +8,15 @@ let allRooms = [
 		portals: [
 			{
 				uname: 'portalout',
-				action: 'out', x: 1, y: 1,
-				w: 64, h: 64,
-				image: configDefault.images['portalout'].image
+				action: 'out',
+				x: 1, y: 1,
+				w: 64, h: 64
 			},
 			{
 				uname: 'portalin',
-				action: 'in', x: 192, y: 1, w: 64, h: 64,
-				image: configDefault.images['portalin'].image,
+				action: 'in',
+				x: 192, y: 1,
+				w: 64, h: 64,
 				dest: { room: 1, portal: 0 }
 			},
 		]
@@ -62,6 +63,10 @@ let allRooms = [
 			{
 				uname: 'blocksimple',
 				x: 150, y: 250,
+			},
+			{
+				uname: 'wall_32x64',
+				x: 220, y: 350,
 			}
 		]
 	},

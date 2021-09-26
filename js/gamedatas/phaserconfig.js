@@ -6,6 +6,8 @@ var myPhaserConfig = {
 	parent: 'amyourphaser',
 	physics: {
 		default: 'arcade',
+		pixelArt: true, // do nothing ??
+		antialias: true, // do nothing ??
 		arcade: {
 			// gravity: { y: 0 },
 			// debug: false
