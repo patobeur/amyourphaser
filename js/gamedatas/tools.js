@@ -56,7 +56,6 @@ class Tools extends Phaser.Scene {
 			this.left_player = false;
 			this.right_player = false;
 			if (this.allkeys.keyUp.indexOf(event.keyCode) > -1) {
-				console.log(PLAYERFACTORY.player.speed)
 				this.myconsole.y -= PLAYERFACTORY.player.speed;
 				PLAYERFACTORY.playerPhaser.y -= PLAYERFACTORY.player.speed;
 				this.up_player = true;
@@ -234,9 +233,7 @@ class Tools extends Phaser.Scene {
 						
 						// testing body object
 						if (currentblock && typeof currentblock.body == 'object') {
-
-							//test collision
-							this.collide_object(this.A_CurrentLibrarie.blocks['blocks1_1'], PLAYERFACTORY.playerPhaser);
+							
 
 							// https://github.com/photonstorm/phaser/blob/v3.51.0/src/gameobjects/components/Transform.js
 							console.log('> . . . . . . . . . . . . . . TRYING TO MAKE WALLS Impassable')
@@ -306,6 +303,17 @@ class Tools extends Phaser.Scene {
 
 					}
 				}
+				
+				//TEST sur les OBJETS
+
+				//test collision
+				this.collide_object(this.A_CurrentLibrarie.blocks['blocks1_1'], PLAYERFACTORY.playerPhaser);
+
+				//test objet qui repousse
+				this.beat_off(this.A_CurrentLibrarie.blocks['blocks1_2'], PLAYERFACTORY.playerPhaser);
+
+				this.add.text(600, 650, 'This is a beat off wall !!', { font: "12px Arial Black", fill: "#000" });
+
 			}
 		}
 	}
@@ -609,10 +617,66 @@ class Tools extends Phaser.Scene {
 					//here on stop le player dans la direction de droite
 					PLAYERFACTORY.playerPhaser.x += -5;
 				}
-				console.log('Quand je touche cet objet j\'appuie sur haut ? :'+this.up_player);
-				console.log('Quand je touche cet objet j\'appuie sur bas ? :'+this.down_player);
-				console.log('Quand je touche cet objet j\'appuie sur droite ? :'+this.right_player);
-				console.log('Quand je touche cet objet j\'appuie sur gauche ? :'+this.left_player);
+			}
+		);
+	}
+	beat_off(object1, player) {
+		this.physics.add.collider(
+			object1,
+			player,
+			() => {
+				if(this.up_player) {
+					//here on stop le player dans la direction du haut
+					this.tweens.timeline({
+						targets: PLAYERFACTORY.playerPhaser,
+						loop: 1,
+						tweens: [
+							{
+								y: PLAYERFACTORY.playerPhaser.y + 25,
+								duration: 25
+							}
+						]
+					});
+				}
+				if(this.down_player) {
+					//here on stop le player dans la direction du bas
+					this.tweens.timeline({
+						targets: PLAYERFACTORY.playerPhaser,
+						loop: 1,
+						tweens: [
+							{
+								y: PLAYERFACTORY.playerPhaser.y - 25,
+								duration: 25
+							}
+						]
+					});
+				}
+				if(this.left_player) {
+					//here on stop le player dans la direction de gauche
+					this.tweens.timeline({
+						targets: PLAYERFACTORY.playerPhaser,
+						loop: 1,
+						tweens: [
+							{
+								x: PLAYERFACTORY.playerPhaser.x + 25,
+								duration: 25
+							}
+						]
+					});
+				}
+				if(this.right_player) {
+					//here on stop le player dans la direction de droite
+					this.tweens.timeline({
+						targets: PLAYERFACTORY.playerPhaser,
+						loop: 1,
+						tweens: [
+							{
+								x: PLAYERFACTORY.playerPhaser.x - 25,
+								duration: 25
+							}
+						]
+					});
+				}
 			}
 		);
 	}
