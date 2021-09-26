@@ -38,7 +38,8 @@ let allRooms = [
 				uname: 'portalin',
 				x: 192, y: 128,
 				w: 64, h: 64,
-				action: 'in', dest: { room: 2, portal: 0 }
+				action: 'in',
+				dest: { room: 2, portal: 0 }
 			},
 			{
 				uname: 'tp_vert_out_19x19',
@@ -50,7 +51,8 @@ let allRooms = [
 				uname: 'tp_vert_in_19x19',
 				x: 420, y: 66,
 				w: 64, h: 64,
-				action: 'in', dest: { room: 1, portal: 2 }
+				action: 'in',
+				dest: { room: 1, portal: 2 }
 			},
 		],
 		items: [
@@ -67,6 +69,15 @@ let allRooms = [
 			{
 				uname: 'wall_32x64',
 				x: 220, y: 350,
+				body: {
+					enable: true,
+					immovable: true,
+					moves: false,
+					pushable: false,
+					blocked: { none: true },
+					rotate: 45,
+					angle: 45
+				}
 			}
 		]
 	},

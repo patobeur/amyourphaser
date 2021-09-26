@@ -20,7 +20,7 @@ class Tools extends Phaser.Scene {
 
 		// datas from gamedatas.js
 		this.allRooms = allRooms;
-		this.allzooom = allzooom;
+		// this.allzooom = allzooom;
 		this.allkeys = allkeys;
 
 		this.A_CurrentLibrarie = {
@@ -39,7 +39,9 @@ class Tools extends Phaser.Scene {
 
 
 
-
+	// addActualRoomBlocks() 
+	// on my way !
+	// around line 192++
 
 
 
@@ -198,6 +200,7 @@ class Tools extends Phaser.Scene {
 					let blockUname = 'blocks' + this.actualRoomImmat + '_' + blocksImmat
 
 					if (typeof this.A_CurrentLibrarie.blocks[blockUname] == 'undefined') {
+						// ADD BLOCK
 						if (LOGON) console.log('(thisroomonly) adding to CurrentLibrarie[blocks] : ' + '[' + blockUname + ']')
 						this.A_CurrentLibrarie.blocks[blockUname] = this.physics.add.image(
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].x + this.allRooms[this.actualRoomImmat].x,
@@ -213,17 +216,52 @@ class Tools extends Phaser.Scene {
 						// and test 
 
 						// attibutes enable/immovable/moves
-						let currentblock = ITEMFACTORY.get_itemFromShop('blocks', this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname)
+						// let currentblock = ITEMFACTORY.get_itemFromShop('blocks', this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname)
+						let currentblock = this.allRooms[this.actualRoomImmat].blocks[blocksImmat]
+
+						// testing 
+						// https://github.com/photonstorm/phaser/blob/v3.51.0/src/gameobjects/components/Transform.js
 						if (currentblock && typeof currentblock.body == 'object') {
 
+							console.log('> . . . . . . . . . . . . . . TRYING TO MAKE WALLS Impassable')
+							console.log('Testing Walls . . . . . . . . [' + this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname + '] . . . . . . . . . ')
+							console.log('body.pushable', currentblock.body.pushable)
+
+
+							// immovable
 							this.A_CurrentLibrarie.blocks[blockUname].body.immovable = currentblock.body.immovable
+							console.log('body.immovable', currentblock.body.immovable)
+
+							// enable
 							this.A_CurrentLibrarie.blocks[blockUname].body.enable = currentblock.body.enable
+							console.log('body.enable', currentblock.body.enable)
+
+							// moves
 							this.A_CurrentLibrarie.blocks[blockUname].body.moves = currentblock.body.moves
+							console.log('body.moves', currentblock.body.moves)
+
+							// pushable
 							this.A_CurrentLibrarie.blocks[blockUname].body.pushable = currentblock.body.pushable
+							console.log('body.pushable', currentblock.body.pushable)
+
+							// rotate
+							if (currentblock.body.rotate) {
+								console.log('body.rotate', currentblock.body.rotate)
+								this.A_CurrentLibrarie.blocks[blockUname].body.rotate = currentblock.body.rotate
+							}
+							// angle
+							if (currentblock.body.angle) {
+								console.log('body.angle', currentblock.body.angle)
+								this.A_CurrentLibrarie.blocks[blockUname].body.angle = currentblock.body.angle
+							}
+							// checkCollision
 							if (typeof currentblock.body.checkCollision == 'object') {
+								console.log('body.checkCollision', currentblock.body.checkCollision.none)
 								this.A_CurrentLibrarie.blocks[blockUname].body.checkCollision.none = currentblock.body.checkCollision.none
 							}
+							// blocked
 							if (typeof currentblock.body.blocked == 'object') {
+								console.log('body.blocked', currentblock.body.blocked.none)
 								this.A_CurrentLibrarie.blocks[blockUname].body.blocked.none = currentblock.body.blocked.none
 							}
 							if (LOGON) console.log(this.A_CurrentLibrarie.blocks[blockUname].body)

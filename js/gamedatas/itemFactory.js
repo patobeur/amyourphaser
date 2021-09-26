@@ -17,24 +17,10 @@ class ItemFactory extends Phaser.Scene {
 				blocksimple: {
 					uname: 'blocksimple',
 					image: THEMEPATHIMG + 'grass_32.png',
-					body: {
-						enable: true,
-						immovable: true,
-						moves: false,
-						pushable: false,
-						blocked: { none: true }
-					}
 				},
 				wall_32x64: {
 					uname: 'blocksimple',
 					image: THEMEPATHIMG + 'wall_32x64.png',
-					body: {
-						enable: true,
-						immovable: true,
-						moves: false,
-						pushable: false,
-						blocked: { none: true }
-					}
 				}
 			},
 			portals: {
