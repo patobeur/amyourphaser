@@ -15,7 +15,6 @@ class SceneMain extends Tools {
 		this.addRooms()
 		this.setWorldBoundsByActualRoom()
 		this.addplayer()
-		this.addconsole()
 
 		// add ITEMSHOP
 		this.addActualRoomPortals()
@@ -26,6 +25,9 @@ class SceneMain extends Tools {
 		// this'll be remove
 		this.addPandatest()
 		this.addBlocktest()
+
+		this.addStatsUI()
+		this.addConsoleUI()
 
 		// event
 		this.input.keyboard.on('keydown', this.onKeyDown, this);

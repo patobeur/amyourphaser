@@ -15,8 +15,9 @@ window.onload = () => {
 		{ pathfile: 'https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js', idname: 'phaser-js' },
 		{ pathfile: 'js/gamedatas/phaserconfig.js', idname: 'phaserconfig-js' },
 		{ pathfile: 'js/gamedatas/playerFactory.js', idname: 'playerFactory-js' },
-		{ pathfile: 'js/gamedatas/itemFactory.js', idname: 'itemFactory-js' },
+		{ pathfile: 'js/gamedatas/UiDomFactory.js', idname: 'UiDomFactory-js' },
 		{ pathfile: 'js/gamedatas/gamedatas.js', idname: 'gamedatas-js' },
+		{ pathfile: 'js/gamedatas/itemFactory.js', idname: 'itemFactory-js' },
 		{ pathfile: 'js/gamedatas/tools.js', idname: 'tools-js' },
 		{ pathfile: 'js/gamedatas/Scenes/sceneMain.js', idname: 'sceneMain-js' },
 		{ pathfile: 'js/gamedatas/Scenes/sceneOuterSpace.js', idname: 'sceneOuterSpace-js' },
@@ -80,9 +81,6 @@ window.onload = () => {
 					ChatBot.add_message("Hum ! We'r inda mood !!! ", 'text')
 				});
 		}
-	}
-	chabtbot = () => {
-
 	}
 	set_LoaderDisplay = (bool = false) => {
 		if (bool) {

@@ -34,6 +34,7 @@ class PlayerFactory extends Phaser.Scene {
 			'basic': {
 				uname: 'basic',
 				stats: {
+					health: 100,
 					int: 100,
 					karma: 100,
 					strength: 100,
@@ -45,6 +46,7 @@ class PlayerFactory extends Phaser.Scene {
 			'magic': {
 				uname: 'magic',
 				stats: {
+					health: 100,
 					int: 100,
 					karma: 100,
 					strength: 100,
@@ -56,6 +58,7 @@ class PlayerFactory extends Phaser.Scene {
 			'rogue': {
 				uname: 'rogue',
 				stats: {
+					health: 100,
 					int: 100,
 					karma: 100,
 					strength: 100,
@@ -67,6 +70,7 @@ class PlayerFactory extends Phaser.Scene {
 			'warrior': {
 				uname: 'warrior',
 				stats: {
+					health: 100,
 					int: 100,
 					karma: 100,
 					strength: 100,
@@ -78,6 +82,7 @@ class PlayerFactory extends Phaser.Scene {
 			'whatever': {
 				uname: 'whatever',
 				stats: {
+					health: 100,
 					int: 1,
 					karma: 1,
 					strength: 1,

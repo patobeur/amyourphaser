@@ -1,6 +1,6 @@
-class ItemFactory extends Phaser.Scene {
+class ItemFactory {// extends Phaser.Scene {
 	constructor() {
-		super()
+		// super()
 		this.allItems = this.get_articleliste()
 	}
 	get_articleliste = () => {
