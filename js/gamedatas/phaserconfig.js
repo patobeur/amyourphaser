@@ -29,9 +29,11 @@ var myPhaserConfig = {
 	physics: {
 		default: 'arcade',
 	},
+	backgroundColor: '#000',
 	scale: {
-		mode: Phaser.Scale.HEIGHT_CONTROLS_WIDTH,
-		parent: 'amyourphaser',
+		mode: Phaser.Scale.FIT,
+		parent: 'pamyourphaser',
+		autoCenter: Phaser.Scale.CENTER_BOTH,
 		width: 800,
 		height: 600
 	},
