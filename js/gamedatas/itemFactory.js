@@ -19,8 +19,16 @@ class ItemFactory {// extends Phaser.Scene {
 					image: THEMEPATHIMG + 'grass_32.png',
 				},
 				wall_32x64: {
-					uname: 'blocksimple',
+					uname: 'wall_32x64',
 					image: THEMEPATHIMG + 'wall_32x64.png',
+				},
+				wall_64x64: {
+					uname: 'wall_64x64',
+					image: THEMEPATHIMG + 'wall_64x64.png',
+				},
+				trap_64x64: {
+					uname: 'trap_64x64',
+					image: THEMEPATHIMG + 'trap_64x64.png',
 				}
 			},
 			portals: {

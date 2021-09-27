@@ -231,7 +231,7 @@ class Tools extends Phaser.Scene {
 									break;
 								case 'beat_off':
 									//test objet qui repousse
-									this.beat_off(this.A_CurrentLibrarie.blocks[blockUname], PLAYERFACTORY.playerPhaser, 5);
+									this.beat_off(this.A_CurrentLibrarie.blocks[blockUname], PLAYERFACTORY.playerPhaser, 35);
 									break;
 								case 'game_over':
 									//try game over
