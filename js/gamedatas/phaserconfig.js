@@ -14,7 +14,7 @@
 // 		},
 // 		scale: {
 // 			mode: Phaser.Scale.FIT,
-// 			parent: 'phaser-example',
+// 			parent: 'amyourphaser',
 // 			autoCenter: Phaser.Scale.CENTER_BOTH,
 // 			width: window.innerWidth,
 // 			height: window.innerHeight
@@ -32,7 +32,7 @@ var myPhaserConfig = {
 	backgroundColor: '#000',
 	scale: {
 		mode: Phaser.Scale.FIT,
-		parent: 'pamyourphaser',
+		parent: 'amyourphaser',
 		autoCenter: Phaser.Scale.CENTER_BOTH,
 		// width: 800,
 		// height: 600
