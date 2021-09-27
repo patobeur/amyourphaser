@@ -34,10 +34,10 @@ var myPhaserConfig = {
 		mode: Phaser.Scale.FIT,
 		parent: 'amyourphaser',
 		autoCenter: Phaser.Scale.CENTER_BOTH,
-		// width: 800,
-		// height: 600
-		width: window.innerWidth,
-		height: window.innerHeight,
+		width: 800,
+		height: 600
+		// width: window.innerWidth,
+		// height: window.innerHeight,
 	},
 	scene: [],
 	mydata: { mess: 'patobeur mess', lovely: 'great' }
