@@ -100,7 +100,7 @@ let allRooms = [
 			{
 				uname: 'trap_64x64',
 				x: 330, y: 350,
-				type: 'trap',
+				type: 'game_over',
 				body: {}
 			}
 		]
