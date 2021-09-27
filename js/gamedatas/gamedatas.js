@@ -71,6 +71,7 @@ let allRooms = [
 			{
 				uname: 'wall_32x64',
 				x: 220, y: 350,
+				type: 'collide',
 				body: {
 					enable: true,
 					immovable: true,
@@ -80,13 +81,14 @@ let allRooms = [
 					rotation: 45,
 					angle: 45,
 					checkCollision: { none: true },
-					collideWorldBounds: true
+					collideWorldBounds: true,
 					// transform: { rotation: true },
 				}
 			},
 			{
 				uname: 'wall_32x64',
 				x: 420, y: 350,
+				type: 'beat_off',
 				body: {
 					enable: true,
 					immovable: true,
@@ -96,13 +98,14 @@ let allRooms = [
 					rotation: 45,
 					angle: 45,
 					checkCollision: { none: true },
-					collideWorldBounds: true
+					collideWorldBounds: true,
 					// transform: { rotation: true },
 				}
 			},
 			{
 				uname: 'wall_32x64',
 				x: 60, y: 350,
+				type: 'game_over',
 				body: {
 					enable: true,
 					immovable: true,
@@ -112,7 +115,7 @@ let allRooms = [
 					rotation: 45,
 					angle: 45,
 					checkCollision: { none: true },
-					collideWorldBounds: true
+					collideWorldBounds: true,
 					// transform: { rotation: true },
 				}
 			}

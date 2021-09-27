@@ -29,6 +29,9 @@ class SceneMain extends Tools {
 		this.addStatsUI()
 		this.addConsoleUI()
 
+		this.add.text(600, 650, 'This is a beat off wall !!', { font: "12px Arial Black", fill: "#000" });
+		this.add.text(290, 650, 'This is a', { font: "12px Arial Black", fill: "#000" });
+		this.add.text(270, 670, 'game over wall !!', { font: "12px Arial Black", fill: "#000" });
 		// event
 		this.input.keyboard.on('keydown', this.onKeyDown, this);
 		this.input.on('wheel', (event) => { this.onWheelScroll(event) }, this);

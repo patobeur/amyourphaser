@@ -40,10 +40,6 @@ class Tools extends Phaser.Scene {
 
 
 
-	// addActualRoomBlocks() 
-	// on my way !
-	// around line 192++
-
 
 
 
@@ -216,6 +212,7 @@ class Tools extends Phaser.Scene {
 			if (this.allRooms[this.actualRoomImmat].blocks.length > 0) {
 				for (let blocksImmat = 0; blocksImmat < this.allRooms[this.actualRoomImmat].blocks.length; blocksImmat++) {
 
+					let currentblock = this.allRooms[this.actualRoomImmat].blocks[blocksImmat] // from gamedatas.js
 					let blockUname = 'blocks' + this.actualRoomImmat + '_' + blocksImmat
 					if (typeof this.A_CurrentLibrarie.blocks[blockUname] == 'undefined') {
 						// ADD BLOCK
@@ -226,28 +223,28 @@ class Tools extends Phaser.Scene {
 							this.allRooms[this.actualRoomImmat].blocks[blocksImmat].uname
 						)
 
-						let currentblock = this.allRooms[this.actualRoomImmat].blocks[blocksImmat]
+						if (currentblock.type) {
+							switch (currentblock.type) {
+								case 'collide':
+									//test collision
+									this.collide_object(this.A_CurrentLibrarie.blocks['blocks1_1'], PLAYERFACTORY.playerPhaser);
+									break;
+								case 'beat_off':
+									//test objet qui repousse
+									this.beat_off(this.A_CurrentLibrarie.blocks['blocks1_2'], PLAYERFACTORY.playerPhaser, 25);
+									break;
+								case 'game_over':
+									//try game over
+									this.game_over_collider(this.A_CurrentLibrarie.blocks['blocks1_3'], PLAYERFACTORY.playerPhaser, 'red');
+									break;
+
+							}
+						}
 						// // testing body object
 						// if (currentblock && typeof currentblock.body == 'object') {}
 
 					}
 				}
-
-				//TEST sur les OBJETS
-
-				//test collision
-				this.collide_object(this.A_CurrentLibrarie.blocks['blocks1_1'], PLAYERFACTORY.playerPhaser);
-
-				//test objet qui repousse
-				this.beat_off(this.A_CurrentLibrarie.blocks['blocks1_2'], PLAYERFACTORY.playerPhaser, 25);
-
-				//try game over
-				this.game_over_collider(this.A_CurrentLibrarie.blocks['blocks1_3'], PLAYERFACTORY.playerPhaser, 'red');
-
-				this.add.text(600, 650, 'This is a beat off wall !!', { font: "12px Arial Black", fill: "#000" });
-				this.add.text(290, 650, 'This is a', { font: "12px Arial Black", fill: "#000" });
-				this.add.text(270, 670, 'game over wall !!', { font: "12px Arial Black", fill: "#000" });
-
 			}
 		}
 	}
