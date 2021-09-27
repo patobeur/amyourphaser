@@ -54,5 +54,4 @@ var myPhaserConfig = {
 		autoCenter: Phaser.Scale.CENTER_BOTH,
 	},
 	scene: [],
-	mydata: { mess: 'patobeur mess', lovely: 'great' }
 };
