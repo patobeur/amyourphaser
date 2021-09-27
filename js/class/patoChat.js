@@ -35,13 +35,13 @@ class ChatBit {
 
 		// Targets Listeners	
 		this.submitActionDiv.addEventListener('click', this.checkSend, false)
-		this.biggerActionDiv.addEventListener('click', this.get_biggerChat)
+		this.biggerActionDiv.addEventListener('click', this.get_biggerChatSize)
 		this.fixchatActionDiv.addEventListener('click', this.get_fixedChat, false)
 		this.clearStorageActionDiv.addEventListener('click', this.clearStorage, false)
 		this.chatInput.addEventListener('focus', () => { this.chatin(true) }, false)
 		this.chatInput.addEventListener('focusout', () => { this.chatin(false) }, false)
-		this.get_biggerChat()
 		// this.is_known()
+		this.set_ChatSize()
 	}
 	chatin = (bool) => {
 		if (LOGON) console.log('chatin', bool)
@@ -66,7 +66,10 @@ class ChatBit {
 		this.chatDiv.classList.contains('open') ? this.chatDiv.classList.remove('open') : this.chatDiv.classList.add('open')
 		this.fixchatActionDiv.classList.contains('active') ? this.fixchatActionDiv.classList.remove('active') : this.fixchatActionDiv.classList.add('active')
 	}
-	get_biggerChat = (eve) => {
+	set_ChatSize = () => {
+		this.chatDiv.classList.add(this.chatSize.sizes[this.chatSize.num])
+	}
+	get_biggerChatSize = (eve) => {
 		this.chatDiv.classList.remove(this.chatSize.sizes[this.chatSize.num])
 		this.chatSize.num = (this.chatSize.num < this.chatSize.sizes.length - 1) ? this.chatSize.num + 1 : 0
 		this.chatDiv.classList.add(this.chatSize.sizes[this.chatSize.num])
