@@ -33,6 +33,8 @@ class Tools extends Phaser.Scene {
 		}
 
 		this.stacksListeNames = ['portals', 'items', 'blocks'];
+		window.onresize = (event) => { this.onResize() }
+
 	}
 	// _____________________________________________
 	// CURRENT IN-DEV FUNCTIONS ___________________/
@@ -45,6 +47,9 @@ class Tools extends Phaser.Scene {
 
 	// ______________________________________________________
 	// SOMES LISTENERS ____________________________//_______/
+	onResize(event) {
+		console.log('ffffffffffffffffffffffff', document.getElementsByTagName('canvas').width)
+	}
 	onKeyDown(event) {
 		if (!ChatBot.isChatFocused) {
 			// if(LOGON) console.log(event.keyCode)

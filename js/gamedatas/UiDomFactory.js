@@ -29,7 +29,7 @@ class UiDomFactory extends Phaser.Scene {
 
 	// stats
 	UIaddStats = (player, playerPhaser, obj) => {
-		console.log('myconsole', this.myconsole)
+		// console.log('myconsole', this.myconsole)
 		let posX = 1
 		let posY = 50//this.myconsole.y + this.myconsole.height
 		//texte room
@@ -37,7 +37,7 @@ class UiDomFactory extends Phaser.Scene {
 		this.texteRoom.zoomFactor = 0
 		this.texteRoom.scrollFactorX = 0
 		this.texteRoom.scrollFactorY = 0
-		console.log(this.texteRoom)
+		// console.log(this.texteRoom)
 
 		//texte health
 		posY = this.texteRoom.y + this.texteRoom.height
