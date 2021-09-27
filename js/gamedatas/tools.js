@@ -227,15 +227,15 @@ class Tools extends Phaser.Scene {
 							switch (currentblock.type) {
 								case 'collide':
 									//test collision
-									this.collide_object(this.A_CurrentLibrarie.blocks['blocks1_1'], PLAYERFACTORY.playerPhaser);
+									this.collide_object(this.A_CurrentLibrarie.blocks[blockUname], PLAYERFACTORY.playerPhaser);
 									break;
 								case 'beat_off':
 									//test objet qui repousse
-									this.beat_off(this.A_CurrentLibrarie.blocks['blocks1_2'], PLAYERFACTORY.playerPhaser, 25);
+									this.beat_off(this.A_CurrentLibrarie.blocks[blockUname], PLAYERFACTORY.playerPhaser, 25);
 									break;
 								case 'game_over':
 									//try game over
-									this.game_over_collider(this.A_CurrentLibrarie.blocks['blocks1_3'], PLAYERFACTORY.playerPhaser, 'red');
+									this.game_over_collider(this.A_CurrentLibrarie.blocks[blockUname], PLAYERFACTORY.playerPhaser, 'red');
 									break;
 
 							}
