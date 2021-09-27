@@ -51,10 +51,7 @@ var myPhaserConfig = {
 	backgroundColor: '#000',
 	scale: {
 		mode: Phaser.Scale.FIT,
-		parent: 'amyourphaser',
 		autoCenter: Phaser.Scale.CENTER_BOTH,
-		width: window.screen.width,
-		height: window.screen.height
 	},
 	scene: [],
 	mydata: { mess: 'patobeur mess', lovely: 'great' }
