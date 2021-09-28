@@ -1,5 +1,5 @@
-
-console.log('v2')
+const version = 'v3'
+console.log(version)
 const LOGON = false
 const TEMPLATE = 'default'
 const THEMEPATH = 'themes/' + TEMPLATE + '/'
@@ -47,7 +47,7 @@ window.onload = () => {
 		// creation of a script tag, to add in <body>
 		let script = document.createElement('script');
 		script.type = "text/javascript"
-		script.src = scriptUrl + "?v=" + new Date().getSeconds();
+		script.src = scriptUrl + '?' + version + '=' + new Date().getSeconds();
 		script.id = identity
 		document.body.appendChild(script);
 		// asynchronous function
