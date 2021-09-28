@@ -1,6 +1,6 @@
 
 console.log('v2')
-const LOGON = true
+const LOGON = false
 const TEMPLATE = 'default'
 const THEMEPATH = 'themes/' + TEMPLATE + '/'
 const THEMEPATHIMG = 'themes/' + TEMPLATE + '/assets/img/'

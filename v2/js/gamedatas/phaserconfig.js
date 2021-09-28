@@ -7,7 +7,7 @@ var myPhaserConfig = {
 		// pixelArt: true, // do nothing ??
 		// antialias: true, // do nothing ??
 	},
-	backgroundColor: '#EAEAEA',
+	// backgroundColor: '#EAEAEA',
 	scale: {
 		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.CENTER_BOTH,
