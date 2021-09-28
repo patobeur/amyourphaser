@@ -1,5 +1,5 @@
 
-console.log('v2')
+console.log('v3')
 const TEMPLATE = 'default'
 const THEMEPATH = 'themes/' + TEMPLATE + '/'
 const THEMEPATHIMG = 'themes/' + TEMPLATE + '/assets/img/'
