@@ -7,7 +7,9 @@ class Tools extends Phaser.Scene {
 		this.centerY
 		// IMAGES
 		this.allImages = [
-			{ immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
+			// { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
+			PLAYERFACTORY.playerDatas.image,
+			{ immat: false, uname: 'wall_32x64', path: THEMEPATHIMG + 'wall_32x64.png' },
 			{ immat: false, uname: 'wall_32x64', path: THEMEPATHIMG + 'wall_32x64.png' },
 			{ immat: false, uname: 'wall_64x64', path: THEMEPATHIMG + 'wall_64x64.png' },
 			{ immat: false, uname: 'worldmap_1920x1080', path: THEMEPATHIMG + 'worldmap_1920x1080.png' },
@@ -17,16 +19,6 @@ class Tools extends Phaser.Scene {
 			{ immat: false, uname: 'thisisnottobeseen', path: THEMEPATHIMG + 'thisisnottobeseen.png' },
 		]
 		this.loadedImages = []
-		// PLAYER
-		this.PlayerDatas = {
-			deg: -90,
-			speed: 5,
-			dest: { on: false, x: 0, y: 0 },
-			up_player: false,
-			down_player: false,
-			left_player: false,
-			right_player: false,
-		}
 		// GROUPS
 		this.BackgroundGroup
 		this.GroundGroup
@@ -36,7 +28,6 @@ class Tools extends Phaser.Scene {
 		this.UiGroup
 		// ALL
 		this.all = {
-			PhaserPlayer: '',
 			Background: '',
 			Ground: '',
 			UiBurger: ''
@@ -90,18 +81,14 @@ class Tools extends Phaser.Scene {
 	ClickedOn = (obj) => {
 		var tx = obj.input.localX
 		var ty = obj.input.localY
-
-		// if (LOGON) 
-		this.PlayerDatas.dest = { on: true, x: tx, y: ty, range: this.all.PhaserPlayer.width }
-
-
-		this.PlayerDatas.deg = this.get_DegreeWithTwoPos(
-			this.all.PhaserPlayer.x,
-			this.all.PhaserPlayer.y,
+		PLAYERFACTORY.playerDatas.dest = { on: true, x: tx, y: ty, range: PLAYERFACTORY.playerPhaser.width }
+		PLAYERFACTORY.playerDatas.deg = this.get_DegreeWithTwoPos(
+			PLAYERFACTORY.playerPhaser.x,
+			PLAYERFACTORY.playerPhaser.y,
 			tx,
 			ty
 		)
-		console.log('d:' + this.PlayerDatas.deg + ' player.x:' + this.all.PhaserPlayer.x + ',y:' + this.all.PhaserPlayer.y, ' click.x:' + parseInt(tx) + ',y:' + parseInt(ty))
+		console.log('d:' + PLAYERFACTORY.playerDatas.deg + ' player.x:' + PLAYERFACTORY.playerPhaser.x + ',y:' + PLAYERFACTORY.playerPhaser.y, ' click.x:' + parseInt(tx) + ',y:' + parseInt(ty))
 
 	}
 	get_DegreeWithTwoPos = (fromX, fromY, destX, destY,) => {
@@ -122,8 +109,9 @@ class Tools extends Phaser.Scene {
 	}
 	// ADD PLAYER
 	addPlayer() {
-		this.all.PhaserPlayer = this.physics.add.image(1, 1, 'player').setOrigin(0)//.setScale(10)
-		this.PlayerGroup.add(this.all.PhaserPlayer)
+		PLAYERFACTORY.playerPhaser = this.physics.add.image(1, 1, PLAYERFACTORY.playerDatas.image.uname).setOrigin(0)//.setScale(10)
+		// PLAYERFACTORY.playerPhaser = this.physics.add.image(1, 1, 'player').setOrigin(0)//.setScale(10)
+		this.PlayerGroup.add(PLAYERFACTORY.playerPhaser)
 	}
 	// ADD UI
 	addUi() {
@@ -131,12 +119,6 @@ class Tools extends Phaser.Scene {
 		this.UiGroup.add(this.all.UiBurger)
 	}
 	// camera follow
-	camerafollowplayer() {
-		// // cameras.main follow player
-		console.log(this.all.PhaserPlayer)
-		// console.log()
-		this.cameras.main.startFollow(this.all.PhaserPlayer);
-	}
 	setWorldBoundsByActualRoom() {
 		// this.physics.world.setBounds(
 		// 	x,
@@ -150,25 +132,27 @@ class Tools extends Phaser.Scene {
 	resizeApp = () => {
 		GAME.scale.resize(window.innerWidth, window.innerHeight);
 	}
-
+	camerasmainfollow = () => {
+		this.cameras.main.startFollow(PLAYERFACTORY.playerPhaser);
+	}
 	onKeyDown(event) {
 		// if (LOGON) console.log(event.keyCode)
 
 		if (this.allkeys.keyUp.indexOf(event.keyCode) > -1) {
-			this.all.PhaserPlayer.y -= this.PlayerDatas.speed;
-			this.PlayerDatas.up_player = true;
+			PLAYERFACTORY.playerPhaser.y -= PLAYERFACTORY.playerDatas.speed;
+			PLAYERFACTORY.playerDatas.up_player = true;
 		}
 		else if (this.allkeys.keyDown.indexOf(event.keyCode) > -1) {
-			this.all.PhaserPlayer.y += this.PlayerDatas.speed;
-			this.PlayerDatas.down_player = true;
+			PLAYERFACTORY.playerPhaser.y += PLAYERFACTORY.playerDatas.speed;
+			PLAYERFACTORY.playerDatas.down_player = true;
 		}
 		else if (this.allkeys.keyLeft.indexOf(event.keyCode) > -1) {
-			this.all.PhaserPlayer.x -= this.PlayerDatas.speed;
-			this.PlayerDatas.left_player = true;
+			PLAYERFACTORY.playerPhaser.x -= PLAYERFACTORY.playerDatas.speed;
+			PLAYERFACTORY.playerDatas.left_player = true;
 		}
 		else if (this.allkeys.keyRight.indexOf(event.keyCode) > -1) {
-			this.all.PhaserPlayer.x += this.PlayerDatas.speed;
-			this.PlayerDatas.right_player = true;
+			PLAYERFACTORY.playerPhaser.x += PLAYERFACTORY.playerDatas.speed;
+			PLAYERFACTORY.playerDatas.right_player = true;
 		}
 	}
 
