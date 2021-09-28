@@ -15,6 +15,12 @@ class SceneMain extends Tools {
 		this.input.keyboard.on('keydown', this.onKeyDown, this);
 		// this.input.on('wheel', (event) => { this.onWheelScroll(event) }, this);
 		// window.addEventListener('resize', () => { this.resizeApp() })
+
+		this.resizeApp()
+
+		window.addEventListener('resize', () => {
+			this.resizeApp()
+		}, false);
 	}
 	update() {
 		// this.game.config.width = window.innerWidth;
