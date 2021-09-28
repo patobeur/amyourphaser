@@ -4,19 +4,19 @@ class PlayerFactory extends Phaser.Scene {
 		this.playerDatas = {
 			uname: 'playerOne',
 			image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
-			speed: 5,
+
+			deston: false,
+			destx: 0,
+			desty: 0,
+			x: 0,
+			y: 0, // not used ???
+			deg: -90,
+			speed: 4,
 			// basic: {
 			// 	image:{ immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			// },
 			job: 'basic',
 			stats: this.get_job('basic', 'stats'),
-			clickedDest: {
-				x: false,
-				y: false
-			},
-			x: 1, y: 1, // not used ???
-			deg: -90,
-			dest: { on: false, x: 0, y: 0 },
 			up_player: false,
 			down_player: false,
 			left_player: false,
@@ -44,7 +44,8 @@ class PlayerFactory extends Phaser.Scene {
 					strength: 100,
 					ying: 0,
 					yang: 0,
-					madness: 0
+					madness: 0,
+					speed: 4,
 				},
 				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			},
@@ -57,8 +58,10 @@ class PlayerFactory extends Phaser.Scene {
 					strength: 100,
 					ying: 0,
 					yang: 0,
-					madness: 0
+					madness: 0,
+					speed: 4,
 				},
+				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			},
 			'rogue': {
 				uname: 'rogue',
@@ -69,8 +72,10 @@ class PlayerFactory extends Phaser.Scene {
 					strength: 100,
 					ying: 0,
 					yang: 0,
-					madness: 0
+					madness: 0,
+					speed: 4,
 				},
+				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			},
 			'warrior': {
 				uname: 'warrior',
@@ -81,8 +86,10 @@ class PlayerFactory extends Phaser.Scene {
 					strength: 100,
 					ying: 0,
 					yang: 0,
-					madness: 0
+					madness: 0,
+					speed: 4,
 				},
+				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			},
 			'whatever': {
 				uname: 'whatever',
@@ -93,8 +100,10 @@ class PlayerFactory extends Phaser.Scene {
 					strength: 1,
 					ying: 50,
 					yang: 50,
-					madness: 100
+					madness: 100,
+					speed: 4,
 				},
+				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			},
 		}
 		return jobs[jobuname][jobcat]

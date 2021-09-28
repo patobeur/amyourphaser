@@ -65,10 +65,10 @@ body #amyourphaser #canvascenter {
   position: absolute;
   width: 96px;
   height: 96px;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(0, 0);
-          transform: translate(0, 0);
+  top: calc(50% + (32px / 2));
+  left: calc(50% + (32px / 2));
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   z-index: 999999999;
   background-color: rgba(255, 255, 255, 0.3);
 }

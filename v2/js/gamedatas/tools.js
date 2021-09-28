@@ -112,6 +112,7 @@ class Tools extends Phaser.Scene {
 		PLAYERFACTORY.playerPhaser = this.physics.add.image(1, 1, PLAYERFACTORY.playerDatas.image.uname).setOrigin(0)//.setScale(10)
 		// PLAYERFACTORY.playerPhaser = this.physics.add.image(1, 1, 'player').setOrigin(0)//.setScale(10)
 		this.PlayerGroup.add(PLAYERFACTORY.playerPhaser)
+		console.log(PLAYERFACTORY.playerDatas)
 	}
 	// ADD UI
 	addUi() {
