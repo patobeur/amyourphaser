@@ -1,8 +1,3 @@
-// default datas
-// supposed to be modified by any
-// playerdata, zoom is supposed to remove et set back to appropriate class
-// all this datas is extracted to gamedatas.js
-
 let configDefault = {
 	// 	zooom: {
 	// 		origin: 1,//not used
