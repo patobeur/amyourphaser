@@ -8,7 +8,7 @@ class SceneMain extends Tools {
 	create() {
 		this.createAll()
 		this.consoleconfig()
-
+		this.setWorldBounds()
 		this.camerasmainfollow()
 		// cameras.main follow player
 

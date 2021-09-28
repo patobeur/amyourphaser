@@ -120,13 +120,14 @@ class Tools extends Phaser.Scene {
 		this.UiGroup.add(this.all.UiBurger)
 	}
 	// camera follow
-	setWorldBoundsByActualRoom() {
-		// this.physics.world.setBounds(
-		// 	x,
-		// 	y,
-		// 	width,
-		// 	height
-		// );
+	setWorldBounds() {
+		console.log('this.all.Background', this.all.Background)
+		this.physics.world.setBounds(
+			0,
+			0,
+			1920,//this.all.Background.width,
+			1080,//this.all.Background.height
+		);
 	}
 	// ________________________
 	// TESTS ______________/__/
