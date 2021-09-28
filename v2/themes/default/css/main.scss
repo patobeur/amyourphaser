@@ -35,6 +35,20 @@ body {
 			width: 100%;
 			height: 100%;
 		}
+		#canvascenter {
+			position: absolute;
+			width: 96px;
+			height: 96px;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 999999999;
+			background-color: rgba(0, 26, 255, 0.575);
+			&:before {
+				color: white;
+				content: "96x96px";
+			}
+		}
 	}
 	#center {
 		position: absolute;
@@ -44,8 +58,12 @@ body {
 		left: 50%;
 		transform: translate(-50%, -50%);
 		// border-radius: 0.5rem;
-		border: 1px solid rgba(201, 6, 6, 0.1);
 		z-index: 999999999;
+		background-color: rgba(0, 0, 0, 0.493);
+		&:before {
+			color: white;
+			content: "32x32px";
+		}
 	}
 }
 //

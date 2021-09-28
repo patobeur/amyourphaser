@@ -1,13 +1,18 @@
 class Tools extends Phaser.Scene {
 	constructor() {
 		super()
+		this.allkeys = allkeys;
+		//
+		this.centerX
+		this.centerY
+		// GROUPS
 		this.BackGroundGroup
 		this.GroundGroup
 		this.ItemGroup
 		this.BlockGroup
 		this.PlayerGroup
 		this.UiGroup
-		//
+		// IMAGES
 		this.allImages = [
 			{ immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			{ immat: false, uname: 'wall_32x64', path: THEMEPATHIMG + 'wall_32x64.png' },
@@ -18,12 +23,14 @@ class Tools extends Phaser.Scene {
 			{ immat: false, uname: 'burger_on', path: THEMEPATHIMG + 'burger_on.png' },
 		]
 		this.loadedImages = []
-		//
-		this.centerX
-		this.centerY
-
-		// 
-		this.PlayerOne
+		// PLAYER
+		this.PhaserPlayer
+		this.PlayerSpeed = 5
+		this.up_player = false;
+		this.down_player = false;
+		this.left_player = false;
+		this.right_player = false;
+		// UI
 		this.UiBurger
 	}
 	// ______________________________________________________
@@ -52,55 +59,89 @@ class Tools extends Phaser.Scene {
 		this.centerX = this.game.config.width / 2
 		this.centerY = this.game.config.height / 2
 
-		// this.BackGroundGroup = this.add.group()
+		this.BackGroundGroup = this.add.group()
 		// this.GroundGroup = this.add.group()
 		// this.ItemGroup = this.add.group()
 		// this.BlockGroup = this.add.group()
 		this.PlayerGroup = this.add.group()
 		this.UiGroup = this.add.group()
+		this.addBackground()
 		this.addPlayer()
 		this.addUi()
 	}
+	// ADD Background
+	addBackground() {
+		this.BackGround = this.physics.add.image(0, 0, 'worldmap_1920x1080').setOrigin(0)//.setScale(10)
+		this.BackGroundGroup.add(this.BackGround)
+	}
 	// ADD PLAYER
 	addPlayer() {
-		this.PlayerOne = this.add.image(this.centerX, this.centerY, 'player')//.setOrigin(1, 1)//.setScale(10)
-		this.PlayerGroup.add(this.PlayerOne)
+		this.PhaserPlayer = this.physics.add.image(128, 128, 'player').setOrigin(0)//.setScale(10)
+		this.PlayerGroup.add(this.PhaserPlayer)
 	}
 	// ADD UI
 	addUi() {
 		this.UiBurger = this.add.image(this.game.config.width, 0, 'burger_off').setOrigin(1, 0).setScale(2)
 		this.UiGroup.add(this.UiBurger)
 	}
+	// camera follow
+	camerafollowplayer() {
+		// // cameras.main follow player
+		console.log(this.PhaserPlayer)
+		// console.log()
+		this.cameras.main.startFollow(this.PhaserPlayer);
+	}
 	setWorldBoundsByActualRoom() {
 		// this.physics.world.setBounds(
-		// 	this.allRooms[this.actualRoomImmat].x,
-		// 	this.allRooms[this.actualRoomImmat].y,
-		// 	this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].width,
-		// 	this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].height
+		// 	x,
+		// 	y,
+		// 	width,
+		// 	height
 		// );
 	}
 	// ________________________
 	// TESTS ______________/__/
-	resizeApp() {
-		// Width-height-ratio of game resolution
-		let game_ratio = 800 / 600;
+	// resizeApp() {
+	// 	// Width-height-ratio of game resolution
+	// 	let game_ratio = 800 / 600;
 
-		// Make div full height of browser and keep the ratio of game resolution
-		let div = document.getElementById('amyourphaser');
-		div.style.width = (window.innerHeight * game_ratio) + 'px';
-		div.style.height = window.innerHeight + 'px';
+	// 	// Make div full height of browser and keep the ratio of game resolution
+	// 	let div = document.getElementById('amyourphaser');
+	// 	div.style.width = (window.innerHeight * game_ratio) + 'px';
+	// 	div.style.height = window.innerHeight + 'px';
 
-		// Check if device DPI messes up the width-height-ratio
-		let canvas = document.getElementsByTagName('canvas')[0];
+	// 	// Check if device DPI messes up the width-height-ratio
+	// 	let canvas = document.getElementsByTagName('canvas')[0];
 
-		let dpi_w = (parseInt(div.style.width) / canvas.width);
-		let dpi_h = (parseInt(div.style.height) / canvas.height);
+	// 	let dpi_w = (parseInt(div.style.width) / canvas.width);
+	// 	let dpi_h = (parseInt(div.style.height) / canvas.height);
 
-		let height = window.innerHeight * (dpi_w / dpi_h);
-		let width = height * 0.6;
+	// 	let height = window.innerHeight * (dpi_w / dpi_h);
+	// 	let width = height * 0.6;
 
-		canvas.style.width = width + 'px';
-		canvas.style.height = height + 'px';
+	// 	canvas.style.width = width + 'px';
+	// 	canvas.style.height = height + 'px';
+	// }
+
+	onKeyDown(event) {
+		// if (LOGON) console.log(event.keyCode)
+
+		if (this.allkeys.keyUp.indexOf(event.keyCode) > -1) {
+			this.PhaserPlayer.y -= this.PlayerSpeed;
+			this.up_player = true;
+		}
+		else if (this.allkeys.keyDown.indexOf(event.keyCode) > -1) {
+			this.PhaserPlayer.y += this.PlayerSpeed;
+			this.down_player = true;
+		}
+		else if (this.allkeys.keyLeft.indexOf(event.keyCode) > -1) {
+			this.PhaserPlayer.x -= this.PlayerSpeed;
+			this.left_player = true;
+		}
+		else if (this.allkeys.keyRight.indexOf(event.keyCode) > -1) {
+			this.PhaserPlayer.x += this.PlayerSpeed;
+			this.right_player = true;
+		}
 	}
 
 }

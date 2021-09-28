@@ -9,6 +9,15 @@ class SceneMain extends Tools {
 		this.createAll()
 		this.consoleconfig()
 		// window.addEventListener('resize', () => { this.resizeApp() })
+
+
+		this.input.keyboard.on('keydown', this.onKeyDown, this);
+		// this.input.on('wheel', (event) => { this.onWheelScroll(event) }, this);
+
+		// // cameras.main follow player
+		console.log(this.PhaserPlayer)
+		// console.log()
+		this.cameras.main.startFollow(this.PhaserPlayer);
 	}
 	update() {
 		// this.game.config.width = window.innerWidth;
