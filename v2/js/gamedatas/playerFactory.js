@@ -63,7 +63,7 @@ class PlayerFactory extends Phaser.Scene {
 				},
 				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			},
-			'rogue': {
+			'StormTrooper': {
 				uname: 'rogue',
 				stats: {
 					health: 100,
@@ -77,7 +77,7 @@ class PlayerFactory extends Phaser.Scene {
 				},
 				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			},
-			'warrior': {
+			'vendeurdechoux': {
 				uname: 'warrior',
 				stats: {
 					health: 100,
