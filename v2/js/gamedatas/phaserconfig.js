@@ -1,7 +1,7 @@
 // definition Phaser
 var myPhaserConfig = {
 	type: Phaser.AUTO,
-	// parent: 'amyourphaser',
+	parent: 'amyourphaser',
 	physics: {
 		default: 'arcade',
 		// pixelArt: true, // do nothing ??

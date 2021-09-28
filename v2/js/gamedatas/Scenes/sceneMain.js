@@ -8,6 +8,7 @@ class SceneMain extends Tools {
 	create() {
 		this.createAll()
 		this.consoleconfig()
+		// window.addEventListener('resize', () => { this.resizeApp() })
 	}
 	update() {
 		// this.game.config.width = window.innerWidth;

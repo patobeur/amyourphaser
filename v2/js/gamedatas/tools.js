@@ -48,7 +48,6 @@ class Tools extends Phaser.Scene {
 		}
 	}
 	createAll() {
-
 		// console.log(this)
 		this.centerX = this.game.config.width / 2
 		this.centerY = this.game.config.height / 2
@@ -64,22 +63,15 @@ class Tools extends Phaser.Scene {
 	}
 	// ADD PLAYER
 	addPlayer() {
-		this.PlayerOne = this.add.image(this.centerX, this.centerY, 'player').setOrigin(0)//.setScale(10)
+		this.PlayerOne = this.add.image(this.centerX, this.centerY, 'player')//.setOrigin(1, 1)//.setScale(10)
 		this.PlayerGroup.add(this.PlayerOne)
 	}
 	// ADD UI
 	addUi() {
-		this.UiBurger = this.add.image(this.game.config.width, 32, 'burger_off').setOrigin(1, 1)//.setScale(10)
+		this.UiBurger = this.add.image(this.game.config.width, 0, 'burger_off').setOrigin(1, 0).setScale(2)
 		this.UiGroup.add(this.UiBurger)
 	}
 	setWorldBoundsByActualRoom() {
-		// if (LOGON) console.log('setWorldBoundsByActualRoom(',
-		// 	this.allRooms[this.actualRoomImmat].x,
-		// 	this.allRooms[this.actualRoomImmat].y,
-		// 	this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].width,
-		// 	this.A_CurrentLibrarie['rooms']['rooms' + this.actualRoomImmat].height,
-		// 	')'
-		// )
 		// this.physics.world.setBounds(
 		// 	this.allRooms[this.actualRoomImmat].x,
 		// 	this.allRooms[this.actualRoomImmat].y,
@@ -89,5 +81,26 @@ class Tools extends Phaser.Scene {
 	}
 	// ________________________
 	// TESTS ______________/__/
+	resizeApp() {
+		// Width-height-ratio of game resolution
+		let game_ratio = 800 / 600;
+
+		// Make div full height of browser and keep the ratio of game resolution
+		let div = document.getElementById('amyourphaser');
+		div.style.width = (window.innerHeight * game_ratio) + 'px';
+		div.style.height = window.innerHeight + 'px';
+
+		// Check if device DPI messes up the width-height-ratio
+		let canvas = document.getElementsByTagName('canvas')[0];
+
+		let dpi_w = (parseInt(div.style.width) / canvas.width);
+		let dpi_h = (parseInt(div.style.height) / canvas.height);
+
+		let height = window.innerHeight * (dpi_w / dpi_h);
+		let width = height * 0.6;
+
+		canvas.style.width = width + 'px';
+		canvas.style.height = height + 'px';
+	}
 
 }
