@@ -4,18 +4,11 @@ var myPhaserConfig = {
 	parent: 'amyourphaser',
 	physics: {
 		default: 'arcade',
-		// pixelArt: true, // do nothing ??
-		// antialias: true, // do nothing ??
 	},
 	// backgroundColor: '#EAEAEA',
 	scale: {
-		// mode: Phaser.Scale.FIT,
 		mode: Phaser.Scale.NONE,
 		autoCenter: Phaser.Scale.CENTER_BOTH,
-		// width: 800,
-		// height: 600,
-		// width: window.innerWidth,
-		// height: window.innerHeight,
 	},
 	scene: [],
 };
