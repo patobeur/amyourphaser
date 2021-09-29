@@ -16,13 +16,10 @@ class SceneMain extends Tools {
 		// this.input.on('wheel', (event) => { this.onWheelScroll(event) }, this);
 		this.resizeApp()
 		window.addEventListener('resize', () => { this.resizeApp() }, false);
+
 	}
 	update() {
-		// this.game.config.width = window.innerWidth;
-		// this.game.config.height = window.innerHeight;
-		// this.centerX = (this.game.config.width / 2);
-		// this.centerY = (this.game.config.height / 2);
-		// console.log('refresh:', 'x:' + this.centerX, 'y:' + this.centerY)
+		this.updatecameras()
 	}
 	consoleconfig() {
 		if (LOGON) {

@@ -32,6 +32,9 @@ class Tools extends Phaser.Scene {
 			Ground: '',
 			UiBurger: ''
 		}
+		this.camera2
+		this.camera3
+		this.camera2Rotation = 0;
 	}
 	// ______________________________________________________
 	// GAMESCENE PRELOADS ______________librarie+__//_______/
@@ -56,8 +59,6 @@ class Tools extends Phaser.Scene {
 	}
 	createAll() {
 		// console.log(this)
-		this.centerX = this.game.config.width / 2
-		this.centerY = this.game.config.height / 2
 
 		this.BackgroundGroup = this.add.group()
 		// this.GroundGroup = this.add.group()
@@ -109,8 +110,7 @@ class Tools extends Phaser.Scene {
 	}
 	// ADD PLAYER
 	addPlayer() {
-		PLAYERFACTORY.playerPhaser = this.physics.add.image(1, 1, PLAYERFACTORY.playerDatas.image.uname).setOrigin(0)//.setScale(10)
-		// PLAYERFACTORY.playerPhaser = this.physics.add.image(1, 1, 'player').setOrigin(0)//.setScale(10)
+		PLAYERFACTORY.playerPhaser = this.physics.add.image(1, 1, PLAYERFACTORY.playerDatas.image.uname).setOrigin(0).setCollideWorldBounds(true);
 		this.PlayerGroup.add(PLAYERFACTORY.playerPhaser)
 		console.log(PLAYERFACTORY.playerDatas)
 	}
@@ -128,14 +128,21 @@ class Tools extends Phaser.Scene {
 			1920,//this.all.Background.width,
 			1080,//this.all.Background.height
 		);
+		// PLAYERFACTORY.playerPhaser.setBounds(
+		// 	0,
+		// 	0,
+		// 	1920,//this.all.Background.width,
+		// 	1080,//this.all.Background.height
+		// );
+		// this.physics.arcade.enable(PLAYERFACTORY.playerPhaser);
 	}
 	// ________________________
 	// TESTS ______________/__/
 	resizeApp = () => {
 		GAME.scale.resize(window.innerWidth, window.innerHeight);
-	}
-	camerasmainfollow = () => {
-		this.cameras.main.startFollow(PLAYERFACTORY.playerPhaser);
+		this.centerX = (GAME.canvas.width / 2);
+		this.centerY = (GAME.canvas.height / 2);
+		console.log('canvasSize:', 'w:' + GAME.canvas.width, 'h:' + GAME.canvas.height)
 	}
 	onKeyDown(event) {
 		// if (LOGON) console.log(event.keyCode)
@@ -157,5 +164,28 @@ class Tools extends Phaser.Scene {
 			PLAYERFACTORY.playerDatas.right_player = true;
 		}
 	}
+	camerasmainfollow = () => {
+		this.cameras.main.startFollow(PLAYERFACTORY.playerPhaser);
 
+		// this.cameras.main.setSize(400, 300);
+		// this.cameras.main.y = 10
+		this.camera2 = this.cameras.add(0, 0, 320, 200)
+		this.camera2.startFollow(PLAYERFACTORY.playerPhaser);
+
+		this.updatecameras()
+	}
+	updatecameras() {
+		this.camera2.scrollX = Math.cos(this.camera2Rotation) * 100;
+		this.camera2.scrollY = Math.sin(this.camera2Rotation) * 100;
+
+		// this.camera2.shake(100, 0.01);
+		// this.camera2.flash(2000);
+		// this.camera2.fade(2000);
+		this.camera2.rotation = Math.sin(45);
+		// this.camera2.zoom = 0.5 + Math.abs(Math.sin(this.camera2Rotation));
+		// if (this.camera2._fadeAlpha >= 1.0) {
+		// 	this.camera2._fadeAlpha = 0.0;
+		// 	this.camera2.fade(1000);
+		// }
+	}
 }
