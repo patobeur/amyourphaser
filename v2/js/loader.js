@@ -4,6 +4,8 @@ const LOGON = false
 const TEMPLATE = 'default'
 const THEMEPATH = 'themes/' + TEMPLATE + '/'
 const THEMEPATHIMG = 'themes/' + TEMPLATE + '/assets/img/'
+const THEMEPATHSPRITES = 'themes/' + TEMPLATE + '/assets/sprites/'
+
 window.onload = () => {
 	// definitions
 	const jsFilesList = [

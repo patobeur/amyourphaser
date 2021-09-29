@@ -1,7 +1,8 @@
 class Tools extends Phaser.Scene {
 	constructor() {
 		super()
-		this.allkeys = allkeys;
+		this.uikeys = uikeys;
+		// this.input.keyboard.on('keyup', this.onKeyUp, this);
 		//
 		this.centerX
 		this.centerY
@@ -19,8 +20,9 @@ class Tools extends Phaser.Scene {
 			{ immat: false, uname: 'thisisnottobeseen', path: THEMEPATHIMG + 'thisisnottobeseen.png' },
 		]
 		this.loadedImages = []
+		this.loadedSprites = []
 		// GROUPS
-		this.BackgroundGroup
+		this.BackgroundGroup = Object
 		this.GroundGroup
 		this.ItemGroup
 		this.BlockGroup
@@ -40,22 +42,24 @@ class Tools extends Phaser.Scene {
 	// GAMESCENE PRELOADS ______________librarie+__//_______/
 	preloadAllImages() {
 		// use imagesloaded[] to avoid loading twice the same
-		// load player image
-		// this.load.image(PLAYERFACTORY.player.uname, PLAYERFACTORY.player['basic'].image)
-		// load rooms image
+		// load images
 		for (let imageImmat = 0; imageImmat < this.allImages.length; imageImmat++) {
-
 			let CurrentImage = this.allImages[imageImmat]
-
 			if (typeof CurrentImage === 'object' && CurrentImage.uname && CurrentImage.path) {//.isArray
 				// set Uniquename
 				let imageUname = 'image_' + imageImmat
-				// insert Uname to image set
+				// insert Uname to this image
 				this.allImages[imageImmat].immat = imageUname
-				// ADD IMAGE
-				this.load.image(CurrentImage.uname, CurrentImage.path)
+				// ADD IMAGE to scene
+				console.log('load: (', CurrentImage.uname, ')', CurrentImage.path)
+				this.loadedImages[imageImmat] = this.load.image(CurrentImage.uname, CurrentImage.path)
 			}
 		}
+		this.loadedSprites.push(
+			this.load.spritesheet('playersprites', THEMEPATHSPRITES + 'playersprites.png', { frameWidth: 32, frameHeight: 32 })
+			// this.load.image('playersprites', THEMEPATHIMG + 'burger_on.png')//, { frameWidth: 32, frameHeight: 32 })
+		)
+		console.log('load: (', 'playersprites', ')', THEMEPATHIMG + 'burger_on.png')
 	}
 	createAll() {
 		// console.log(this)
@@ -69,6 +73,66 @@ class Tools extends Phaser.Scene {
 		this.addBackground()
 		this.addPlayer()
 		this.addUi()
+	}
+	// ADD PLAYER
+	addPlayer() {
+
+		PLAYERFACTORY.playerPhaser = this.physics.add.sprite(
+			1,
+			1,
+			PLAYERFACTORY.playerDatas.image.uname
+		)
+			.setOrigin(0)
+			.setCollideWorldBounds(true);
+
+		this.PlayerGroup.add(PLAYERFACTORY.playerPhaser)
+		// console.log(PLAYERFACTORY.playerDatas)
+
+		this.createPlayerAnim()
+	}
+	createPlayerAnim() {
+		console.log('gggggg')
+
+		// https://labs.phaser.io/edit.html?src=src/animation/create%20animation%20from%20sprite%20sheet.js&v=3.55.2
+		// Animation set
+		const keys = [
+			'idle_up', 'idle_right', 'idle_down', 'idle_left',
+			'walk_up', 'walk_right', 'walk_down', 'walk_left'
+		]
+
+		GAME.anims.create({
+			key: 'idle_down', frameRate: 8, repeat: -1,
+			frames: this.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+		});
+		GAME.anims.create({
+			key: 'idle_up', frameRate: 8, repeat: -1,
+			frames: this.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+		});
+		GAME.anims.create({
+			key: 'idle_left', frameRate: 8, repeat: -1,
+			frames: this.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+		});
+		GAME.anims.create({
+			key: 'idle_right', frameRate: 8, repeat: -1,
+			frames: this.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+		});
+		GAME.anims.create({
+			key: 'walk_up', frameRate: 4, repeat: -1,
+			frames: this.anims.generateFrameNumbers('playersprites', { frames: [1, 0, 2, 0] }),
+		});
+		GAME.anims.create({
+			key: 'walk_down', frameRate: 4, repeat: -1,
+			frames: this.anims.generateFrameNumbers('playersprites', { frames: [7, 6, 8, 6] }),
+		});
+		GAME.anims.create({
+			key: 'walk_left', frameRate: 4, repeat: -1,
+			frames: this.anims.generateFrameNumbers('playersprites', { frames: [14, 12, 13, 12] }),
+		});
+		GAME.anims.create({
+			key: 'walk_right', frameRate: 4, repeat: -1,
+			frames: this.anims.generateFrameNumbers('playersprites', { frames: [19, 18, 20, 18] }),
+		});
+		// PLAYERFACTORY.playerPhaser.play('idle_down');
 	}
 	// ADD Background
 	addBackground() {
@@ -108,12 +172,6 @@ class Tools extends Phaser.Scene {
 
 
 	}
-	// ADD PLAYER
-	addPlayer() {
-		PLAYERFACTORY.playerPhaser = this.physics.add.image(1, 1, PLAYERFACTORY.playerDatas.image.uname).setOrigin(0).setCollideWorldBounds(true);
-		this.PlayerGroup.add(PLAYERFACTORY.playerPhaser)
-		console.log(PLAYERFACTORY.playerDatas)
-	}
 	// ADD UI
 	addUi() {
 		this.all.UiBurger = this.add.image(this.game.config.width, 0, 'burger_off').setOrigin(1, 0).setScale(2)
@@ -145,24 +203,10 @@ class Tools extends Phaser.Scene {
 		console.log('canvasSize:', 'w:' + GAME.canvas.width, 'h:' + GAME.canvas.height)
 	}
 	onKeyDown(event) {
-		// if (LOGON) console.log(event.keyCode)
-
-		if (this.allkeys.keyUp.indexOf(event.keyCode) > -1) {
-			PLAYERFACTORY.playerPhaser.y -= PLAYERFACTORY.playerDatas.speed;
-			PLAYERFACTORY.playerDatas.up_player = true;
-		}
-		else if (this.allkeys.keyDown.indexOf(event.keyCode) > -1) {
-			PLAYERFACTORY.playerPhaser.y += PLAYERFACTORY.playerDatas.speed;
-			PLAYERFACTORY.playerDatas.down_player = true;
-		}
-		else if (this.allkeys.keyLeft.indexOf(event.keyCode) > -1) {
-			PLAYERFACTORY.playerPhaser.x -= PLAYERFACTORY.playerDatas.speed;
-			PLAYERFACTORY.playerDatas.left_player = true;
-		}
-		else if (this.allkeys.keyRight.indexOf(event.keyCode) > -1) {
-			PLAYERFACTORY.playerPhaser.x += PLAYERFACTORY.playerDatas.speed;
-			PLAYERFACTORY.playerDatas.right_player = true;
-		}
+		PLAYERFACTORY.checkPlayerOnKeyDown(event)
+	}
+	onKeyUp(event) {
+		PLAYERFACTORY.checkPlayerOnKeyUp(event)
 	}
 	camerasmainfollow = () => {
 		this.cameras.main.startFollow(PLAYERFACTORY.playerPhaser);

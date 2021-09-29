@@ -1,6 +1,7 @@
 class PlayerFactory extends Phaser.Scene {
 	constructor() {
 		super()
+		this.playerkeys = playerkeys;
 		this.playerDatas = {
 			uname: 'playerOne',
 			image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
@@ -8,8 +9,8 @@ class PlayerFactory extends Phaser.Scene {
 			deston: false,
 			destx: 0,
 			desty: 0,
-			x: 0,
-			y: 0, // not used ???
+			x: 1,
+			y: 1, // not used ???
 			deg: -90,
 			speed: 4,
 			// basic: {
@@ -21,6 +22,8 @@ class PlayerFactory extends Phaser.Scene {
 			down_player: false,
 			left_player: false,
 			right_player: false,
+			//ANIMS
+			currentSprites: 'idle_down'
 		}
 		this.playerPhaser = false
 	}
@@ -108,4 +111,43 @@ class PlayerFactory extends Phaser.Scene {
 		}
 		return jobs[jobuname][jobcat]
 	}
+
+	checkPlayerOnKeyDown(event) {
+
+		if (this.playerkeys.keyUp.indexOf(event.keyCode) > -1) {
+			this.playerPhaser.y -= this.playerDatas.speed;
+			this.playerDatas.up_player = true;
+			this.checkCurrentPlayerSprite('walk_up')
+		}
+		else if (this.playerkeys.keyDown.indexOf(event.keyCode) > -1) {
+			this.playerPhaser.y += this.playerDatas.speed;
+			this.playerDatas.down_player = true;
+			this.checkCurrentPlayerSprite('walk_down')
+		}
+		else if (this.playerkeys.keyLeft.indexOf(event.keyCode) > -1) {
+			this.playerPhaser.x -= this.playerDatas.speed;
+			this.playerDatas.left_player = true;
+			this.checkCurrentPlayerSprite('walk_left')
+		}
+		else if (this.playerkeys.keyRight.indexOf(event.keyCode) > -1) {
+			this.playerPhaser.x += this.playerDatas.speed;
+			this.playerDatas.right_player = true;
+			this.checkCurrentPlayerSprite('walk_right')
+		}
+	}
+	checkPlayerOnKeyUp(event) {
+		this.playerPhaser.anims.stop();
+	}
+
+	checkCurrentPlayerSprite(animeName) {
+		if (this.playerDatas.currentSpriteName != animeName) {
+			this.playerPhaser.play(animeName)
+			this.playerDatas.currentSpriteName = animeName
+		}
+
+	}
+
+
+
+
 }

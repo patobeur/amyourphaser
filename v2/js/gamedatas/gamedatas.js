@@ -5,11 +5,13 @@
 // 	max: configDefault.zooom.max,
 // 	min: configDefault.zooom.min,
 // }
-let allkeys = {
+let playerkeys = {
 	keyUp: configDefault.keys.keyUp,
 	keyDown: configDefault.keys.keyDown,
 	keyLeft: configDefault.keys.keyLeft,
 	keyRight: configDefault.keys.keyRight,
+}
+let uikeys = {
 	keySpace: configDefault.keys.keySpace,
 	keyEnter: configDefault.keys.keyEnter,
 	keyEscape: configDefault.keys.keyEscape,
