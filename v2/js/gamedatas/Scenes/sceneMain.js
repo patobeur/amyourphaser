@@ -13,6 +13,7 @@ class SceneMain extends Tools {
 		// cameras.main follow player
 
 		this.input.keyboard.on('keydown', this.onKeyDown, this);
+		this.input.keyboard.on('keyup', this.onKeyUp, this);
 		// this.input.on('wheel', (event) => { this.onWheelScroll(event) }, this);
 		this.resizeApp()
 		window.addEventListener('resize', () => { this.resizeApp() }, false);

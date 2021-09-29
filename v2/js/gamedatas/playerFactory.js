@@ -23,9 +23,26 @@ class PlayerFactory extends Phaser.Scene {
 			left_player: false,
 			right_player: false,
 			//ANIMS
-			currentSprites: 'idle_down'
+			currentSprites: 'idle_down',
+			sprites: {
+				immat: false,
+				uname: 'playersprites',
+				path: THEMEPATHSPRITES + 'playersprites.png',
+				frames: { frameWidth: 32, frameHeight: 32 }
+			},
+			setbounds: {
+				x: 0,
+				y: 0,
+				w: 1920,
+				h: 1080
+			},
+
 		}
 		this.playerPhaser = false
+		this.animskeys = [
+			'idle_up', 'idle_right', 'idle_down', 'idle_left',
+			'walk_up', 'walk_right', 'walk_down', 'walk_left'
+		]
 	}
 	set_job = () => {
 
@@ -136,12 +153,33 @@ class PlayerFactory extends Phaser.Scene {
 		}
 	}
 	checkPlayerOnKeyUp(event) {
-		this.playerPhaser.anims.stop();
+		// if (
+		// 	(this.playerkeys.keyUp.indexOf(event.keyCode) > -1) ||
+		// 	(this.playerkeys.keyDown.indexOf(event.keyCode) > -1) ||
+		// 	(this.playerkeys.keyLeft.indexOf(event.keyCode) > -1) ||
+		// 	(this.playerkeys.keyRight.indexOf(event.keyCode) > -1)
+		// ) {
+		// 	console.log('isPlaying', this.playerPhaser.anims.isPlaying)
+		// 	console.log('event.Up', event)
+		// 	console.log('currentAnim.key', this.playerPhaser.anims.currentAnim.key)
+
+		// 	let name = this.playerPhaser.anims.currentAnim.key;
+		// 	name = name.replace('walk_', '') + '_player'
+
+		// 	console.log(name)
+		// 	console.log('A_this.playerDatas[' + name + ']: is ' + this.playerDatas[name])
+
+		// 	this.playerDatas[name] = false
+
+		// 	this.playerPhaser.anims.stop();
+		// 	console.log('B_this.playerDatas[' + name + '] is set to :' + this.playerDatas[name])
+		// }
 	}
 
 	checkCurrentPlayerSprite(animeName) {
 		if (this.playerDatas.currentSpriteName != animeName) {
 			this.playerPhaser.play(animeName)
+			// console.log(this.playerPhaser)
 			this.playerDatas.currentSpriteName = animeName
 		}
 

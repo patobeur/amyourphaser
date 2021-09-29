@@ -19,6 +19,11 @@ class Tools extends Phaser.Scene {
 			{ immat: false, uname: 'burger_on', path: THEMEPATHIMG + 'burger_on.png' },
 			{ immat: false, uname: 'thisisnottobeseen', path: THEMEPATHIMG + 'thisisnottobeseen.png' },
 		]
+		//this.load.spritesheet('playersprites', THEMEPATHSPRITES + 'playersprites.png', { frameWidth: 32, frameHeight: 32 })
+		this.allSprites = [
+			PLAYERFACTORY.playerDatas.sprites,
+			{ immat: false, uname: 'groundsprites', path: THEMEPATHSPRITES + 'groundsprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+		]
 		this.loadedImages = []
 		this.loadedSprites = []
 		// GROUPS
@@ -55,6 +60,24 @@ class Tools extends Phaser.Scene {
 				this.loadedImages[imageImmat] = this.load.image(CurrentImage.uname, CurrentImage.path)
 			}
 		}
+
+
+		for (let spriteImmat = 0; spriteImmat < this.allSprites.length; spriteImmat++) {
+			let CurrentSprite = this.allSprites[spriteImmat]
+			if (typeof CurrentSprite === 'object' && CurrentSprite.uname && CurrentSprite.path) {//.isArray
+				// set Uniquename
+				let scriptUname = 'image_' + spriteImmat
+				// insert Uname to this sprites
+				this.allSprites[spriteImmat].immat = scriptUname
+				// ADD IMAGE to scene
+				console.log('load: (', CurrentSprite.uname, ')', CurrentSprite.path)
+
+				this.loadedSprites[spriteImmat] = this.load.spritesheet(CurrentSprite.uname, CurrentSprite.path, CurrentSprite.frames)
+
+			}
+		}
+
+
 		this.loadedSprites.push(
 			this.load.spritesheet('playersprites', THEMEPATHSPRITES + 'playersprites.png', { frameWidth: 32, frameHeight: 32 })
 			// this.load.image('playersprites', THEMEPATHIMG + 'burger_on.png')//, { frameWidth: 32, frameHeight: 32 })
@@ -95,10 +118,6 @@ class Tools extends Phaser.Scene {
 
 		// https://labs.phaser.io/edit.html?src=src/animation/create%20animation%20from%20sprite%20sheet.js&v=3.55.2
 		// Animation set
-		const keys = [
-			'idle_up', 'idle_right', 'idle_down', 'idle_left',
-			'walk_up', 'walk_right', 'walk_down', 'walk_left'
-		]
 
 		GAME.anims.create({
 			key: 'idle_down', frameRate: 8, repeat: -1,
@@ -142,6 +161,28 @@ class Tools extends Phaser.Scene {
 		this.BackgroundGroup.add(this.all.Background)
 		this.all.Background.on('pointerdown', () => { this.ClickedOn(this.all.Background) }, this)
 
+
+
+
+		// there BLOCKS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	}
 	ClickedOn = (obj) => {
 		var tx = obj.input.localX
@@ -166,11 +207,7 @@ class Tools extends Phaser.Scene {
 	}
 	// REFRESH PLAYER
 	refreshPlayer() {
-
-
-
-
-
+		// what ?
 	}
 	// ADD UI
 	addUi() {
@@ -181,18 +218,11 @@ class Tools extends Phaser.Scene {
 	setWorldBounds() {
 		console.log('this.all.Background', this.all.Background)
 		this.physics.world.setBounds(
-			0,
-			0,
-			1920,//this.all.Background.width,
-			1080,//this.all.Background.height
+			PLAYERFACTORY.playerDatas.setbounds.x,
+			PLAYERFACTORY.playerDatas.setbounds.y,
+			PLAYERFACTORY.playerDatas.setbounds.w,
+			PLAYERFACTORY.playerDatas.setbounds.h,
 		);
-		// PLAYERFACTORY.playerPhaser.setBounds(
-		// 	0,
-		// 	0,
-		// 	1920,//this.all.Background.width,
-		// 	1080,//this.all.Background.height
-		// );
-		// this.physics.arcade.enable(PLAYERFACTORY.playerPhaser);
 	}
 	// ________________________
 	// TESTS ______________/__/
