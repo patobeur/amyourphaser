@@ -1,6 +1,8 @@
 class SceneMain extends Tools {
 	constructor() {
-		super(SceneMain)
+		super({
+			key: "SceneMain"
+		})
 	}
 	preload() {
 		this.preloadAllImages()

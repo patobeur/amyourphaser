@@ -7,27 +7,14 @@ class Tools extends Phaser.Scene {
 		this.centerX
 		this.centerY
 		// IMAGES
-		this.allGrounds = this.getAllGrounds()
+		this.allGrounds = this.getAllGroundsToLoad()
+		this.allImages = this.getAllImagesToLoad()
+		this.allSprites = this.getAllSpritesToLoad()
 
-		this.allImages = [
-			// { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
-			PLAYERFACTORY.playerDatas.image,
-			{ immat: false, uname: 'wall_32x64', path: THEMEPATHIMG + 'wall_32x64.png' },
-			{ immat: false, uname: 'wall_32x64', path: THEMEPATHIMG + 'wall_32x64.png' },
-			{ immat: false, uname: 'wall_64x64', path: THEMEPATHIMG + 'wall_64x64.png' },
-			{ immat: false, uname: 'worldmap_1920x1080', path: THEMEPATHIMG + 'worldmap_1920x1080.png' },
-			{ immat: false, uname: 'worldmap_1920x1080v2', path: THEMEPATHIMG + 'worldmap_1920x1080v2.png' },
-			{ immat: false, uname: 'burger_off', path: THEMEPATHIMG + 'burger_off.png' },
-			{ immat: false, uname: 'burger_on', path: THEMEPATHIMG + 'burger_on.png' },
-			{ immat: false, uname: 'thisisnottobeseen', path: THEMEPATHIMG + 'thisisnottobeseen.png' },
-		]
-		//this.load.spritesheet('playersprites', THEMEPATHSPRITES + 'playersprites.png', { frameWidth: 32, frameHeight: 32 })
-		this.allSprites = [
-			PLAYERFACTORY.playerDatas.sprites,
-			{ immat: false, uname: 'groundsprites', path: THEMEPATHSPRITES + 'groundsprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
-		]
 		this.loadedImages = []
 		this.loadedSprites = []
+
+
 		// GROUPS
 		this.BackgroundGroup
 		this.GroundGroup
@@ -47,6 +34,62 @@ class Tools extends Phaser.Scene {
 	}
 	// ______________________________________________________
 	// GAMESCENE PRELOADS ______________librarie+__//_______/
+	createAll() {
+		// console.log(this)
+		this.BackgroundGroup = this.add.group()
+		this.GroundGroup = this.add.group()
+		// this.ItemGroup = this.add.group()
+		// this.BlockGroup = this.add.group()
+		this.PlayerGroup = this.add.group()
+		this.UiGroup = this.add.group()
+		this.addBackgroundToScene()
+		this.addGroundsToScene()
+		this.addPlayerToScene()
+		this.addUi()
+	}
+	get_aleaEntreBornes(minimum, maximum) {
+		return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
+	}
+
+
+
+
+
+
+
+
+	// add to load
+	getAllGroundsToLoad() {
+		let blockList = [31, 32, 33, 34, 35, 36, 37, 38]
+		let array = []
+		for (let b = 0; b < blockList.length; b++) {
+			array.push(
+				{ immat: b, uname: 'ground_' + blockList[b], path: THEMEPATHIMG + 'grounds/ground_' + blockList[b] + '.png' },
+			)
+		}
+		return array
+	}
+	getAllImagesToLoad() {
+		return [
+			// { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
+			PLAYERFACTORY.playerDatas.image,
+			{ immat: false, uname: 'wall_32x64', path: THEMEPATHIMG + 'wall_32x64.png' },
+			{ immat: false, uname: 'wall_32x64', path: THEMEPATHIMG + 'wall_32x64.png' },
+			{ immat: false, uname: 'wall_64x64', path: THEMEPATHIMG + 'wall_64x64.png' },
+			{ immat: false, uname: 'worldmap_1920x1080', path: THEMEPATHIMG + 'worldmap_1920x1080.png' },
+			{ immat: false, uname: 'worldmap_1920x1080v2', path: THEMEPATHIMG + 'worldmap_1920x1080v2.png' },
+			{ immat: false, uname: 'burger_off', path: THEMEPATHIMG + 'burger_off.png' },
+			{ immat: false, uname: 'burger_on', path: THEMEPATHIMG + 'burger_on.png' },
+			{ immat: false, uname: 'thisisnottobeseen', path: THEMEPATHIMG + 'thisisnottobeseen.png' },
+		]
+	}
+	getAllSpritesToLoad() {
+		return [
+			PLAYERFACTORY.playerDatas.sprites,
+			{ immat: false, uname: 'groundsprites', path: THEMEPATHSPRITES + 'groundsprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+		]
+	}
+	// preload all
 	preloadAllImages() {
 		// load images
 		for (let imageImmat = 0; imageImmat < this.allImages.length; imageImmat++) {
@@ -62,7 +105,7 @@ class Tools extends Phaser.Scene {
 			}
 		}
 
-		// PLAYER SPRITES
+		// PLAYER SPRITES animations
 		for (let spriteImmat = 0; spriteImmat < this.allSprites.length; spriteImmat++) {
 			let CurrentSprite = this.allSprites[spriteImmat]
 			if (typeof CurrentSprite === 'object' && CurrentSprite.uname && CurrentSprite.path) {//.isArray
@@ -74,104 +117,50 @@ class Tools extends Phaser.Scene {
 				this.loadedSprites[spriteImmat] = this.load.spritesheet(CurrentSprite.uname, CurrentSprite.path, CurrentSprite.frames)
 			}
 		}
-		this.loadedSprites.push(
-			this.load.spritesheet('playersprites', THEMEPATHSPRITES + 'playersprites.png', { frameWidth: 32, frameHeight: 32 })
-			// this.load.image('playersprites', THEMEPATHIMG + 'burger_on.png')//, { frameWidth: 32, frameHeight: 32 })
-		)
+
 		// grounds blocks
+		for (let groundImmat = 0; groundImmat < this.allGrounds.length; groundImmat++) {
+			this.load.image(this.allGrounds[groundImmat].uname, this.allGrounds[groundImmat].path)
 
-		for (let blockimmat = 1; blockimmat < this.allGrounds.length; blockimmat++) {
-			this.load.image(this.allGrounds[blockimmat].uname, this.allGrounds[blockimmat].path)
-			console.log(this.allGrounds[blockimmat].uname, this.allGrounds[blockimmat].path)
-
+			console.log('grounds added:', this.allGrounds[groundImmat].uname, this.allGrounds[groundImmat].path)
 		}
 
 	}
-	createAll() {
-		// console.log(this)
-		this.BackgroundGroup = this.add.group()
-		this.GroundGroup = this.add.group()
-		// this.ItemGroup = this.add.group()
-		// this.BlockGroup = this.add.group()
-		this.PlayerGroup = this.add.group()
-		this.UiGroup = this.add.group()
-		this.addBackground()
-		this.addGrounds()
-		this.addPlayer()
-		this.addUi()
-	}
-	// ADD PLAYER
-	addPlayer() {
-		PLAYERFACTORY.playerPhaser = this.physics.add.sprite(
-			1,
-			1,
-			PLAYERFACTORY.playerDatas.image.uname
-		).setOrigin(0).setCollideWorldBounds(true);
-		this.PlayerGroup.add(PLAYERFACTORY.playerPhaser)
-		// console.log(PLAYERFACTORY.playerDatas)
-		PLAYERFACTORY.createPlayerAnim(this)
-	}
-	get_aleaEntreBornes(minimum, maximum) {
-		return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
-	}
-
-
-
-
-
-
-
-
-	// ADD GROUNDS
-	getAllGrounds() {
-		// let blockList = [1, 2, 3, 4, 5, 6,
-		// 	8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-		// 	19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38]
-		let blockList = [25, 26, 29, 30]
-		let array = []
-		for (let b = 0; b < blockList.length; b++) {
-			array.push(
-				{ immat: b, uname: 'ground_' + (b < 10 ? '0' : '') + b, path: THEMEPATHIMG + 'grounds/ground_' + (b < 10 ? '0' : '') + b + '.png' },
-			)
+	// add to scene
+	addGroundsToScene() {
+		let col = parseInt(1920 / 32)
+		let row = parseInt(1080 / 32)
+		console.log('allGrounds.length', this.allGrounds.length)
+		let num = 0
+		let r = 0
+		for (let r = 0; r < row; r++) {
+			for (let c = 0; c < col; c++) {
+				let ground = this.allGrounds[this.get_aleaEntreBornes(0, this.allGrounds.length - 1)]
+				console.log(c + '/' + ground.uname)
+				console.log(ground.path)
+				// console.log(num)
+				this.GroundGroup.add(this.physics.add.image((32 * c), (32 * r), ground.uname).setOrigin(0))
+				num++
+			}
 		}
-		return array
 	}
-	addGrounds() {
-		// let col = parseInt(1920 / 32)
-		// let row = parseInt(1080 / 32)
-		// console.log(this.allGrounds.length)
-		// let num = 0
-		// for (let r = 0; r < row; r++) {
-		// 	for (let c = 0; c < col; c++) {
-		// 		let newblock = this.allGrounds[this.get_aleaEntreBornes(0, this.allGrounds.length - 1)]
-		// 		console.log(newblock.uname)
-		// 		let blockImmat = 'block_' + num
-		// 		console.log(num)
-		// 		this.GroundGroup[blockImmat] = this.physics.add.image((32 * c), (32 * r), newblock.uname).setOrigin(0)
-		// 		num++
-		// 	}
-		// }
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-	addBackground() {
+	addBackgroundToScene() { // grounds are clickable
 		this.all.Background = this.physics.add.image(0, 0, 'worldmap_1920x1080').setOrigin(0)//.setScale(10)
 		// setInteractive && make clickable
 		this.all.Background.setInteractive()
 		this.BackgroundGroup.add(this.all.Background)
 		this.all.Background.on('pointerdown', () => { this.ClickedOn(this.all.Background) }, this)
 	}
+	addPlayerToScene() {
+		PLAYERFACTORY.playerPhaser = this.physics.add.sprite(
+			1, 1,
+			PLAYERFACTORY.playerDatas.image.uname
+		).setOrigin(0).setCollideWorldBounds(true);
+		this.PlayerGroup.add(PLAYERFACTORY.playerPhaser)
+		PLAYERFACTORY.createPlayerAnim(this)
+	}
+
+
 	ClickedOn = (obj) => {
 		var tx = obj.input.localX
 		var ty = obj.input.localY
@@ -218,7 +207,7 @@ class Tools extends Phaser.Scene {
 		GAME.scale.resize(window.innerWidth, window.innerHeight);
 		this.centerX = (GAME.canvas.width / 2);
 		this.centerY = (GAME.canvas.height / 2);
-		console.log('canvasSize:', 'w:' + GAME.canvas.width, 'h:' + GAME.canvas.height)
+		// console.log('canvasSize:', 'w:' + GAME.canvas.width, 'h:' + GAME.canvas.height)
 	}
 	onKeyDown(event) {
 		PLAYERFACTORY.checkPlayerOnKeyDown(event)
