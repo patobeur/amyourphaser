@@ -7,6 +7,8 @@ class Tools extends Phaser.Scene {
 		this.centerX
 		this.centerY
 		// IMAGES
+		this.allGrounds = this.getAllGrounds()
+
 		this.allImages = [
 			// { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			PLAYERFACTORY.playerDatas.image,
@@ -27,7 +29,7 @@ class Tools extends Phaser.Scene {
 		this.loadedImages = []
 		this.loadedSprites = []
 		// GROUPS
-		this.BackgroundGroup = Object
+		this.BackgroundGroup
 		this.GroundGroup
 		this.ItemGroup
 		this.BlockGroup
@@ -46,7 +48,6 @@ class Tools extends Phaser.Scene {
 	// ______________________________________________________
 	// GAMESCENE PRELOADS ______________librarie+__//_______/
 	preloadAllImages() {
-		// use imagesloaded[] to avoid loading twice the same
 		// load images
 		for (let imageImmat = 0; imageImmat < this.allImages.length; imageImmat++) {
 			let CurrentImage = this.allImages[imageImmat]
@@ -56,12 +57,12 @@ class Tools extends Phaser.Scene {
 				// insert Uname to this image
 				this.allImages[imageImmat].immat = imageUname
 				// ADD IMAGE to scene
-				console.log('load: (', CurrentImage.uname, ')', CurrentImage.path)
+				// console.log('load: (', CurrentImage.uname, ')', CurrentImage.path)
 				this.loadedImages[imageImmat] = this.load.image(CurrentImage.uname, CurrentImage.path)
 			}
 		}
 
-
+		// PLAYER SPRITES
 		for (let spriteImmat = 0; spriteImmat < this.allSprites.length; spriteImmat++) {
 			let CurrentSprite = this.allSprites[spriteImmat]
 			if (typeof CurrentSprite === 'object' && CurrentSprite.uname && CurrentSprite.path) {//.isArray
@@ -70,119 +71,106 @@ class Tools extends Phaser.Scene {
 				// insert Uname to this sprites
 				this.allSprites[spriteImmat].immat = scriptUname
 				// ADD IMAGE to scene
-				console.log('load: (', CurrentSprite.uname, ')', CurrentSprite.path)
-
 				this.loadedSprites[spriteImmat] = this.load.spritesheet(CurrentSprite.uname, CurrentSprite.path, CurrentSprite.frames)
-
 			}
 		}
-
-
 		this.loadedSprites.push(
 			this.load.spritesheet('playersprites', THEMEPATHSPRITES + 'playersprites.png', { frameWidth: 32, frameHeight: 32 })
 			// this.load.image('playersprites', THEMEPATHIMG + 'burger_on.png')//, { frameWidth: 32, frameHeight: 32 })
 		)
-		console.log('load: (', 'playersprites', ')', THEMEPATHIMG + 'burger_on.png')
+		// grounds blocks
+
+		for (let blockimmat = 1; blockimmat < this.allGrounds.length; blockimmat++) {
+			this.load.image(this.allGrounds[blockimmat].uname, this.allGrounds[blockimmat].path)
+			console.log(this.allGrounds[blockimmat].uname, this.allGrounds[blockimmat].path)
+
+		}
+
 	}
 	createAll() {
 		// console.log(this)
-
 		this.BackgroundGroup = this.add.group()
-		// this.GroundGroup = this.add.group()
+		this.GroundGroup = this.add.group()
 		// this.ItemGroup = this.add.group()
 		// this.BlockGroup = this.add.group()
 		this.PlayerGroup = this.add.group()
 		this.UiGroup = this.add.group()
 		this.addBackground()
+		this.addGrounds()
 		this.addPlayer()
 		this.addUi()
 	}
 	// ADD PLAYER
 	addPlayer() {
-
 		PLAYERFACTORY.playerPhaser = this.physics.add.sprite(
 			1,
 			1,
 			PLAYERFACTORY.playerDatas.image.uname
-		)
-			.setOrigin(0)
-			.setCollideWorldBounds(true);
-
+		).setOrigin(0).setCollideWorldBounds(true);
 		this.PlayerGroup.add(PLAYERFACTORY.playerPhaser)
 		// console.log(PLAYERFACTORY.playerDatas)
-
-		this.createPlayerAnim()
+		PLAYERFACTORY.createPlayerAnim(this)
 	}
-	createPlayerAnim() {
-		console.log('gggggg')
-
-		// https://labs.phaser.io/edit.html?src=src/animation/create%20animation%20from%20sprite%20sheet.js&v=3.55.2
-		// Animation set
-
-		GAME.anims.create({
-			key: 'idle_down', frameRate: 8, repeat: -1,
-			frames: this.anims.generateFrameNumbers('playersprites', { frames: [6] }),
-		});
-		GAME.anims.create({
-			key: 'idle_up', frameRate: 8, repeat: -1,
-			frames: this.anims.generateFrameNumbers('playersprites', { frames: [6] }),
-		});
-		GAME.anims.create({
-			key: 'idle_left', frameRate: 8, repeat: -1,
-			frames: this.anims.generateFrameNumbers('playersprites', { frames: [6] }),
-		});
-		GAME.anims.create({
-			key: 'idle_right', frameRate: 8, repeat: -1,
-			frames: this.anims.generateFrameNumbers('playersprites', { frames: [6] }),
-		});
-		GAME.anims.create({
-			key: 'walk_up', frameRate: 4, repeat: -1,
-			frames: this.anims.generateFrameNumbers('playersprites', { frames: [1, 0, 2, 0] }),
-		});
-		GAME.anims.create({
-			key: 'walk_down', frameRate: 4, repeat: -1,
-			frames: this.anims.generateFrameNumbers('playersprites', { frames: [7, 6, 8, 6] }),
-		});
-		GAME.anims.create({
-			key: 'walk_left', frameRate: 4, repeat: -1,
-			frames: this.anims.generateFrameNumbers('playersprites', { frames: [14, 12, 13, 12] }),
-		});
-		GAME.anims.create({
-			key: 'walk_right', frameRate: 4, repeat: -1,
-			frames: this.anims.generateFrameNumbers('playersprites', { frames: [19, 18, 20, 18] }),
-		});
-		// PLAYERFACTORY.playerPhaser.play('idle_down');
+	get_aleaEntreBornes(minimum, maximum) {
+		return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
 	}
-	// ADD Background
+
+
+
+
+
+
+
+
+	// ADD GROUNDS
+	getAllGrounds() {
+		// let blockList = [1, 2, 3, 4, 5, 6,
+		// 	8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+		// 	19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38]
+		let blockList = [25, 26, 29, 30]
+		let array = []
+		for (let b = 0; b < blockList.length; b++) {
+			array.push(
+				{ immat: b, uname: 'ground_' + (b < 10 ? '0' : '') + b, path: THEMEPATHIMG + 'grounds/ground_' + (b < 10 ? '0' : '') + b + '.png' },
+			)
+		}
+		return array
+	}
+	addGrounds() {
+		// let col = parseInt(1920 / 32)
+		// let row = parseInt(1080 / 32)
+		// console.log(this.allGrounds.length)
+		// let num = 0
+		// for (let r = 0; r < row; r++) {
+		// 	for (let c = 0; c < col; c++) {
+		// 		let newblock = this.allGrounds[this.get_aleaEntreBornes(0, this.allGrounds.length - 1)]
+		// 		console.log(newblock.uname)
+		// 		let blockImmat = 'block_' + num
+		// 		console.log(num)
+		// 		this.GroundGroup[blockImmat] = this.physics.add.image((32 * c), (32 * r), newblock.uname).setOrigin(0)
+		// 		num++
+		// 	}
+		// }
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 	addBackground() {
 		this.all.Background = this.physics.add.image(0, 0, 'worldmap_1920x1080').setOrigin(0)//.setScale(10)
 		// setInteractive && make clickable
 		this.all.Background.setInteractive()
 		this.BackgroundGroup.add(this.all.Background)
 		this.all.Background.on('pointerdown', () => { this.ClickedOn(this.all.Background) }, this)
-
-
-
-
-		// there BLOCKS
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 	ClickedOn = (obj) => {
 		var tx = obj.input.localX

@@ -1,7 +1,7 @@
 
 let OuterSpace = true;
 class SceneOuterSpace extends Tools {
-	constructor() {
+	constructor(SceneOuterSpace) {
 		super()
 		this.test = 'SceneOuterSpace test ok'
 		console.log(this.test)

@@ -19,7 +19,7 @@ window.onload = () => {
 		{ pathfile: 'js/gamedatas/playerFactory.js', idname: 'playerFactory-js' },
 		{ pathfile: 'js/gamedatas/tools.js', idname: 'tools-js' },
 		{ pathfile: 'js/gamedatas/Scenes/sceneMain.js', idname: 'sceneMain-js' },
-		// { pathfile: 'js/gamedatas/Scenes/sceneOuterSpace.js', idname: 'sceneOuterSpace-js' },
+		{ pathfile: 'js/gamedatas/Scenes/sceneOuterSpace.js', idname: 'sceneOuterSpace-js' },
 		{ pathfile: 'js/gamedatas/main.js', idname: 'main-js' },
 	];
 	let isLoaderOpen = true

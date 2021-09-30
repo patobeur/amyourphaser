@@ -152,6 +152,43 @@ class PlayerFactory extends Phaser.Scene {
 			this.checkCurrentPlayerSprite('walk_right')
 		}
 	}
+	createPlayerAnim() {
+		// https://labs.phaser.io/edit.html?src=src/animation/create%20animation%20from%20sprite%20sheet.js&v=3.55.2
+		// Animation set
+		GAME.anims.create({
+			key: 'idle_down', frameRate: 8, repeat: -1,
+			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+		});
+		GAME.anims.create({
+			key: 'idle_up', frameRate: 8, repeat: -1,
+			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+		});
+		GAME.anims.create({
+			key: 'idle_left', frameRate: 8, repeat: -1,
+			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+		});
+		GAME.anims.create({
+			key: 'idle_right', frameRate: 8, repeat: -1,
+			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+		});
+		GAME.anims.create({
+			key: 'walk_up', frameRate: 4, repeat: -1,
+			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [1, 0, 2, 0] }),
+		});
+		GAME.anims.create({
+			key: 'walk_down', frameRate: 4, repeat: -1,
+			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [7, 6, 8, 6] }),
+		});
+		GAME.anims.create({
+			key: 'walk_left', frameRate: 4, repeat: -1,
+			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [14, 12, 13, 12] }),
+		});
+		GAME.anims.create({
+			key: 'walk_right', frameRate: 4, repeat: -1,
+			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [19, 18, 20, 18] }),
+		});
+		// PLAYERFACTORY.playerPhaser.play('idle_down');
+	}
 	checkPlayerOnKeyUp(event) {
 		// if (
 		// 	(this.playerkeys.keyUp.indexOf(event.keyCode) > -1) ||
