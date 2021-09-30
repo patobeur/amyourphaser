@@ -3,8 +3,7 @@ console.log(version)
 const LOGON = false
 const TEMPLATE = 'default'
 const THEMEPATH = 'themes/' + TEMPLATE + '/'
-const THEMEPATHIMG = 'themes/' + TEMPLATE + '/assets/img/'
-const THEMEPATHSPRITES = 'themes/' + TEMPLATE + '/assets/sprites/'
+const THEMEPATHASSETS = 'themes/' + TEMPLATE + '/assets/'
 
 window.onload = () => {
 	// definitions
@@ -16,6 +15,7 @@ window.onload = () => {
 		//{ pathfile: 'https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js', idname: 'phaser-js' },
 		{ pathfile: 'js/gamedatas/gamedatas.js', idname: 'gamedatas-js' },
 		{ pathfile: 'js/gamedatas/phaserconfig.js', idname: 'phaserconfig-js' },
+		{ pathfile: 'js/gamedatas/floorsFactory.js', idname: 'floorsFactory-js' },
 		{ pathfile: 'js/gamedatas/playerFactory.js', idname: 'playerFactory-js' },
 		{ pathfile: 'js/gamedatas/tools.js', idname: 'tools-js' },
 		{ pathfile: 'js/gamedatas/Scenes/sceneMain.js', idname: 'sceneMain-js' },

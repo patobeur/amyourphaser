@@ -4,7 +4,7 @@ class PlayerFactory extends Phaser.Scene {
 		this.playerkeys = playerkeys;
 		this.playerDatas = {
 			uname: 'playerOne',
-			image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
+			image: { immat: false, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
 
 			deston: false,
 			destx: 0,
@@ -16,8 +16,8 @@ class PlayerFactory extends Phaser.Scene {
 			// basic: {
 			// 	image:{ immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			// },
-			job: 'basic',
-			stats: this.get_job('basic', 'stats'),
+			job: 'magic',
+			stats: this.get_job('magic', 'stats'),
 			up_player: false,
 			down_player: false,
 			left_player: false,
@@ -27,7 +27,7 @@ class PlayerFactory extends Phaser.Scene {
 			sprites: {
 				immat: false,
 				uname: 'playersprites',
-				path: THEMEPATHSPRITES + 'playersprites.png',
+				path: THEMEPATHASSETS + '/sprites/playersprites.png',
 				frames: { frameWidth: 32, frameHeight: 32 }
 			},
 			setbounds: {
@@ -55,19 +55,19 @@ class PlayerFactory extends Phaser.Scene {
 	}
 	get_job = (jobuname, jobcat) => {
 		let jobs = {
-			'basic': {
-				uname: 'basic',
+			'rogue': {
+				uname: 'rogue',
 				stats: {
 					health: 100,
 					int: 100,
 					karma: 100,
 					strength: 100,
 					ying: 0,
-					yang: 0,
+					yang: 100,
 					madness: 0,
 					speed: 4,
 				},
-				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
+				image: { immat: false, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
 			},
 			'magic': {
 				uname: 'magic',
@@ -81,10 +81,10 @@ class PlayerFactory extends Phaser.Scene {
 					madness: 0,
 					speed: 4,
 				},
-				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
+				image: { immat: false, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
 			},
-			'StormTrooper': {
-				uname: 'rogue',
+			'archer': {
+				uname: 'archer',
 				stats: {
 					health: 100,
 					int: 100,
@@ -95,9 +95,9 @@ class PlayerFactory extends Phaser.Scene {
 					madness: 0,
 					speed: 4,
 				},
-				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
+				image: { immat: false, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
 			},
-			'vendeurdechoux': {
+			'warrior': {
 				uname: 'warrior',
 				stats: {
 					health: 100,
@@ -109,21 +109,21 @@ class PlayerFactory extends Phaser.Scene {
 					madness: 0,
 					speed: 4,
 				},
-				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
+				image: { immat: false, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
 			},
-			'whatever': {
-				uname: 'whatever',
+			'healer': {
+				uname: 'healer',
 				stats: {
 					health: 100,
 					int: 1,
 					karma: 1,
 					strength: 1,
-					ying: 50,
-					yang: 50,
+					ying: 100,
+					yang: 0,
 					madness: 100,
 					speed: 4,
 				},
-				image: { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
+				image: { immat: false, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
 			},
 		}
 		return jobs[jobuname][jobcat]

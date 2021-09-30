@@ -4,20 +4,16 @@ class Tools extends Phaser.Scene {
 		this.uikeys = uikeys;
 		// this.input.keyboard.on('keyup', this.onKeyUp, this);
 		//
-		this.centerX
-		this.centerY
 		// IMAGES
-		this.allGrounds = this.getAllGroundsToLoad()
 		this.allImages = this.getAllImagesToLoad()
-		this.allSprites = this.getAllSpritesToLoad()
+		this.allSprites = this.getAllImagesSpritesToLoad()
 
 		this.loadedImages = []
 		this.loadedSprites = []
 
-
 		// GROUPS
 		this.BackgroundGroup
-		this.GroundGroup
+		// this.GroundGroup
 		this.ItemGroup
 		this.BlockGroup
 		this.PlayerGroup
@@ -29,7 +25,6 @@ class Tools extends Phaser.Scene {
 			UiBurger: ''
 		}
 		this.camera2
-		this.camera3
 		this.camera2Rotation = 0;
 	}
 	// ______________________________________________________
@@ -37,13 +32,10 @@ class Tools extends Phaser.Scene {
 	createAll() {
 		// console.log(this)
 		this.BackgroundGroup = this.add.group()
-		this.GroundGroup = this.add.group()
-		// this.ItemGroup = this.add.group()
-		// this.BlockGroup = this.add.group()
 		this.PlayerGroup = this.add.group()
 		this.UiGroup = this.add.group()
+
 		this.addBackgroundToScene()
-		this.addGroundsToScene()
 		this.addPlayerToScene()
 		this.addUi()
 	}
@@ -58,36 +50,37 @@ class Tools extends Phaser.Scene {
 
 
 
-	// add to load
-	getAllGroundsToLoad() {
-		let blockList = [31, 32, 33, 34, 35, 36, 37, 38]
-		let array = []
-		for (let b = 0; b < blockList.length; b++) {
-			array.push(
-				{ immat: b, uname: 'ground_' + blockList[b], path: THEMEPATHIMG + 'grounds/ground_' + blockList[b] + '.png' },
-			)
-		}
-		return array
-	}
+	// get lists of images to load
 	getAllImagesToLoad() {
-		return [
+		let allimages = [
 			// { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			PLAYERFACTORY.playerDatas.image,
-			{ immat: false, uname: 'wall_32x64', path: THEMEPATHIMG + 'wall_32x64.png' },
-			{ immat: false, uname: 'wall_32x64', path: THEMEPATHIMG + 'wall_32x64.png' },
-			{ immat: false, uname: 'wall_64x64', path: THEMEPATHIMG + 'wall_64x64.png' },
-			{ immat: false, uname: 'worldmap_1920x1080', path: THEMEPATHIMG + 'worldmap_1920x1080.png' },
-			{ immat: false, uname: 'worldmap_1920x1080v2', path: THEMEPATHIMG + 'worldmap_1920x1080v2.png' },
-			{ immat: false, uname: 'burger_off', path: THEMEPATHIMG + 'burger_off.png' },
-			{ immat: false, uname: 'burger_on', path: THEMEPATHIMG + 'burger_on.png' },
-			{ immat: false, uname: 'thisisnottobeseen', path: THEMEPATHIMG + 'thisisnottobeseen.png' },
+			{ immat: false, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
+			{ immat: false, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
+			{ immat: false, uname: 'wall_64x64', path: THEMEPATHASSETS + 'img/wall_64x64.png' },
+			{ immat: false, uname: 'worldmap_1920x1080', path: THEMEPATHASSETS + 'img/worldmap_1920x1080.png' },
+			{ immat: false, uname: 'worldmap_1920x1080v2', path: THEMEPATHASSETS + 'img/worldmap_1920x1080v2.png' },
+			{ immat: false, uname: 'burger_off', path: THEMEPATHASSETS + 'img/burger_off.png' },
+			{ immat: false, uname: 'burger_on', path: THEMEPATHASSETS + 'img/burger_on.png' },
+			{ immat: false, uname: 'thisisnottobeseen', path: THEMEPATHASSETS + 'img/thisisnottobeseen.png' },
 		]
+		if (FLOORSFACTORY.floors) {
+			FLOORSFACTORY.floors.forEach(floor => {
+				allimages.push(floor)
+			});
+		}
+		return allimages
 	}
-	getAllSpritesToLoad() {
-		return [
+	getAllImagesSpritesToLoad() {
+		let allsprites = [
 			PLAYERFACTORY.playerDatas.sprites,
-			{ immat: false, uname: 'groundsprites', path: THEMEPATHSPRITES + 'groundsprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 		]
+		if (FLOORSFACTORY.sprites) {
+			FLOORSFACTORY.sprites.forEach(sprite => {
+				allsprites.push(sprite)
+			});
+		}
+		return allsprites
 	}
 	// preload all
 	preloadAllImages() {
@@ -104,7 +97,6 @@ class Tools extends Phaser.Scene {
 				this.loadedImages[imageImmat] = this.load.image(CurrentImage.uname, CurrentImage.path)
 			}
 		}
-
 		// PLAYER SPRITES animations
 		for (let spriteImmat = 0; spriteImmat < this.allSprites.length; spriteImmat++) {
 			let CurrentSprite = this.allSprites[spriteImmat]
@@ -117,33 +109,8 @@ class Tools extends Phaser.Scene {
 				this.loadedSprites[spriteImmat] = this.load.spritesheet(CurrentSprite.uname, CurrentSprite.path, CurrentSprite.frames)
 			}
 		}
-
-		// grounds blocks
-		for (let groundImmat = 0; groundImmat < this.allGrounds.length; groundImmat++) {
-			this.load.image(this.allGrounds[groundImmat].uname, this.allGrounds[groundImmat].path)
-
-			console.log('grounds added:', this.allGrounds[groundImmat].uname, this.allGrounds[groundImmat].path)
-		}
-
 	}
 	// add to scene
-	addGroundsToScene() {
-		let col = parseInt(1920 / 32)
-		let row = parseInt(1080 / 32)
-		console.log('allGrounds.length', this.allGrounds.length)
-		let num = 0
-		let r = 0
-		for (let r = 0; r < row; r++) {
-			for (let c = 0; c < col; c++) {
-				let ground = this.allGrounds[this.get_aleaEntreBornes(0, this.allGrounds.length - 1)]
-				console.log(c + '/' + ground.uname)
-				console.log(ground.path)
-				// console.log(num)
-				this.GroundGroup.add(this.physics.add.image((32 * c), (32 * r), ground.uname).setOrigin(0))
-				num++
-			}
-		}
-	}
 	addBackgroundToScene() { // grounds are clickable
 		this.all.Background = this.physics.add.image(0, 0, 'worldmap_1920x1080').setOrigin(0)//.setScale(10)
 		// setInteractive && make clickable
@@ -151,6 +118,7 @@ class Tools extends Phaser.Scene {
 		this.BackgroundGroup.add(this.all.Background)
 		this.all.Background.on('pointerdown', () => { this.ClickedOn(this.all.Background) }, this)
 	}
+
 	addPlayerToScene() {
 		PLAYERFACTORY.playerPhaser = this.physics.add.sprite(
 			1, 1,
@@ -160,7 +128,7 @@ class Tools extends Phaser.Scene {
 		PLAYERFACTORY.createPlayerAnim(this)
 	}
 
-
+	// functions
 	ClickedOn = (obj) => {
 		var tx = obj.input.localX
 		var ty = obj.input.localY
@@ -182,18 +150,9 @@ class Tools extends Phaser.Scene {
 		if (theta < 0) theta += 360; // negative case
 		return theta;
 	}
-	// REFRESH PLAYER
-	refreshPlayer() {
-		// what ?
-	}
-	// ADD UI
-	addUi() {
-		this.all.UiBurger = this.add.image(this.game.config.width, 0, 'burger_off').setOrigin(1, 0).setScale(2)
-		this.UiGroup.add(this.all.UiBurger)
-	}
 	// camera follow
 	setWorldBounds() {
-		console.log('this.all.Background', this.all.Background)
+		console.log('this.physics.world.setBounds', PLAYERFACTORY.playerDatas.setbounds.x, PLAYERFACTORY.playerDatas.setbounds.y, PLAYERFACTORY.playerDatas.setbounds.w, PLAYERFACTORY.playerDatas.setbounds.h)
 		this.physics.world.setBounds(
 			PLAYERFACTORY.playerDatas.setbounds.x,
 			PLAYERFACTORY.playerDatas.setbounds.y,
@@ -201,38 +160,41 @@ class Tools extends Phaser.Scene {
 			PLAYERFACTORY.playerDatas.setbounds.h,
 		);
 	}
-	// ________________________
-	// TESTS ______________/__/
 	resizeApp = () => {
 		GAME.scale.resize(window.innerWidth, window.innerHeight);
 		this.centerX = (GAME.canvas.width / 2);
 		this.centerY = (GAME.canvas.height / 2);
 		// console.log('canvasSize:', 'w:' + GAME.canvas.width, 'h:' + GAME.canvas.height)
 	}
+	camerasmainfollow = () => {
+		this.cameras.main.startFollow(PLAYERFACTORY.playerPhaser);
+		// this.cameras.main.setSize(400, 300);
+	}
 	onKeyDown(event) {
 		PLAYERFACTORY.checkPlayerOnKeyDown(event)
+	}
+	// ________________________
+	// TESTS ______________/__/
+	// ADD UI
+	addUi() { // useless
+		this.all.UiBurger = this.add.image(128, 0, 'burger_off').setOrigin(1, 0).setScale(2)
+		this.UiGroup.add(this.all.UiBurger)
 	}
 	onKeyUp(event) {
 		PLAYERFACTORY.checkPlayerOnKeyUp(event)
 	}
-	camerasmainfollow = () => {
-		this.cameras.main.startFollow(PLAYERFACTORY.playerPhaser);
-
-		// this.cameras.main.setSize(400, 300);
-		// this.cameras.main.y = 10
+	addcamera2 = () => {
 		this.camera2 = this.cameras.add(0, 0, 320, 200)
+		this.camera2.rotation = Math.sin(45);
 		this.camera2.startFollow(PLAYERFACTORY.playerPhaser);
-
 		this.updatecameras()
 	}
-	updatecameras() {
-		this.camera2.scrollX = Math.cos(this.camera2Rotation) * 100;
-		this.camera2.scrollY = Math.sin(this.camera2Rotation) * 100;
-
+	updatecameras() { // better in scene update()
+		// this.camera2.scrollX = Math.cos(50) * 100;
+		// this.camera2.scrollY = Math.sin(50) * 100;
 		// this.camera2.shake(100, 0.01);
 		// this.camera2.flash(2000);
 		// this.camera2.fade(2000);
-		this.camera2.rotation = Math.sin(45);
 		// this.camera2.zoom = 0.5 + Math.abs(Math.sin(this.camera2Rotation));
 		// if (this.camera2._fadeAlpha >= 1.0) {
 		// 	this.camera2._fadeAlpha = 0.0;

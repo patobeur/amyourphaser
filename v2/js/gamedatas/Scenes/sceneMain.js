@@ -12,6 +12,7 @@ class SceneMain extends Tools {
 		this.consoleconfig()
 		this.setWorldBounds()
 		this.camerasmainfollow()
+		this.addcamera2()
 		// cameras.main follow player
 
 		this.input.keyboard.on('keydown', this.onKeyDown, this);
@@ -22,14 +23,12 @@ class SceneMain extends Tools {
 
 	}
 	update() {
-		this.updatecameras()
 	}
 	consoleconfig() {
 		if (LOGON) {
 			console.log('GAME', GAME)
 			console.log('GAME.config', GAME.config)
 			console.log('myPhaserConfig', myPhaserConfig)
-			myPhaserConfig
 		}
 		console.log('Ready to go !')
 	}
