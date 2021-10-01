@@ -1,24 +1,23 @@
 class PlayerFactory extends Phaser.Scene {
 	constructor() {
 		super()
+		this.jobs = ['magic', 'rogue', 'healer', 'archer', 'warrior']
 		this.playerkeys = KEYSFACTORY.keys.player;
 		this.playerDatas = {
-			uname: 'playerOne',
+			uname: 'ObiOuane',
 			x: 1,
 			y: 1, // not used ???
 			deg: -90,
 			speed: 4,
-			job: 'magic',
+			job: 'warrior',//basic,rogue,warrior,healer,archer,magic
 			stats: {},
 			up_player: false,
 			down_player: false,
 			left_player: false,
 			right_player: false,
 			currentSpriteName: 'idle_down',
-			// IMAGE
-			image: { immat: -1, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
-			//ANIMS
-			sprites: { immat: -1, uname: 'playersprites', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+			image: {},
+			sprites: {},
 			setbounds: { //this must go to floorfactory
 				x: 0,
 				y: 0,
@@ -27,13 +26,23 @@ class PlayerFactory extends Phaser.Scene {
 			},
 			clickpos: new Phaser.Math.Vector2()
 		}
-		this.playerDatas.stats = this.get_job('stats');
+
+		this.setJobDatas();
+
 		this.playerPhaser = Object
 		this.animskeys = [
 			'idle_up', 'idle_right', 'idle_down', 'idle_left',
 			'walk_up', 'walk_right', 'walk_down', 'walk_left'
 		]
 	}
+	// _____________________________________________________
+	// SET JOB DATAS ______________________________//_______\
+	setJobDatas() {
+		this.playerDatas.stats = this.get_job('stats');
+		this.playerDatas.image = this.get_job('image');
+		this.playerDatas.sprites = this.get_job('sprites');
+	}
+
 	// _____________________________________________________
 	// CLICK FLOOR TO MOVE ________________________//_______\
 	PlayerMoveByPointer = (obj, thisgame) => {
@@ -128,40 +137,67 @@ class PlayerFactory extends Phaser.Scene {
 		}
 
 	}
+	get_imagetoload(allimages) {
+		let allJobs = this.get_job('all')
+		this.jobs.forEach(jobname => {
+			allJobs[jobname].image.immat = allimages.length
+			allimages.push(allJobs[jobname].image)
+		});
+		return allimages
+	}
 	get_job = (jobcat) => {
 		let jobs = {
-			'rogue': {
+			rogue: {
 				uname: 'rogue',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 100, madness: 0, speed: 4 },
-				image: { immat: -1, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
+				image: { immat: -1, uname: 'player_rogue', path: THEMEPATHASSETS + 'img/job_rogue.png' },
 				sprites: { immat: -1, uname: 'playersprites', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
-			'magic': {
+			magic: {
 				uname: 'magic',
-				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 0, madness: 0, speed: 4 },
-				image: { immat: -1, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
+				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 50, yang: 50, madness: 0, speed: 4 },
+				image: { immat: -1, uname: 'player_magic', path: THEMEPATHASSETS + 'img/job_magic.png' },
 				sprites: { immat: -1, uname: 'playersprites', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
-			'archer': {
+			archer: {
 				uname: 'archer',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 0, madness: 0, speed: 4 },
-				image: { immat: -1, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
+				image: { immat: -1, uname: 'player_archer', path: THEMEPATHASSETS + 'img/job_basic.png' },
 				sprites: { immat: -1, uname: 'playersprites', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
-			'warrior': {
+			warrior: {
 				uname: 'warrior',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 0, madness: 0, speed: 4 },
-				image: { immat: -1, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
+				image: { immat: -1, uname: 'player_warrior', path: THEMEPATHASSETS + 'img/job_warrior.png' },
 				sprites: { immat: -1, uname: 'playersprites', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
-			'healer': {
-				uname: 'healer', stats: { health: 100, int: 1, karma: 1, strength: 1, ying: 100, yang: 0, madness: 100, speed: 4 },
-				image: { immat: -1, uname: 'player', path: THEMEPATHASSETS + 'img/star_32x32.png' },
+			healer: {
+				uname: 'healer',
+				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 100, yang: 0, madness: 0, speed: 4 },
+				image: { immat: -1, uname: 'player_healer', path: THEMEPATHASSETS + 'img/job_healer.png' },
 				sprites: { immat: -1, uname: 'playersprites', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
 		}
-
+		if (jobcat == 'all') {
+			return jobs
+		}
 		return jobs[this.playerDatas.job][jobcat]
+	}
+	updateplayerpos() {
+		var distance = Phaser.Math.Distance.Between(
+			this.playerPhaser.x,
+			this.playerPhaser.y,
+			this.playerDatas.clickpos.x,
+			this.playerDatas.clickpos.y
+		);
+
+		// if body player mooving
+		if (this.playerPhaser.body.speed > 0) {
+			if (distance < this.playerDatas.speed) {
+				CHATFACTORY.add_message('I reach pos x:' + parseInt(this.playerPhaser.x) + ',y:' + parseInt(this.playerPhaser.y), 'text', 'me')
+				this.playerPhaser.body.reset(this.playerDatas.clickpos.x, this.playerDatas.clickpos.y);
+			}
+		}
 	}
 }
 let PLAYERFACTORY = new PlayerFactory();

@@ -48,8 +48,6 @@ class Tools extends Phaser.Scene {
 	// get lists of images to load
 	getAllImagesToLoad() {
 		let allimages = [
-			// { immat: -1, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
-			PLAYERFACTORY.playerDatas.image,
 			{ immat: -1, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
 			{ immat: -1, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
 			{ immat: -1, uname: 'wall_64x64', path: THEMEPATHASSETS + 'img/wall_64x64.png' },
@@ -59,6 +57,7 @@ class Tools extends Phaser.Scene {
 			{ immat: -1, uname: 'burger_on', path: THEMEPATHASSETS + 'img/burger_on.png' },
 			{ immat: -1, uname: 'thisisnottobeseen', path: THEMEPATHASSETS + 'img/thisisnottobeseen.png' },
 		]
+		allimages = PLAYERFACTORY.get_imagetoload(allimages)
 		if (FLOORSFACTORY.floors) {
 			FLOORSFACTORY.floors.forEach(floor => {
 				allimages.push(floor)
@@ -119,6 +118,10 @@ class Tools extends Phaser.Scene {
 		this.allSingles.Background.on('pointerdown', () => { PLAYERFACTORY.PlayerMoveByPointer(this.allSingles.Background, this) }, this)
 	}
 	addPlayerToScene() {
+		// console.log(PLAYERFACTORY.playerDatas)
+		// console.log(PLAYERFACTORY.playerDatas.image.immat)
+		console.log(this.allImages.images)
+
 		PLAYERFACTORY.playerPhaser = this.physics.add.sprite(
 			1, 1,
 			PLAYERFACTORY.playerDatas.image.uname
