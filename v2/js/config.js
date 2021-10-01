@@ -16,8 +16,3 @@ var myPhaserConfig = {
 myPhaserConfig.scene = [SceneMain]
 // creation GAME Instance
 let GAME = new Phaser.Game(myPhaserConfig);
-let MATHSFACTORY = new MathFactory();
-let KEYSFACTORY = new KeyboardFactory();
-let FLOORSFACTORY = new FloorsFactory();
-let IMAGESFACTORY = new ImagesFactory();
-let PLAYERFACTORY = new PlayerFactory();

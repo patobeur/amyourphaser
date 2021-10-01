@@ -1,5 +1,5 @@
 let configDefault = {
-	zooom: {
+	zoom: {
 		origin: 1,// not used at the moment
 		step: .1,
 		max: 5,

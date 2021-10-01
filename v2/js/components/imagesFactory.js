@@ -20,3 +20,4 @@ class ImagesFactory extends Phaser.Scene {
 		return []
 	}
 }
+let IMAGESFACTORY = new ImagesFactory();

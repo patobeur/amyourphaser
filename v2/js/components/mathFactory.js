@@ -14,3 +14,4 @@ class MathFactory {
 		return theta;
 	}
 }
+let MATHSFACTORY = new MathFactory();

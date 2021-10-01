@@ -24,6 +24,7 @@ class SceneMain extends Tools {
 
 	}
 	update() {
+		this.updateplayerpos()
 	}
 	consoleconfig() {
 		if (LOGON) {

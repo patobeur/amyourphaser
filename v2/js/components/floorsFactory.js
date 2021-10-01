@@ -18,3 +18,4 @@ class FloorsFactory extends Phaser.Scene {
 		]
 	}
 }
+let FLOORSFACTORY = new FloorsFactory();

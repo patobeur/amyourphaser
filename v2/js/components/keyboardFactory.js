@@ -21,3 +21,4 @@ class KeyboardFactory {
 		}
 	}
 }
+let KEYSFACTORY = new KeyboardFactory();
