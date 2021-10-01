@@ -48,16 +48,16 @@ class Tools extends Phaser.Scene {
 	// get lists of images to load
 	getAllImagesToLoad() {
 		let allimages = [
-			// { immat: false, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
+			// { immat: -1, uname: 'player', path: THEMEPATHIMG + 'star_32x32.png' },
 			PLAYERFACTORY.playerDatas.image,
-			{ immat: false, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
-			{ immat: false, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
-			{ immat: false, uname: 'wall_64x64', path: THEMEPATHASSETS + 'img/wall_64x64.png' },
-			{ immat: false, uname: 'worldmap_1920x1080', path: THEMEPATHASSETS + 'img/worldmap_1920x1080.png' },
-			{ immat: false, uname: 'worldmap_1920x1080v2', path: THEMEPATHASSETS + 'img/worldmap_1920x1080v2.png' },
-			{ immat: false, uname: 'burger_off', path: THEMEPATHASSETS + 'img/burger_off.png' },
-			{ immat: false, uname: 'burger_on', path: THEMEPATHASSETS + 'img/burger_on.png' },
-			{ immat: false, uname: 'thisisnottobeseen', path: THEMEPATHASSETS + 'img/thisisnottobeseen.png' },
+			{ immat: -1, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
+			{ immat: -1, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
+			{ immat: -1, uname: 'wall_64x64', path: THEMEPATHASSETS + 'img/wall_64x64.png' },
+			{ immat: -1, uname: 'worldmap_1920x1080', path: THEMEPATHASSETS + 'img/worldmap_1920x1080.png' },
+			{ immat: -1, uname: 'worldmap_1920x1080v2', path: THEMEPATHASSETS + 'img/worldmap_1920x1080v2.png' },
+			{ immat: -1, uname: 'burger_off', path: THEMEPATHASSETS + 'img/burger_off.png' },
+			{ immat: -1, uname: 'burger_on', path: THEMEPATHASSETS + 'img/burger_on.png' },
+			{ immat: -1, uname: 'thisisnottobeseen', path: THEMEPATHASSETS + 'img/thisisnottobeseen.png' },
 		]
 		if (FLOORSFACTORY.floors) {
 			FLOORSFACTORY.floors.forEach(floor => {
@@ -128,8 +128,8 @@ class Tools extends Phaser.Scene {
 
 		PLAYERFACTORY.createPlayerGAMEAnims(this)
 		CHATFACTORY.add_message('New around ? ', 'text')
-		// UIFACTORY.addmsg('Welcome to this !!')
-		// UIFACTORY.addmsg('Here you are x:' + parseInt(PLAYERFACTORY.playerPhaser.x) + ',y:' + parseInt(PLAYERFACTORY.playerPhaser.y))
+		CHATFACTORY.add_message('Here you are x:' + parseInt(PLAYERFACTORY.playerPhaser.x) + ',y:' + parseInt(PLAYERFACTORY.playerPhaser.y), 'text')
+
 	}
 	updateplayerpos() {
 		var distance = Phaser.Math.Distance.Between(
@@ -139,14 +139,14 @@ class Tools extends Phaser.Scene {
 			PLAYERFACTORY.playerDatas.clickpos.y
 		);
 
+		// if body player mooving
 		if (PLAYERFACTORY.playerPhaser.body.speed > 0) {
 			if (distance < PLAYERFACTORY.playerDatas.speed) {
-				// UIFACTORY.addmsg('You reach pos x:' + parseInt(PLAYERFACTORY.playerPhaser.x) + ',y:' + parseInt(PLAYERFACTORY.playerPhaser.y))
+				CHATFACTORY.add_message('I reach pos x:' + parseInt(PLAYERFACTORY.playerPhaser.x) + ',y:' + parseInt(PLAYERFACTORY.playerPhaser.y), 'text', 'me')
 				PLAYERFACTORY.playerPhaser.body.reset(PLAYERFACTORY.playerDatas.clickpos.x, PLAYERFACTORY.playerDatas.clickpos.y);
 			}
 		}
 	}
-	// functions
 
 	// camera follow
 	setWorldBounds(obj) {
