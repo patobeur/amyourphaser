@@ -38,6 +38,7 @@ class PlayerFactory extends Phaser.Scene {
 	// _____________________________________________________
 	// SET JOB DATAS ______________________________//_______\
 	setJobDatas() {
+		// only one of each
 		this.playerDatas.stats = this.get_job('stats');
 		this.playerDatas.image = this.get_job('image');
 		this.playerDatas.sprites = this.get_job('sprites');
@@ -137,13 +138,13 @@ class PlayerFactory extends Phaser.Scene {
 		}
 
 	}
-	get_imagetoload(allimages) {
+	get_imagetopreload() {
 		let allJobs = this.get_job('all')
+		let jobsimage = []
 		this.jobs.forEach(jobname => {
-			allJobs[jobname].image.immat = allimages.length
-			allimages.push(allJobs[jobname].image)
+			jobsimage.push(allJobs[jobname].image)
 		});
-		return allimages
+		return jobsimage
 	}
 	get_job = (jobcat) => {
 		let jobs = {
@@ -151,31 +152,31 @@ class PlayerFactory extends Phaser.Scene {
 				uname: 'rogue',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 100, madness: 0, speed: 4 },
 				image: { immat: -1, uname: 'player_rogue', path: THEMEPATHASSETS + 'img/job_rogue.png' },
-				sprites: { immat: -1, uname: 'playersprites', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				sprites: { immat: -1, uname: 'playersprites_rogue', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
 			magic: {
 				uname: 'magic',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 50, yang: 50, madness: 0, speed: 4 },
 				image: { immat: -1, uname: 'player_magic', path: THEMEPATHASSETS + 'img/job_magic.png' },
-				sprites: { immat: -1, uname: 'playersprites', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				sprites: { immat: -1, uname: 'playersprites_magic', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
 			archer: {
 				uname: 'archer',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 0, madness: 0, speed: 4 },
 				image: { immat: -1, uname: 'player_archer', path: THEMEPATHASSETS + 'img/job_basic.png' },
-				sprites: { immat: -1, uname: 'playersprites', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				sprites: { immat: -1, uname: 'playersprites_archer', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
 			warrior: {
 				uname: 'warrior',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 0, madness: 0, speed: 4 },
 				image: { immat: -1, uname: 'player_warrior', path: THEMEPATHASSETS + 'img/job_warrior.png' },
-				sprites: { immat: -1, uname: 'playersprites', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				sprites: { immat: -1, uname: 'playersprites_warrior', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
 			healer: {
 				uname: 'healer',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 100, yang: 0, madness: 0, speed: 4 },
 				image: { immat: -1, uname: 'player_healer', path: THEMEPATHASSETS + 'img/job_healer.png' },
-				sprites: { immat: -1, uname: 'playersprites', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				sprites: { immat: -1, uname: 'playersprites_healer', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
 		}
 		if (jobcat == 'all') {
@@ -190,8 +191,7 @@ class PlayerFactory extends Phaser.Scene {
 			this.playerDatas.clickpos.x,
 			this.playerDatas.clickpos.y
 		);
-
-		// if body player mooving
+		// if body player is mooving
 		if (this.playerPhaser.body.speed > 0) {
 			if (distance < this.playerDatas.speed) {
 				CHATFACTORY.add_message('I reach pos x:' + parseInt(this.playerPhaser.x) + ',y:' + parseInt(this.playerPhaser.y), 'text', 'me')

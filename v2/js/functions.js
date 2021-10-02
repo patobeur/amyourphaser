@@ -5,10 +5,6 @@ class Tools extends Phaser.Scene {
 		// this.input.keyboard.on('keyup', this.onKeyUp, this);
 		//
 		// IMAGES & SPRITES
-		this.allImages = {
-			images: this.getAllImagesToLoad(),
-			sprites: this.getAllImagesSpritesToLoad()
-		}
 
 		this.loadedImages = []
 		this.loadedSprites = []
@@ -25,7 +21,7 @@ class Tools extends Phaser.Scene {
 			player: [],
 			ui: [],
 		}
-		this.camera2
+		this.camera2 = Object
 		this.camera2Rotation = 0;
 	}
 	// ______________________________________________________
@@ -41,70 +37,34 @@ class Tools extends Phaser.Scene {
 		}
 		this.allGroups.floor = FLOORSFACTORY.floors
 
+
 		this.addBackgroundToScene()
 		this.addPlayerToScene()
 		this.addUi()
 	}
-	// get lists of images to load
-	getAllImagesToLoad() {
-		let allimages = [
-			{ immat: -1, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
-			{ immat: -1, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
-			{ immat: -1, uname: 'wall_64x64', path: THEMEPATHASSETS + 'img/wall_64x64.png' },
-			{ immat: -1, uname: 'worldmap_1920x1080', path: THEMEPATHASSETS + 'img/worldmap_1920x1080.png' },
-			{ immat: -1, uname: 'worldmap_1920x1080v2', path: THEMEPATHASSETS + 'img/worldmap_1920x1080v2.png' },
-			{ immat: -1, uname: 'burger_off', path: THEMEPATHASSETS + 'img/burger_off.png' },
-			{ immat: -1, uname: 'burger_on', path: THEMEPATHASSETS + 'img/burger_on.png' },
-			{ immat: -1, uname: 'thisisnottobeseen', path: THEMEPATHASSETS + 'img/thisisnottobeseen.png' },
-		]
-		allimages = PLAYERFACTORY.get_imagetoload(allimages)
-		if (FLOORSFACTORY.floors) {
-			FLOORSFACTORY.floors.forEach(floor => {
-				allimages.push(floor)
-			});
-		}
-		if (IMAGESFACTORY.images) {
-			IMAGESFACTORY.images.forEach(image => {
-				allimages.push(image)
-			});
-		}
-		return allimages
-	}
-	getAllImagesSpritesToLoad() {
-		let allsprites = [
-			PLAYERFACTORY.playerDatas.sprites,
-		]
-		if (FLOORSFACTORY.sprites) {
-			FLOORSFACTORY.sprites.forEach(sprite => {
-				allsprites.push(sprite)
-			});
-		}
-		return allsprites
-	}
 	// preload them'all
 	preloadAllImages() {
+		// at the end this is all going to ImagesFactory Class
+		IMAGESFACTORY.add_images(IMAGESFACTORY.get_imagetopreload())
+		IMAGESFACTORY.add_images(PLAYERFACTORY.get_imagetopreload())
+		IMAGESFACTORY.add_images(FLOORSFACTORY.images)
+
+		IMAGESFACTORY.add_sprites([PLAYERFACTORY.playerDatas.sprites])
+		IMAGESFACTORY.add_sprites([FLOORSFACTORY.sprites])
+
 		// load images
-		for (let imageImmat = 0; imageImmat < this.allImages.images.length; imageImmat++) {
-			let CurrentImage = this.allImages.images[imageImmat]
+		for (let imageImmat = 0; imageImmat < IMAGESFACTORY.images.length; imageImmat++) {
+			let CurrentImage = IMAGESFACTORY.images[imageImmat]
 			if (typeof CurrentImage === 'object' && CurrentImage.uname && CurrentImage.path) {//.isArray
-				// set Uniquename
-				let imageUname = 'image_' + imageImmat
-				// insert Uname to this image
-				this.allImages.images[imageImmat].immat = imageUname
 				// ADD IMAGE to scene
-				// console.log('load: (', CurrentImage.uname, ')', CurrentImage.path)
+				console.log('load: (', CurrentImage.uname, ')', CurrentImage.path)
 				this.loadedImages[imageImmat] = this.load.image(CurrentImage.uname, CurrentImage.path)
 			}
 		}
 		// PLAYER SPRITES animations
-		for (let spriteImmat = 0; spriteImmat < this.allImages.sprites.length; spriteImmat++) {
-			let CurrentSprite = this.allImages.sprites[spriteImmat]
+		for (let spriteImmat = 0; spriteImmat < IMAGESFACTORY.sprites.length; spriteImmat++) {
+			let CurrentSprite = IMAGESFACTORY.sprites[spriteImmat]
 			if (typeof CurrentSprite === 'object' && CurrentSprite.uname && CurrentSprite.path) {//.isArray
-				// set Uniquename
-				let scriptUname = 'image_' + spriteImmat
-				// insert Uname to this sprites
-				this.allImages.sprites[spriteImmat].immat = scriptUname
-				// ADD IMAGE to scene
 				this.loadedSprites[spriteImmat] = this.load.spritesheet(CurrentSprite.uname, CurrentSprite.path, CurrentSprite.frames)
 			}
 		}
@@ -120,7 +80,8 @@ class Tools extends Phaser.Scene {
 	addPlayerToScene() {
 		// console.log(PLAYERFACTORY.playerDatas)
 		// console.log(PLAYERFACTORY.playerDatas.image.immat)
-		console.log(this.allImages.images)
+		console.log(IMAGESFACTORY.images)
+		console.log(IMAGESFACTORY.sprites)
 
 		PLAYERFACTORY.playerPhaser = this.physics.add.sprite(
 			1, 1,
