@@ -45,7 +45,12 @@ class Tools extends Phaser.Scene {
 		// setInteractive && make clickable
 		this.allSingles.Background.setInteractive()
 		this.allGroups.background.add(this.allSingles.Background)
-		this.allSingles.Background.on('pointerdown', () => { PLAYERFACTORY.PlayerMoveByPointer(this.allSingles.Background, this) }, this)
+		this.allSingles.Background.on('pointerdown', (go) => {
+			console.log(go)
+			PLAYERFACTORY.PlayerMoveByPointer(
+				this.allSingles.Background,
+				this)
+		}, this)
 	}
 	addPlayerToScene() {
 		// console.log(PLAYERFACTORY.playerDatas)

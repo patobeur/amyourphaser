@@ -46,8 +46,8 @@ class PlayerFactory extends Phaser.Scene {
 
 	// _____________________________________________________
 	// CLICK FLOOR TO MOVE ________________________//_______\
-	PlayerMoveByPointer = (obj, thisgame) => {
-		this.set_PlayerClickPos({ x: obj.input.localX, y: obj.input.localY })
+	PlayerMoveByPointer = (backgroundclicked, thisgame) => {
+		this.set_PlayerClickPos({ x: backgroundclicked.input.localX, y: backgroundclicked.input.localY })
 		this.move_PlayerToPointerPos(thisgame)
 	}
 	set_PlayerClickPos(obj) {
@@ -97,35 +97,35 @@ class PlayerFactory extends Phaser.Scene {
 		// Animation set
 		GAME.anims.create({
 			key: 'idle_down', frameRate: 8, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [6] }),
 		});
 		GAME.anims.create({
 			key: 'idle_up', frameRate: 8, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [6] }),
 		});
 		GAME.anims.create({
 			key: 'idle_left', frameRate: 8, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [6] }),
 		});
 		GAME.anims.create({
 			key: 'idle_right', frameRate: 8, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [6] }),
+			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [6] }),
 		});
 		GAME.anims.create({
 			key: 'walk_up', frameRate: 4, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [1, 0, 2, 0] }),
+			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [1, 0, 2, 0] }),
 		});
 		GAME.anims.create({
 			key: 'walk_down', frameRate: 4, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [7, 6, 8, 6] }),
+			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [7, 6, 8, 6] }),
 		});
 		GAME.anims.create({
 			key: 'walk_left', frameRate: 4, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [14, 12, 13, 12] }),
+			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [14, 12, 13, 12] }),
 		});
 		GAME.anims.create({
 			key: 'walk_right', frameRate: 4, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites', { frames: [19, 18, 20, 18] }),
+			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [19, 18, 20, 18] }),
 		});
 		// PLAYERFACTORY.playerPhaser.play('idle_down');
 	}
@@ -133,6 +133,7 @@ class PlayerFactory extends Phaser.Scene {
 	}
 	set_CurrentPlayerSprite(animeName) {
 		if (this.playerDatas.currentSpriteName != animeName) {
+			console.log(animeName)
 			this.playerPhaser.play(animeName)
 			this.playerDatas.currentSpriteName = animeName
 		}
