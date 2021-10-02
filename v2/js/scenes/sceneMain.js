@@ -5,7 +5,7 @@ class SceneMain extends Tools {
 		})
 	}
 	preload() {
-		this.preloadAllImages()
+		IMAGESFACTORY.preloadAllImages(this)
 	}
 	create() {
 		this.createAll()

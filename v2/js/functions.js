@@ -6,8 +6,6 @@ class Tools extends Phaser.Scene {
 		//
 		// IMAGES & SPRITES
 
-		this.loadedImages = []
-		this.loadedSprites = []
 
 		// PHASER Singles
 		this.allSingles = {
@@ -37,37 +35,9 @@ class Tools extends Phaser.Scene {
 		}
 		this.allGroups.floor = FLOORSFACTORY.floors
 
-
 		this.addBackgroundToScene()
 		this.addPlayerToScene()
 		this.addUi()
-	}
-	// preload them'all
-	preloadAllImages() {
-		// at the end this is all going to ImagesFactory Class
-		IMAGESFACTORY.add_images(IMAGESFACTORY.get_imagetopreload())
-		IMAGESFACTORY.add_images(PLAYERFACTORY.get_imagetopreload())
-		IMAGESFACTORY.add_images(FLOORSFACTORY.images)
-
-		IMAGESFACTORY.add_sprites([PLAYERFACTORY.playerDatas.sprites])
-		IMAGESFACTORY.add_sprites([FLOORSFACTORY.sprites])
-
-		// load images
-		for (let imageImmat = 0; imageImmat < IMAGESFACTORY.images.length; imageImmat++) {
-			let CurrentImage = IMAGESFACTORY.images[imageImmat]
-			if (typeof CurrentImage === 'object' && CurrentImage.uname && CurrentImage.path) {//.isArray
-				// ADD IMAGE to scene
-				console.log('load: (', CurrentImage.uname, ')', CurrentImage.path)
-				this.loadedImages[imageImmat] = this.load.image(CurrentImage.uname, CurrentImage.path)
-			}
-		}
-		// PLAYER SPRITES animations
-		for (let spriteImmat = 0; spriteImmat < IMAGESFACTORY.sprites.length; spriteImmat++) {
-			let CurrentSprite = IMAGESFACTORY.sprites[spriteImmat]
-			if (typeof CurrentSprite === 'object' && CurrentSprite.uname && CurrentSprite.path) {//.isArray
-				this.loadedSprites[spriteImmat] = this.load.spritesheet(CurrentSprite.uname, CurrentSprite.path, CurrentSprite.frames)
-			}
-		}
 	}
 	// add to scene
 	addBackgroundToScene() { // grounds are clickable
@@ -80,8 +50,6 @@ class Tools extends Phaser.Scene {
 	addPlayerToScene() {
 		// console.log(PLAYERFACTORY.playerDatas)
 		// console.log(PLAYERFACTORY.playerDatas.image.immat)
-		console.log(IMAGESFACTORY.images)
-		console.log(IMAGESFACTORY.sprites)
 
 		PLAYERFACTORY.playerPhaser = this.physics.add.sprite(
 			1, 1,
