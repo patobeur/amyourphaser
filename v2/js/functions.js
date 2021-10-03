@@ -12,7 +12,6 @@ class GameFunctions extends Phaser.Scene {
 		// PHASER groups
 		this.allGroups = {}
 		this.camera2 = Object
-		this.camera2Rotation = 0;
 	}
 	// _________________________________________
 	// GAMESCENE PRELOADS _librarie+__//_______/
@@ -29,6 +28,7 @@ class GameFunctions extends Phaser.Scene {
 		}
 
 		IMAGESFACTORY.addBackgroundToScene()
+		IMAGESFACTORY.setBackgroundClickable()
 		PLAYERFACTORY.addplayertoscene()
 		this.addUi()
 		INTERACTIVEFACTORY.resizeApp()
@@ -81,7 +81,7 @@ class GameFunctions extends Phaser.Scene {
 		// this.camera2.shake(100, 0.01);
 		// this.camera2.flash(2000);
 		// this.camera2.fade(2000);
-		// this.camera2.zoom = 0.5 + Math.abs(Math.sin(this.camera2Rotation));
+		// this.camera2.zoom = 0.5 + Math.abs(Math.sin(45));
 		// if (this.camera2._fadeAlpha >= 1.0) {
 		// 	this.camera2._fadeAlpha = 0.0;
 		// 	this.camera2.fade(1000);

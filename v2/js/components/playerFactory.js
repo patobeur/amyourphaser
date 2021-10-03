@@ -3,6 +3,11 @@ class PlayerFactory extends Phaser.Scene {
 		super()
 		this.jobs = ['magic', 'rogue', 'healer', 'archer', 'warrior']
 		this.playerkeys = INTERACTIVEFACTORY.keys.player;
+		this.images = []
+		this.sprites = []
+		this.spritessheet = []
+		this.set_imagesAndSprites()
+		// --
 		this.playerDatas = {
 			uname: 'ObiOuane',
 			x: 1,
@@ -18,6 +23,7 @@ class PlayerFactory extends Phaser.Scene {
 			currentSpriteName: 'idle_down',
 			image: {},
 			sprites: {},
+			spritessheet: {},
 			setbounds: { //this must go to floorfactory
 				x: 0,
 				y: 0,
@@ -42,11 +48,11 @@ class PlayerFactory extends Phaser.Scene {
 		this.playerDatas.stats = this.get_job('stats');
 		this.playerDatas.image = this.get_job('image');
 		this.playerDatas.sprites = this.get_job('sprites');
+		this.playerDatas.spritessheet = this.get_job('spritessheet');
 	}
-
 	// _____________________________________________________
 	// CLICK FLOOR TO MOVE ________________________//_______\
-	PlayerMoveByPointer = (backgroundclicked) => {
+	playerMoveByPointer = (backgroundclicked) => {
 		this.set_PlayerClickPos({ x: backgroundclicked.input.localX, y: backgroundclicked.input.localY })
 		this.move_PlayerToPointerPos()
 	}
@@ -97,87 +103,92 @@ class PlayerFactory extends Phaser.Scene {
 	createPlayerGAMEAnims() {
 		// https://labs.phaser.io/edit.html?src=src/animation/create%20animation%20from%20sprite%20sheet.js&v=3.55.2
 		// Animation set
+		console.log('sprites_' + this.playerDatas.job)
 		GAME.anims.create({
 			key: 'idle_down', frameRate: 8, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [6] }),
+			frames: GAME.anims.generateFrameNumbers('sprites_' + this.playerDatas.job, { frames: [6] }),
 		});
 		GAME.anims.create({
 			key: 'idle_up', frameRate: 8, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [6] }),
+			frames: GAME.anims.generateFrameNumbers('sprites_' + this.playerDatas.job, { frames: [6] }),
 		});
 		GAME.anims.create({
 			key: 'idle_left', frameRate: 8, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [6] }),
+			frames: GAME.anims.generateFrameNumbers('sprites_' + this.playerDatas.job, { frames: [6] }),
 		});
 		GAME.anims.create({
 			key: 'idle_right', frameRate: 8, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [6] }),
+			frames: GAME.anims.generateFrameNumbers('sprites_' + this.playerDatas.job, { frames: [6] }),
 		});
 		GAME.anims.create({
 			key: 'walk_up', frameRate: 4, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [1, 0, 2, 0] }),
+			frames: GAME.anims.generateFrameNumbers('sprites_' + this.playerDatas.job, { frames: [1, 0, 2, 0] }),
 		});
 		GAME.anims.create({
 			key: 'walk_down', frameRate: 4, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [7, 6, 8, 6] }),
+			frames: GAME.anims.generateFrameNumbers('sprites_' + this.playerDatas.job, { frames: [7, 6, 8, 6] }),
 		});
 		GAME.anims.create({
 			key: 'walk_left', frameRate: 4, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [14, 12, 13, 12] }),
+			frames: GAME.anims.generateFrameNumbers('sprites_' + this.playerDatas.job, { frames: [14, 12, 13, 12] }),
 		});
 		GAME.anims.create({
 			key: 'walk_right', frameRate: 4, repeat: -1,
-			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [19, 18, 20, 18] }),
+			frames: GAME.anims.generateFrameNumbers('sprites_' + this.playerDatas.job, { frames: [19, 18, 20, 18] }),
 		});
 		// PLAYERFACTORY.playerPhaser.play('idle_down');
 	}
 	set_CurrentPlayerSprite(animeName) {
 		if (this.playerDatas.currentSpriteName != animeName) {
-			// console.log(animeName)
+			console.log('animeName', animeName)
 			this.playerPhaser.play(animeName)
 			this.playerDatas.currentSpriteName = animeName
 		}
-
 	}
-	get_imagetopreload() {
+	set_imagesAndSprites() {
 		let allJobs = this.get_job('all')
-		let jobsimage = []
 		this.jobs.forEach(jobname => {
-			jobsimage.push(allJobs[jobname].image)
+			this.images.push(allJobs[jobname].image)
+			this.sprites.push(allJobs[jobname].sprites)
+			this.spritessheet.push(allJobs[jobname].spritessheet)
 		});
-		return jobsimage
 	}
 	get_job = (jobcat) => {
 		let jobs = {
 			rogue: {
 				uname: 'rogue',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 100, madness: 0, speed: 4 },
-				image: { immat: -1, uname: 'player_rogue', path: THEMEPATHASSETS + 'img/job_rogue.png' },
-				sprites: { immat: -1, uname: 'playersprites_rogue', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				sprites: { immat: -1, uname: 'sprite_rogue', path: THEMEPATHASSETS + 'img/job_rogue.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				image: { immat: -1, uname: 'player_rogue', path: THEMEPATHASSETS + '/sprites/playersprites.png' },
+				spritessheet: { immat: -1, uname: 'sprites_rogue', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
 			magic: {
 				uname: 'magic',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 50, yang: 50, madness: 0, speed: 4 },
-				image: { immat: -1, uname: 'player_magic', path: THEMEPATHASSETS + 'img/job_magic.png' },
-				sprites: { immat: -1, uname: 'playersprites_magic', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				sprites: { immat: -1, uname: 'sprite_magic', path: THEMEPATHASSETS + 'img/job_magic.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				image: { immat: -1, uname: 'player_magic', path: THEMEPATHASSETS + '/sprites/playersprites.png' },
+				spritessheet: { immat: -1, uname: 'sprites_magic', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
 			archer: {
 				uname: 'archer',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 0, madness: 0, speed: 4 },
-				image: { immat: -1, uname: 'player_archer', path: THEMEPATHASSETS + 'img/job_basic.png' },
-				sprites: { immat: -1, uname: 'playersprites_archer', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				sprites: { immat: -1, uname: 'sprite_archer', path: THEMEPATHASSETS + 'img/job_basic.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				image: { immat: -1, uname: 'player_archer', path: THEMEPATHASSETS + '/sprites/playersprites.png' },
+				spritessheet: { immat: -1, uname: 'sprites_archer', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
 			warrior: {
 				uname: 'warrior',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 0, madness: 0, speed: 4 },
-				image: { immat: -1, uname: 'player_warrior', path: THEMEPATHASSETS + 'img/job_warrior.png' },
-				sprites: { immat: -1, uname: 'playersprites_warrior', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				sprites: { immat: -1, uname: 'sprite_warrior', path: THEMEPATHASSETS + 'img/job_warrior.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				image: { immat: -1, uname: 'player_warrior', path: THEMEPATHASSETS + '/sprites/playersprites.png' },
+				spritessheet: { immat: -1, uname: 'sprites_warrior', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
 			healer: {
 				uname: 'healer',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 100, yang: 0, madness: 0, speed: 4 },
-				image: { immat: -1, uname: 'player_healer', path: THEMEPATHASSETS + 'img/job_healer.png' },
-				sprites: { immat: -1, uname: 'playersprites_healer', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				sprites: { immat: -1, uname: 'sprite_healer', path: THEMEPATHASSETS + 'img/job_healer.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				image: { immat: -1, uname: 'player_healer', path: THEMEPATHASSETS + '/sprites/playersprites.png' },
+				spritessheet: { immat: -1, uname: 'sprites_healer', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
 			},
 		}
 		if (jobcat == 'all') {
@@ -203,7 +214,7 @@ class PlayerFactory extends Phaser.Scene {
 	addplayertoscene() {
 		this.playerPhaser = GAME.scene.scenes[SCENEIMMAT].physics.add.sprite(
 			1, 1,
-			this.playerDatas.image.uname
+			this.playerDatas.sprites.uname
 		).setOrigin(0).setCollideWorldBounds(true);
 
 		// add to group
