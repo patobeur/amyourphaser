@@ -1,4 +1,4 @@
-class SceneMain extends Tools {
+class SceneMain extends GameFunctions {
 	constructor() {
 		super({
 			key: "SceneMain"

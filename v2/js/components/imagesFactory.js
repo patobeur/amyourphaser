@@ -22,32 +22,26 @@ class ImagesFactory extends Phaser.Scene {
 	get_spritetopreload = () => {
 		return []
 	}
-	// --
 	add_images(arraylist) {
 		if (!arraylist.length) return;
 		arraylist.forEach(image => {
 			image.immat = '' + this.images.length
 			this.images.push(image)
-			// console.log('image:', image)
 		});
-		// console.log('add_images:', arraylist)
 	}
 	add_sprites(arraylist) {
 		if (!arraylist) return;
 		arraylist.forEach(sprite => {
 			sprite.immat = '' + this.sprites.length
 			this.sprites.push(sprite)
-			// console.log('sprite:', sprite)
 		});
-		// console.log('add_sprites:', arraylist)
 	}
 	load_images() {
 		for (let imageImmat = 0; imageImmat < this.images.length; imageImmat++) {
 			let currentimage = this.images[imageImmat]
 			if (typeof currentimage === 'object' && currentimage.uname && currentimage.path && currentimage.immat > -1) {//.isArray
 				// ADD IMAGE to scene
-				this.loadedImages = GAME.scene.scenes[0].load.image(currentimage.uname, currentimage.path)
-				// console.log('load: (', currentimage.uname, ')', currentimage.path)
+				this.loadedImages = GAME.scene.scenes[SCENEIMMAT].load.image(currentimage.uname, currentimage.path)
 			}
 		}
 	}
@@ -58,7 +52,7 @@ class ImagesFactory extends Phaser.Scene {
 				currentsprite.uname && currentsprite.path &&
 				currentsprite.frames && currentsprite.immat > -1) {
 				// ADD SPRITE to scene
-				this.loadedSprites = GAME.scene.scenes[0].load.spritesheet(currentsprite.uname, currentsprite.path, currentsprite.frames)
+				this.loadedSprites = GAME.scene.scenes[SCENEIMMAT].load.spritesheet(currentsprite.uname, currentsprite.path, currentsprite.frames)
 				// console.log('load: (', currentsprite.uname, ')', currentsprite.path)
 			}
 		}
@@ -75,10 +69,24 @@ class ImagesFactory extends Phaser.Scene {
 		// load images
 		this.load_images()
 		this.load_sprites()
-		console.log('images',this.images)
-		console.log('sprites',this.sprites)
-		console.log('spritessheet',this.spritessheet)
+		if (LOGON) {
+			console.log('images', this.images)
+			console.log('sprites', this.sprites)
+			console.log('spritessheet', this.spritessheet)
+		}
 	}
-
+	addBackgroundToScene() { // grounds are clickable
+		GAME.scene.scenes[SCENEIMMAT].allSingles.Background = GAME.scene.scenes[SCENEIMMAT].physics.add.image(0, 0, 'worldmap_1920x1080').setOrigin(0)//.setScale(10)
+		// setInteractive && make clickable
+		GAME.scene.scenes[SCENEIMMAT].allSingles.Background.setInteractive()
+		GAME.scene.scenes[SCENEIMMAT].allGroups.background.add(GAME.scene.scenes[SCENEIMMAT].allSingles.Background)
+		// add event clik on background
+		GAME.scene.scenes[SCENEIMMAT].allSingles.Background.on('pointerdown', (go) => {
+			// console.log(go)
+			PLAYERFACTORY.PlayerMoveByPointer(
+				GAME.scene.scenes[SCENEIMMAT].allSingles.Background
+			)
+		})
+	}
 }
 let IMAGESFACTORY = new ImagesFactory();

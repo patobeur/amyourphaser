@@ -1,11 +1,14 @@
-const version = 'v3'
+const version = 'v5'
 console.log(version)
+let SCENEIMMAT = 0
 const LOGON = false
 const TEMPLATE = 'default'
 const THEMEPATH = 'themes/' + TEMPLATE + '/'
 const THEMEPATHASSETS = 'themes/' + TEMPLATE + '/assets/'
+document.body.addEventListener("contextmenu", (e) => { e.preventDefault(); return false; });
 
 window.onload = () => {
+
 	// definitions
 	const jsFilesList = [
 		{ pathfile: THEMEPATH + 'config.js', idname: 'config-js' },
@@ -16,7 +19,7 @@ window.onload = () => {
 		{ pathfile: 'js/components/chatbotFactory.js', idname: 'chatbotFactory-js' },
 		{ pathfile: 'js/components/mathFactory.js', idname: 'math-js' },
 		{ pathfile: 'js/components/uiFactory.js', idname: 'ui-js' },
-		{ pathfile: 'js/components/keyboardFactory.js', idname: 'keyboard-js' },
+		{ pathfile: 'js/components/interactiveFactory.js', idname: 'interactive-js' },
 		{ pathfile: 'js/components/playerFactory.js', idname: 'playerFactory-js' },
 		{ pathfile: 'js/components/floorsFactory.js', idname: 'floorsFactory-js' },
 		{ pathfile: 'js/components/imagesFactory.js', idname: 'imagesFactory-js' },

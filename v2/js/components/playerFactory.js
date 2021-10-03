@@ -2,7 +2,7 @@ class PlayerFactory extends Phaser.Scene {
 	constructor() {
 		super()
 		this.jobs = ['magic', 'rogue', 'healer', 'archer', 'warrior']
-		this.playerkeys = KEYSFACTORY.keys.player;
+		this.playerkeys = INTERACTIVEFACTORY.keys.player;
 		this.playerDatas = {
 			uname: 'ObiOuane',
 			x: 1,
@@ -46,9 +46,9 @@ class PlayerFactory extends Phaser.Scene {
 
 	// _____________________________________________________
 	// CLICK FLOOR TO MOVE ________________________//_______\
-	PlayerMoveByPointer = (backgroundclicked, thisgame) => {
+	PlayerMoveByPointer = (backgroundclicked) => {
 		this.set_PlayerClickPos({ x: backgroundclicked.input.localX, y: backgroundclicked.input.localY })
-		this.move_PlayerToPointerPos(thisgame)
+		this.move_PlayerToPointerPos()
 	}
 	set_PlayerClickPos(obj) {
 		this.playerDatas.clickpos = {
@@ -63,7 +63,7 @@ class PlayerFactory extends Phaser.Scene {
 		)
 	}
 	move_PlayerToPointerPos() {
-		GAME.scene.scenes[0].physics.moveTo(
+		GAME.scene.scenes[SCENEIMMAT].physics.moveTo(
 			this.playerPhaser,
 			this.playerDatas.clickpos.x,
 			this.playerDatas.clickpos.y,
@@ -91,6 +91,8 @@ class PlayerFactory extends Phaser.Scene {
 			this.playerDatas.right_player = true;
 			this.set_CurrentPlayerSprite('walk_right')
 		}
+	}
+	checkPlayerOnKeyUp(event) {
 	}
 	createPlayerGAMEAnims() {
 		// https://labs.phaser.io/edit.html?src=src/animation/create%20animation%20from%20sprite%20sheet.js&v=3.55.2
@@ -128,8 +130,6 @@ class PlayerFactory extends Phaser.Scene {
 			frames: GAME.anims.generateFrameNumbers('playersprites_' + this.playerDatas.job, { frames: [19, 18, 20, 18] }),
 		});
 		// PLAYERFACTORY.playerPhaser.play('idle_down');
-	}
-	checkPlayerOnKeyUp(event) {
 	}
 	set_CurrentPlayerSprite(animeName) {
 		if (this.playerDatas.currentSpriteName != animeName) {
@@ -200,14 +200,14 @@ class PlayerFactory extends Phaser.Scene {
 			}
 		}
 	}
-	addplayertoscene(){
-		this.playerPhaser = GAME.scene.scenes[0].physics.add.sprite(
+	addplayertoscene() {
+		this.playerPhaser = GAME.scene.scenes[SCENEIMMAT].physics.add.sprite(
 			1, 1,
 			this.playerDatas.image.uname
 		).setOrigin(0).setCollideWorldBounds(true);
 
 		// add to group
-		GAME.scene.scenes[0].allGroups.player.add(this.playerPhaser)
+		GAME.scene.scenes[SCENEIMMAT].allGroups.player.add(this.playerPhaser)
 		this.createPlayerGAMEAnims()
 
 		CHATFACTORY.add_message('New around ? ', 'text')

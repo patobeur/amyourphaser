@@ -1,6 +1,4 @@
-
-let OuterSpace = true;
-class SceneOuterSpace extends Tools {
+class SceneOuterSpace extends GameFunctions {
 	constructor() {
 		super({
 			key: "SceneOuterSpace"

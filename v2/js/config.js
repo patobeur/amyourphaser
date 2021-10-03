@@ -16,3 +16,4 @@ var myPhaserConfig = {
 myPhaserConfig.scene = [SceneMain]
 // creation GAME Instance
 let GAME = new Phaser.Game(myPhaserConfig);
+// GAME.canvas.oncontextmenu = (e) => e.preventDefault()
