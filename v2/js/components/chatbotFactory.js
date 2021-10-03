@@ -95,7 +95,7 @@ class ChatBotFactory {
 		let targetDiv = document.getElementById('messages-box')
 		targetDiv.prepend(newmessDiv)
 		// ---
-		document.getElementById('chat-container').classList.add('active')
+		// document.getElementById('chat-container').classList.add('active')
 		// ---
 		nbMess++
 		setTimeout(this.set_chatOff, 5000, 'test')

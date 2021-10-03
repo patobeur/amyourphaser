@@ -4,9 +4,6 @@ class Tools extends Phaser.Scene {
 		// this.uikeys = uikeys;
 		// this.input.keyboard.on('keyup', this.onKeyUp, this);
 		//
-		// IMAGES & SPRITES
-
-
 		// PHASER Singles
 		this.allSingles = {
 			background: [],
@@ -22,22 +19,49 @@ class Tools extends Phaser.Scene {
 		this.camera2 = Object
 		this.camera2Rotation = 0;
 	}
-	// ______________________________________________________
-	// GAMESCENE PRELOADS ______________librarie+__//_______/
+	// _________________________________________
+	// GAMESCENE PRELOADS _librarie+__//_______/
+	preloadAll(){
+		IMAGESFACTORY.preloadAllImages()
+	}
 	createAll() {
-		// console.log(this)
+		// console.log()
 		this.allGroups = {
 			background: this.add.group(),
-			floor: this.add.group(),
+			floor: this.add.group(FLOORSFACTORY.floors),
 			player: this.add.group(),
 			// mob: this.add.group(),
 			ui: this.add.group(),
 		}
-		this.allGroups.floor = FLOORSFACTORY.floors
 
 		this.addBackgroundToScene()
-		this.addPlayerToScene()
+		PLAYERFACTORY.addplayertoscene()
 		this.addUi()
+
+		
+		this.consoleconfig()
+		this.setWorldBounds(PLAYERFACTORY.playerDatas.setbounds)
+		this.camerasmainfollow() // cameras.main follow player
+		this.addcamera2()
+
+		this.resizeApp()
+		// keyboard event 
+		this.input.keyboard.on('keydown', (event) => { PLAYERFACTORY.checkPlayerOnKeyDown(event) }, this);
+		this.input.keyboard.on('keyup', (event) => { PLAYERFACTORY.checkPlayerOnKeyUp(event) }, this);
+		this.input.on('wheel', (event) => { this.onWheelScroll(event) }, this);
+
+		window.addEventListener('resize', () => { this.resizeApp() }, false);
+	}
+	updateAll(){		
+		PLAYERFACTORY.updateplayerpos()
+	}
+	consoleconfig() {
+		if (LOGON) {
+			console.log('GAME', GAME)
+			console.log('GAME.config', GAME.config)
+			console.log('myPhaserConfig', myPhaserConfig)
+		}
+		console.log('Ready to go !')
 	}
 	// add to scene
 	addBackgroundToScene() { // grounds are clickable
@@ -46,44 +70,28 @@ class Tools extends Phaser.Scene {
 		this.allSingles.Background.setInteractive()
 		this.allGroups.background.add(this.allSingles.Background)
 		this.allSingles.Background.on('pointerdown', (go) => {
-			console.log(go)
+			// console.log(go)
 			PLAYERFACTORY.PlayerMoveByPointer(
 				this.allSingles.Background,
 				this)
 		}, this)
 	}
-	addPlayerToScene() {
-		// console.log(PLAYERFACTORY.playerDatas)
-		// console.log(PLAYERFACTORY.playerDatas.image.immat)
+	// updateplayerpos() {
+	// 	var distance = Phaser.Math.Distance.Between(
+	// 		PLAYERFACTORY.playerPhaser.x,
+	// 		PLAYERFACTORY.playerPhaser.y,
+	// 		PLAYERFACTORY.playerDatas.clickpos.x,
+	// 		PLAYERFACTORY.playerDatas.clickpos.y
+	// 	);
 
-		PLAYERFACTORY.playerPhaser = this.physics.add.sprite(
-			1, 1,
-			PLAYERFACTORY.playerDatas.image.uname
-		).setOrigin(0).setCollideWorldBounds(true);
-		// add to group
-		this.allGroups.player.add(PLAYERFACTORY.playerPhaser)
-
-		PLAYERFACTORY.createPlayerGAMEAnims(this)
-		CHATFACTORY.add_message('New around ? ', 'text')
-		CHATFACTORY.add_message('Here you are x:' + parseInt(PLAYERFACTORY.playerPhaser.x) + ',y:' + parseInt(PLAYERFACTORY.playerPhaser.y), 'text')
-
-	}
-	updateplayerpos() {
-		var distance = Phaser.Math.Distance.Between(
-			PLAYERFACTORY.playerPhaser.x,
-			PLAYERFACTORY.playerPhaser.y,
-			PLAYERFACTORY.playerDatas.clickpos.x,
-			PLAYERFACTORY.playerDatas.clickpos.y
-		);
-
-		// if body player mooving
-		if (PLAYERFACTORY.playerPhaser.body.speed > 0) {
-			if (distance < PLAYERFACTORY.playerDatas.speed) {
-				CHATFACTORY.add_message('I reach pos x:' + parseInt(PLAYERFACTORY.playerPhaser.x) + ',y:' + parseInt(PLAYERFACTORY.playerPhaser.y), 'text', 'me')
-				PLAYERFACTORY.playerPhaser.body.reset(PLAYERFACTORY.playerDatas.clickpos.x, PLAYERFACTORY.playerDatas.clickpos.y);
-			}
-		}
-	}
+	// 	// if body player mooving
+	// 	if (PLAYERFACTORY.playerPhaser.body.speed > 0) {
+	// 		if (distance < PLAYERFACTORY.playerDatas.speed) {
+	// 			CHATFACTORY.add_message('I reach pos x:' + parseInt(PLAYERFACTORY.playerPhaser.x) + ',y:' + parseInt(PLAYERFACTORY.playerPhaser.y), 'text', 'me')
+	// 			PLAYERFACTORY.playerPhaser.body.reset(PLAYERFACTORY.playerDatas.clickpos.x, PLAYERFACTORY.playerDatas.clickpos.y);
+	// 		}
+	// 	}
+	// }
 
 	// camera follow
 	setWorldBounds(obj) {
@@ -128,5 +136,10 @@ class Tools extends Phaser.Scene {
 		// 	this.camera2._fadeAlpha = 0.0;
 		// 	this.camera2.fade(1000);
 		// }
+	}
+	onWheelScroll(event) {
+		event.deltaY > 0
+			? this.cameras.main.zoom > configDefault.zoom.min ? this.cameras.main.zoom -= configDefault.zoom.step : ''
+			: this.cameras.main.zoom < configDefault.zoom.max ? this.cameras.main.zoom += configDefault.zoom.step : '';
 	}
 }

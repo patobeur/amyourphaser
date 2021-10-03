@@ -62,8 +62,8 @@ class PlayerFactory extends Phaser.Scene {
 			this.playerDatas.clickpos.y
 		)
 	}
-	move_PlayerToPointerPos(thisgame) {
-		thisgame.physics.moveTo(
+	move_PlayerToPointerPos() {
+		GAME.scene.scenes[0].physics.moveTo(
 			this.playerPhaser,
 			this.playerDatas.clickpos.x,
 			this.playerDatas.clickpos.y,
@@ -133,7 +133,7 @@ class PlayerFactory extends Phaser.Scene {
 	}
 	set_CurrentPlayerSprite(animeName) {
 		if (this.playerDatas.currentSpriteName != animeName) {
-			console.log(animeName)
+			// console.log(animeName)
 			this.playerPhaser.play(animeName)
 			this.playerDatas.currentSpriteName = animeName
 		}
@@ -199,6 +199,19 @@ class PlayerFactory extends Phaser.Scene {
 				this.playerPhaser.body.reset(this.playerDatas.clickpos.x, this.playerDatas.clickpos.y);
 			}
 		}
+	}
+	addplayertoscene(){
+		this.playerPhaser = GAME.scene.scenes[0].physics.add.sprite(
+			1, 1,
+			this.playerDatas.image.uname
+		).setOrigin(0).setCollideWorldBounds(true);
+
+		// add to group
+		GAME.scene.scenes[0].allGroups.player.add(this.playerPhaser)
+		this.createPlayerGAMEAnims()
+
+		CHATFACTORY.add_message('New around ? ', 'text')
+		CHATFACTORY.add_message('Here you are x:' + parseInt(this.playerPhaser.x) + ',y:' + parseInt(this.playerPhaser.y), 'text')
 	}
 }
 let PLAYERFACTORY = new PlayerFactory();

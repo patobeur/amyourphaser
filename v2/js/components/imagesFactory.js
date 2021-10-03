@@ -41,31 +41,30 @@ class ImagesFactory extends Phaser.Scene {
 		});
 		// console.log('add_sprites:', arraylist)
 	}
-	load_images(thisgame) {
+	load_images() {
 		for (let imageImmat = 0; imageImmat < this.images.length; imageImmat++) {
 			let currentimage = this.images[imageImmat]
 			if (typeof currentimage === 'object' && currentimage.uname && currentimage.path && currentimage.immat > -1) {//.isArray
 				// ADD IMAGE to scene
-				this.loadedImages = thisgame.load.image(currentimage.uname, currentimage.path)
+				this.loadedImages = GAME.scene.scenes[0].load.image(currentimage.uname, currentimage.path)
 				// console.log('load: (', currentimage.uname, ')', currentimage.path)
 			}
 		}
 	}
-	load_sprites(thisgame) {
+	load_sprites() {
 		for (let spriteImmat = 0; spriteImmat < this.sprites.length; spriteImmat++) {
 			let currentsprite = this.sprites[spriteImmat]
 			if (typeof currentsprite === 'object' &&
 				currentsprite.uname && currentsprite.path &&
 				currentsprite.frames && currentsprite.immat > -1) {
 				// ADD SPRITE to scene
-				this.loadedSprites = thisgame.load.spritesheet(currentsprite.uname, currentsprite.path, currentsprite.frames)
+				this.loadedSprites = GAME.scene.scenes[0].load.spritesheet(currentsprite.uname, currentsprite.path, currentsprite.frames)
 				// console.log('load: (', currentsprite.uname, ')', currentsprite.path)
 			}
 		}
 	}
 
-	preloadAllImages(thisgame) { // called by sceneMain.js
-		// this is all going to ImagesFactory Class
+	preloadAllImages() { // called by sceneMain.jss
 		this.add_images(this.get_imagetopreload())
 		this.add_images(PLAYERFACTORY.get_imagetopreload())
 		this.add_images(FLOORSFACTORY.images)
@@ -74,11 +73,11 @@ class ImagesFactory extends Phaser.Scene {
 		this.add_sprites([PLAYERFACTORY.playerDatas.sprites])
 		this.add_sprites(FLOORSFACTORY.sprites)
 		// load images
-		this.load_images(thisgame)
-		this.load_sprites(thisgame)
-		console.log(this.images)
-		console.log(this.sprites)
-		console.log(this.spritessheet)
+		this.load_images()
+		this.load_sprites()
+		console.log('images',this.images)
+		console.log('sprites',this.sprites)
+		console.log('spritessheet',this.spritessheet)
 	}
 
 }
