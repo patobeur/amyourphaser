@@ -13,4 +13,7 @@ class SceneMain extends GameFunctions {
 	update() {
 		this.updateAll()
 	}
+	render() {
+		PLAYERFACTORY.renderbullet()
+	}
 }

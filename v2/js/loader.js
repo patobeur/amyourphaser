@@ -1,11 +1,11 @@
 const version = 'v5'
 console.log(version)
-let SCENEIMMAT = 0
+const SCENEIMMAT = 0
 const LOGON = false
 const TEMPLATE = 'default'
 const THEMEPATH = 'themes/' + TEMPLATE + '/'
 const THEMEPATHASSETS = 'themes/' + TEMPLATE + '/assets/'
-document.body.addEventListener("contextmenu", (e) => { e.preventDefault(); return false; });
+// document.body.addEventListener("contextmenu", (e) => { e.preventDefault(); return false; });
 
 window.onload = () => {
 

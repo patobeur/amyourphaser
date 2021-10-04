@@ -11,6 +11,11 @@ let configDefault = {
 			keyDown: [83, 40], // 's', arrowDown
 			keyLeft: [81, 37], // 'q', arrowLeft
 			keyRight: [68, 39], // 'd', arrowRight
+			key1: [49], // '&', 1
+			key2: [50], // 'é', 2
+			key3: [51], // '"', 3
+			key4: [52], // ''', 4
+			key5: [53], // '(', 5
 		},
 		ui: {
 			keySpace: [32], // space

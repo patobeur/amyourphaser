@@ -28,18 +28,20 @@ class GameFunctions extends Phaser.Scene {
 		}
 
 		IMAGESFACTORY.addBackgroundToScene()
-		IMAGESFACTORY.setBackgroundClickable()
 		PLAYERFACTORY.addplayertoscene()
 		this.addUi()
 		INTERACTIVEFACTORY.resizeApp()
 
 		this.consoleconfig()
-		this.setWorldBounds(PLAYERFACTORY.playerDatas.setbounds)
 		this.camerasmainfollow() // cameras.main follow player
 		this.addcamera2()
 
+		this.setWorldBounds()
+
 		// keydown, keyup, wheel, resize and other interactions
 		INTERACTIVEFACTORY.set_interactivity(0)
+		// setInteractive && make clickable
+		INTERACTIVEFACTORY.setBackgroundClickable()
 	}
 	updateAll() {
 		PLAYERFACTORY.updateplayerpos()
@@ -53,9 +55,16 @@ class GameFunctions extends Phaser.Scene {
 		console.log('Ready to go !')
 	}
 	// worl limit
-	setWorldBounds(obj) {
-		if (LOGON) console.log('this.physics.world.setBounds', obj.x, obj.y, obj.w, obj.h)
-		this.physics.world.setBounds(obj.x, obj.y, obj.w, obj.h,);
+	setWorldBounds() {
+		let x = GAME.scene.scenes[SCENEIMMAT].allSingles.background.x
+		let y = GAME.scene.scenes[SCENEIMMAT].allSingles.background.y
+		let width = GAME.scene.scenes[SCENEIMMAT].allSingles.background.width
+		let height = GAME.scene.scenes[SCENEIMMAT].allSingles.background.height
+
+		// if (LOGON) 
+		console.log('this.physics.world.setBounds', x, y, width, height)
+		this.physics.world.setBounds(x, y, width, height);
+
 	}
 	// camera follow
 	camerasmainfollow = () => {
