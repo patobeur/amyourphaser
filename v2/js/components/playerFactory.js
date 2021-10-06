@@ -153,7 +153,7 @@ class PlayerFactory extends Phaser.Scene {
 	}
 	set_CurrentPlayerSprite(animeName) {
 		if (this.playerDatas.currentSpriteName != animeName) {
-			console.log('animeName', animeName)
+			// console.log('animeName', animeName)
 			this.playerPhaser.play(animeName)
 			this.playerDatas.currentSpriteName = animeName
 		}
@@ -269,14 +269,14 @@ class PlayerFactory extends Phaser.Scene {
 		GAME.scene.scenes[SCENEIMMAT].debug.spriteInfo(this.playerPhaser, 32, 450);
 	}
 	set_bullets() {
-		console.log('setting bullets')
+		if (LOGON) console.log('setting bullets')
 		this.bullets = GAME.scene.scenes[SCENEIMMAT].add.group();
 		// not working ??
 		// this.bullets.setCollideWorldBounds(true);
 		// this.bullets.setoutOfBoundsKill(true);
 		// this dont create nothing !!!!!
 		this.bullets.createMultiple(50, 'bullet', 0, false);
-		console.log('>>>>>>>>console.log this.bullets group:', this.bullets)
+		if (LOGON) console.log('>>>>>>>>console.log this.bullets group:', this.bullets)
 		// not working ?? array empty ?????
 		// this.bullets.children.forEach(element => {
 		// 	console.log('<<<<<<<<<<<<<<<<console.log bullet child', bullet)

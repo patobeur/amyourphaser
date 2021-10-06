@@ -19,8 +19,6 @@ class ImagesFactory extends Phaser.Scene {
 	// basics 
 	get_basicsimagetopreload = () => {
 		return [
-			{ immat: -1, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
-			{ immat: -1, uname: 'wall_64x64', path: THEMEPATHASSETS + 'img/wall_64x64.png' },
 			{ immat: -1, uname: 'worldmap_1920x1080', path: THEMEPATHASSETS + 'img/worldmap_1920x1080.png' },
 			{ immat: -1, uname: 'worldmap_1920x1080v2', path: THEMEPATHASSETS + 'img/worldmap_1920x1080v2.png' },
 			{ immat: -1, uname: 'burger_off', path: THEMEPATHASSETS + 'img/burger_off.png' },
@@ -67,26 +65,26 @@ class ImagesFactory extends Phaser.Scene {
 		// add to loadlist
 		this.add_imagesToLoadList(this.get_basicsimagetopreload(), 'images')
 		this.add_imagesToLoadList(this.get_basicsspritetopreload(), 'sprites')
+		// player
 		this.add_imagesToLoadList(PLAYERFACTORY.images, 'images')
 		this.add_imagesToLoadList(PLAYERFACTORY.sprites, 'sprites')
 		this.add_imagesToLoadList(PLAYERFACTORY.spritessheet, 'spritessheet')
 		this.add_imagesToLoadList(PLAYERFACTORY.bulletssprite, 'bulletssprite')
-		this.add_imagesToLoadList(FLOORSFACTORY.get_imagetopreload(), 'images')
-
+		// floors
+		this.add_imagesToLoadList(FLOORSFACTORY.images, 'images')
 
 		// load images
 		this.stacks.forEach(itemname => {
-			// this['load_' + item](item)
 			this.load_mixed(itemname)
 		});
 
 
 		if (LOGON) {
-			console.log('images', this.images)
 			console.log('spritessheet', this.spritessheet)
 			console.log('bulletssprite', this.bulletssprite)
 			console.log('sprites', this.sprites)
 		}
+		console.log('images', this.images)
 	}
 }
 let IMAGESFACTORY = new ImagesFactory();
