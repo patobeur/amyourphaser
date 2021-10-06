@@ -83,8 +83,8 @@ class ImagesFactory extends Phaser.Scene {
 			console.log('spritessheet', this.spritessheet)
 			console.log('bulletssprite', this.bulletssprite)
 			console.log('sprites', this.sprites)
+			console.log('images', this.images)
 		}
-		console.log('images', this.images)
 	}
 }
 let IMAGESFACTORY = new ImagesFactory();

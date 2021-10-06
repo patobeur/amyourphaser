@@ -41,9 +41,32 @@ class FloorsFactory extends Phaser.Scene {
 					{
 						immat: -1,
 						uname: 'block_1',
-						x: 192, y: 192,
+						x: 4 * 32, y: 4 * 32
+						,
 						path: THEMEPATHASSETS + 'img/wall_64x64.png',
 						collide: true
+					},
+					{
+						immat: -1,
+						uname: 'block_2',
+						x: 7 * 32, y: 0,
+						path: THEMEPATHASSETS + 'img/wall_32x64.png',
+						collide: true
+					},
+					{
+						immat: -1,
+						uname: 'block_3',
+						x: 7 * 32, y: 4 * 32,
+						path: THEMEPATHASSETS + 'img/wall_32x128.png',
+						collide: true
+					},
+					{
+						immat: -1,
+						uname: 'block_4',
+						x: 2 * 32, y: 192,
+						path: THEMEPATHASSETS + 'img/wall_32x64.png',
+						collide: true,
+						rotate: 0
 					}
 				]
 			}
@@ -51,30 +74,49 @@ class FloorsFactory extends Phaser.Scene {
 	}
 	addFloorToScene() { // grounds are clickable
 		this.currentFloorDatas = FLOORSFACTORY.images[FLOORSFACTORY.currentFloorImmat].uname
-		if (LOGON) console.log('addFloorToScene', FLOORSFACTORY.currentFloorImmat, this.currentFloorUname)
+		// if (LOGON)
+		console.log('addFloorToScene', FLOORSFACTORY.currentFloorImmat, this.currentFloorUname)
 		// add to groups
 		GAME.scene.scenes[SCENEIMMAT].allGroups.floor[this.currentFloorUname] =
 			GAME.scene.scenes[SCENEIMMAT].physics.add.image(
 				0, 0,
 				this.currentFloorUname
-			).setOrigin(0)//.setScale(10)
+			).setOrigin(0, 0)//.setScale(10)
 	}
 	addBlocksToScene() {
+		console.log('adding blocks...')
 		// this.currentFloorUname = FLOORSFACTORY.images[FLOORSFACTORY.currentFloorImmat].uname
 		this.roomsDatas[FLOORSFACTORY.currentFloorImmat].blocks.forEach(block => {
 			// console.log('set_blocks', block)
+			console.log('adding : ', block.uname, 'to allGroups.block')
 			GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname] =
 				GAME.scene.scenes[SCENEIMMAT].physics.add.image(
 					block.x,
 					block.y,
 					block.uname
-				).setCollideWorldBounds(true);
+				).setOrigin(0, 0)//.setCollideWorldBounds(true);
 
 			if (block.collide) {
-				console.log('-----------')
+				GAME.scene.scenes[SCENEIMMAT].collide_object(
+					GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname],
+					PLAYERFACTORY.playerPhaser)
+			}
+			if (block.rotate) {
+				GAME.scene.scenes[SCENEIMMAT].tweens.add({
+					targets: GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname],
+					angle: block.rotate,
+					duration: 0,
+					// onUpdate: (tween) => {
+					// 	const value = GAME.scene.scenes[SCENEIMMAT].tweens
+					// 	console.log('ok', value)
+					// }
+				})
 
-				GAME.scene.scenes[SCENEIMMAT].collide_object(GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname], PLAYERFACTORY.playerPhaser)
 
+
+				// GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname].setAngle(block.rotate)
+				// GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname].setRotation(Phaser.Math.RadToDeg(block.rotate))
+				// console.log('rotation', GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname].rotation)
 			}
 			if (block.beat_off) { GAME.scene.scenes[SCENEIMMAT].beat_off(x, y, 'red') }
 			if (block.game_over) { GAME.scene.scenes[SCENEIMMAT].game_over_collider(x, y, 'red') }
