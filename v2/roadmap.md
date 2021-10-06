@@ -41,7 +41,8 @@
 - [ ] Blocks
 - - these are the elements of the decor
 
-
+### to read
+- [ ] https://blog.ourcade.co/posts/2020/phaser-3-point-click-pathfinding-movement-tilemap/
 
 ### thx 
 thx for your free easy fast copy/past css loader : https://loading.io/css/

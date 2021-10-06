@@ -1,8 +1,8 @@
 class ImagesFactory extends Phaser.Scene {
 	constructor() {
 		super()
-		this.images = this.get_basicsimagetopreload()
-		this.sprites = this.get_basicsspritetopreload()
+		this.images = []
+		this.sprites = []
 		this.spritessheet = []
 		this.bulletssprite = []
 
@@ -10,24 +10,30 @@ class ImagesFactory extends Phaser.Scene {
 		this.loadedsprites = []
 		this.loadedspritesSheet = []
 		this.loadedbulletssprite = []
+
 		this.stacks = ['images', 'sprites', 'spritessheet', 'bulletssprite']
+
 		this.stackedcounter = 0
 		this.loadedcounter = 0
 	}
 	// basics 
 	get_basicsimagetopreload = () => {
 		return [
-			{ immat: false, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
-			{ immat: false, uname: 'wall_64x64', path: THEMEPATHASSETS + 'img/wall_64x64.png' },
-			{ immat: false, uname: 'worldmap_1920x1080', path: THEMEPATHASSETS + 'img/worldmap_1920x1080.png' },
-			{ immat: false, uname: 'worldmap_1920x1080v2', path: THEMEPATHASSETS + 'img/worldmap_1920x1080v2.png' },
-			{ immat: false, uname: 'burger_off', path: THEMEPATHASSETS + 'img/burger_off.png' },
-			{ immat: false, uname: 'burger_on', path: THEMEPATHASSETS + 'img/burger_on.png' },
-			{ immat: false, uname: 'thisisnottobeseen', path: THEMEPATHASSETS + 'img/thisisnottobeseen.png' },
+			{ immat: -1, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
+			{ immat: -1, uname: 'wall_64x64', path: THEMEPATHASSETS + 'img/wall_64x64.png' },
+			{ immat: -1, uname: 'worldmap_1920x1080', path: THEMEPATHASSETS + 'img/worldmap_1920x1080.png' },
+			{ immat: -1, uname: 'worldmap_1920x1080v2', path: THEMEPATHASSETS + 'img/worldmap_1920x1080v2.png' },
+			{ immat: -1, uname: 'burger_off', path: THEMEPATHASSETS + 'img/burger_off.png' },
+			{ immat: -1, uname: 'burger_on', path: THEMEPATHASSETS + 'img/burger_on.png' },
+			{ immat: -1, uname: 'thisisnottobeseen', path: THEMEPATHASSETS + 'img/thisisnottobeseen.png' },
+			{ immat: -1, uname: 'cursor', path: THEMEPATHASSETS + 'img/cursor.png' },
 		]
 	}
 	get_basicsspritetopreload = () => {
-		return []
+		return [
+			{ immat: -1, uname: 'cursor_left', path: THEMEPATHASSETS + 'sprites/cursor_left.png', frames: { frameWidth: 32, frameHeight: 32 } },
+			{ immat: -1, uname: 'cursor_right', path: THEMEPATHASSETS + 'sprites/cursor_right.png', frames: { frameWidth: 32, frameHeight: 32 } },
+		]
 	}
 	// mixed
 	load_mixed(itemname) {
@@ -43,13 +49,14 @@ class ImagesFactory extends Phaser.Scene {
 					this['loaded' + itemname] = GAME.scene.scenes[SCENEIMMAT].load.spritesheet(current.uname, current.path, current.frames)
 				}
 			}
+			// console.log('loaded' + itemname, current.uname, current.path, current.frames)
 			this.loadedcounter++
 		}
 	}
 	add_imagesToLoadList(arraylist, type) {
-		if (!arraylist.length || !type) return;
+		if (!arraylist.length || !arraylist.length > 0 || !type) { console.log('bad'); return }
 		arraylist.forEach(item => {
-			item.immat = this.images.length
+			item.immat = this[type].length
 			this[type].push(item)
 			this.stackedcounter++
 		});
@@ -58,6 +65,8 @@ class ImagesFactory extends Phaser.Scene {
 	// -------------------------------------
 	preloadAllImages() { // called by sceneMain.js
 		// add to loadlist
+		this.add_imagesToLoadList(this.get_basicsimagetopreload(), 'images')
+		this.add_imagesToLoadList(this.get_basicsspritetopreload(), 'sprites')
 		this.add_imagesToLoadList(PLAYERFACTORY.images, 'images')
 		this.add_imagesToLoadList(PLAYERFACTORY.sprites, 'sprites')
 		this.add_imagesToLoadList(PLAYERFACTORY.spritessheet, 'spritessheet')
@@ -74,24 +83,10 @@ class ImagesFactory extends Phaser.Scene {
 
 		if (LOGON) {
 			console.log('images', this.images)
-			console.log('sprites', this.sprites)
 			console.log('spritessheet', this.spritessheet)
 			console.log('bulletssprite', this.bulletssprite)
+			console.log('sprites', this.sprites)
 		}
-	}
-	addBackgroundToScene() { // grounds are clickable
-		// console.log(FLOORSFACTORY.currentFloorImmat)
-		let currentfloor = FLOORSFACTORY.images[FLOORSFACTORY.currentFloorImmat].uname
-
-		GAME.scene.scenes[SCENEIMMAT].allSingles.Background =
-			GAME.scene.scenes[SCENEIMMAT].physics.add.image(
-				0, 0,
-				currentfloor
-			).setOrigin(0)//.setScale(10)
-		GAME.scene.scenes[SCENEIMMAT].allGroups.background.add(
-			GAME.scene.scenes[SCENEIMMAT].allSingles.Background
-		)
-		// console.log(GAME.scene.scenes[SCENEIMMAT].allGroups)
 	}
 }
 let IMAGESFACTORY = new ImagesFactory();

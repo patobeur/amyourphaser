@@ -28,7 +28,7 @@ class InteractiveFactory {
 		GAME.scene.scenes[sceneNum].input.keyboard.on('keydown', (event) => { PLAYERFACTORY.checkPlayerOnKeyDown(event) });
 		GAME.scene.scenes[sceneNum].input.keyboard.on('keyup', (event) => { PLAYERFACTORY.checkPlayerOnKeyUp(event) });
 		GAME.scene.scenes[sceneNum].input.on('wheel', (event) => { this.onWheelScroll(event) });
-		GAME.scene.scenes[sceneNum].input.on('onMouseMove', (event) => { this.mousemove(event) });
+		GAME.scene.scenes[sceneNum].input.on('pointermove', (event) => { this.mousemove(event) });
 		window.addEventListener('resize', () => { this.resizeApp() }, false);
 
 	}
@@ -41,30 +41,37 @@ class InteractiveFactory {
 		GAME.scene.scenes[SCENEIMMAT].scale.resize(window.innerWidth, window.innerHeight);
 		if (LOGON) console.log('canvasSize:', 'w:' + GAME.scene.scenes[SCENEIMMAT].canvas.width, 'h:' + GAME.scene.scenes[SCENEIMMAT].canvas.height)
 	}
-	setBackgroundClickable() {
-		// console.log('ff', GAME.scene.scenes[SCENEIMMAT].onMouseMove)
+	setFloorClickable() {
 		// add event clik on background
-		GAME.scene.scenes[SCENEIMMAT].allSingles.Background.setInteractive()
-		GAME.scene.scenes[SCENEIMMAT].allSingles.Background.on('pointerdown', (pointer) => {
-			let x = GAME.scene.scenes[SCENEIMMAT].allSingles.Background.input.localX
-			let y = GAME.scene.scenes[SCENEIMMAT].allSingles.Background.input.localY
+
+		let floor = GAME.scene.scenes[SCENEIMMAT].allGroups.floor[FLOORSFACTORY.currentFloorUname]
+		floor.setInteractive()
+		floor.on('pointerdown', (pointer) => {
+			let x = floor.input.localX
+			let y = floor.input.localY
 			if (pointer.rightButtonDown()) {
 				// if (pointer.getDuration() > 100) {
-				console.log('right', x, y)
+				// console.log('right', x, y)
 				// } else { }
 			}
 			if (pointer.leftButtonDown()) {
-				console.log('left', x, y)
+				// console.log('left', x, y)
 				PLAYERFACTORY.playerMoveByPointer(
-					GAME.scene.scenes[SCENEIMMAT].allSingles.Background
+					floor
 				)
 			}
-
-
 		})
 	}
-	mousemove() {
-		console.log('moove')
+	mousemove(event) {
+		let floor = GAME.scene.scenes[SCENEIMMAT].allGroups.floor[FLOORSFACTORY.currentFloorUname]
+		let cursor = GAME.scene.scenes[SCENEIMMAT].allSingles.cursor
+		let dx = floor.input.localX
+		let dy = floor.input.localY
+		cursor.setVisible(true).setPosition(dx, dy);
+		// test 
+		// let BetweenPoints = Phaser.Math.Angle.BetweenPoints(objsource, objdest)
+		// let Between = Phaser.Math.Angle.Between(objsource, objdest)
+		// let BetweenY = Phaser.Math.Angle.BetweenY(objsource, objdest)
 	}
 }
 let INTERACTIVEFACTORY = new InteractiveFactory();

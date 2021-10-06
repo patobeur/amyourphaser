@@ -63,7 +63,7 @@ class PlayerFactory extends Phaser.Scene {
 	// _____________________________________________________
 	// CLICK FLOOR TO MOVE ________________________//_______\
 	playerMoveByPointer = (backgroundclicked) => {
-		this.set_PlayerClickPos({ x: backgroundclicked.input.localX, y: backgroundclicked.input.localY })
+		this.set_PlayerClickPos({ x: backgroundclicked.input.localX + (PLAYERFACTORY.playerPhaser.width / 2), y: backgroundclicked.input.localY + (PLAYERFACTORY.playerPhaser.height / 2) })
 		this.move_PlayerToPointerPos()
 	}
 	set_PlayerClickPos(obj) {
@@ -86,7 +86,6 @@ class PlayerFactory extends Phaser.Scene {
 			200)
 	}
 	checkPlayerOnKeyDown(event) {
-		console.log(event)
 		if (this.playerkeys.keyUp.indexOf(event.keyCode) > -1) {
 			this.playerPhaser.y -= this.playerDatas.speed;
 			this.playerDatas.up_player = true;
@@ -108,6 +107,7 @@ class PlayerFactory extends Phaser.Scene {
 			this.set_CurrentPlayerSprite('walk_right')
 		}
 		else if (this.playerkeys.key1.indexOf(event.keyCode) > -1) {
+			// console.log(event)
 			PLAYERFACTORY.fire()
 		}
 	}
@@ -186,7 +186,7 @@ class PlayerFactory extends Phaser.Scene {
 		this.playerPhaser = GAME.scene.scenes[SCENEIMMAT].physics.add.sprite(
 			1, 1,
 			this.playerDatas.sprites.uname
-		).setOrigin(0).setCollideWorldBounds(true);
+		).setOrigin(0.5, .5).setCollideWorldBounds(true);
 
 		this.set_bullets()
 		// add to group
@@ -202,45 +202,45 @@ class PlayerFactory extends Phaser.Scene {
 				uname: 'rogue',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 100, madness: 0, speed: 4 },
 				sprites: { immat: -1, uname: 'sprite_rogue', path: THEMEPATHASSETS + 'img/job_rogue.png', frames: { frameWidth: 32, frameHeight: 32 } },
-				image: { immat: -1, uname: 'player_rogue', path: THEMEPATHASSETS + '/sprites/playersprites.png' },
-				spritessheet: { immat: -1, uname: 'sprites_rogue', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
-				bulletssprite: { immat: -1, uname: 'bullet_rogue', path: THEMEPATHASSETS + '/sprites/fireball.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				image: { immat: -1, uname: 'player_rogue', path: THEMEPATHASSETS + 'sprites/playersprites.png' },
+				spritessheet: { immat: -1, uname: 'sprites_rogue', path: THEMEPATHASSETS + 'sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				bulletssprite: { immat: -1, uname: 'bullet_rogue', path: THEMEPATHASSETS + 'sprites/fireball.png', frames: { frameWidth: 32, frameHeight: 32 } },
 				skills: { bullets: true }
 			},
 			magic: {
 				uname: 'magic',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 50, yang: 50, madness: 0, speed: 4 },
 				sprites: { immat: -1, uname: 'sprite_magic', path: THEMEPATHASSETS + 'img/job_magic.png', frames: { frameWidth: 32, frameHeight: 32 } },
-				image: { immat: -1, uname: 'player_magic', path: THEMEPATHASSETS + '/sprites/playersprites.png' },
-				spritessheet: { immat: -1, uname: 'sprites_magic', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
-				bulletssprite: { immat: -1, uname: 'bullet_magic', path: THEMEPATHASSETS + '/sprites/fireball.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				image: { immat: -1, uname: 'player_magic', path: THEMEPATHASSETS + 'sprites/playersprites.png' },
+				spritessheet: { immat: -1, uname: 'sprites_magic', path: THEMEPATHASSETS + 'sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				bulletssprite: { immat: -1, uname: 'bullet_magic', path: THEMEPATHASSETS + 'sprites/fireball.png', frames: { frameWidth: 32, frameHeight: 32 } },
 				skills: { bullets: true }
 			},
 			archer: {
 				uname: 'archer',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 0, madness: 0, speed: 4 },
 				sprites: { immat: -1, uname: 'sprite_archer', path: THEMEPATHASSETS + 'img/job_basic.png', frames: { frameWidth: 32, frameHeight: 32 } },
-				image: { immat: -1, uname: 'player_archer', path: THEMEPATHASSETS + '/sprites/playersprites.png' },
-				spritessheet: { immat: -1, uname: 'sprites_archer', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
-				bulletssprite: { immat: -1, uname: 'bullet_archer', path: THEMEPATHASSETS + '/sprites/fireball.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				image: { immat: -1, uname: 'player_archer', path: THEMEPATHASSETS + 'sprites/playersprites.png' },
+				spritessheet: { immat: -1, uname: 'sprites_archer', path: THEMEPATHASSETS + 'sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				bulletssprite: { immat: -1, uname: 'bullet_archer', path: THEMEPATHASSETS + 'sprites/fireball.png', frames: { frameWidth: 32, frameHeight: 32 } },
 				skills: { bullets: true }
 			},
 			warrior: {
 				uname: 'warrior',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 0, yang: 0, madness: 0, speed: 4 },
 				sprites: { immat: -1, uname: 'sprite_warrior', path: THEMEPATHASSETS + 'img/job_warrior.png', frames: { frameWidth: 32, frameHeight: 32 } },
-				image: { immat: -1, uname: 'player_warrior', path: THEMEPATHASSETS + '/sprites/playersprites.png' },
-				spritessheet: { immat: -1, uname: 'sprites_warrior', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
-				bulletssprite: { immat: -1, uname: 'bullet_warrior', path: THEMEPATHASSETS + '/sprites/fireball.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				image: { immat: -1, uname: 'player_warrior', path: THEMEPATHASSETS + 'sprites/playersprites.png' },
+				spritessheet: { immat: -1, uname: 'sprites_warrior', path: THEMEPATHASSETS + 'sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				bulletssprite: { immat: -1, uname: 'bullet_warrior', path: THEMEPATHASSETS + 'sprites/fireball.png', frames: { frameWidth: 32, frameHeight: 32 } },
 				skills: { bullets: true }
 			},
 			healer: {
 				uname: 'healer',
 				stats: { health: 100, int: 100, karma: 100, strength: 100, ying: 100, yang: 0, madness: 0, speed: 4 },
 				sprites: { immat: -1, uname: 'sprite_healer', path: THEMEPATHASSETS + 'img/job_healer.png', frames: { frameWidth: 32, frameHeight: 32 } },
-				image: { immat: -1, uname: 'player_healer', path: THEMEPATHASSETS + '/sprites/playersprites.png' },
-				spritessheet: { immat: -1, uname: 'sprites_healer', path: THEMEPATHASSETS + '/sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
-				bulletssprite: { immat: -1, uname: 'bullet_healer', path: THEMEPATHASSETS + '/sprites/fireball.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				image: { immat: -1, uname: 'player_healer', path: THEMEPATHASSETS + 'sprites/playersprites.png' },
+				spritessheet: { immat: -1, uname: 'sprites_healer', path: THEMEPATHASSETS + 'sprites/playersprites.png', frames: { frameWidth: 32, frameHeight: 32 } },
+				bulletssprite: { immat: -1, uname: 'bullet_healer', path: THEMEPATHASSETS + 'sprites/fireball.png', frames: { frameWidth: 32, frameHeight: 32 } },
 				skills: { bullets: true }
 			},
 		}
@@ -259,7 +259,7 @@ class PlayerFactory extends Phaser.Scene {
 			console.log('fire()  console.log(this.bullets)', this.bullets)
 			var bullet = this.bullets.getFirstDead();
 
-			bullet.reset(this.playerPhaser.x - 8, this.playerPhaser.y - 8);
+			// bullet.reset(this.playerPhaser.x - 8, this.playerPhaser.y - 8);
 
 			GAME.scene.scenes[SCENEIMMAT].physics.arcade.moveToPointer(bullet, 300);
 		}
@@ -268,7 +268,6 @@ class PlayerFactory extends Phaser.Scene {
 		GAME.scene.scenes[SCENEIMMAT].debug.text('Active Bullets: ' + this.bullets.countLiving() + ' / ' + this.bullets.total, 32, 32);
 		GAME.scene.scenes[SCENEIMMAT].debug.spriteInfo(this.playerPhaser, 32, 450);
 	}
-
 	set_bullets() {
 		console.log('setting bullets')
 		this.bullets = GAME.scene.scenes[SCENEIMMAT].add.group();
