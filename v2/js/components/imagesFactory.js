@@ -5,13 +5,14 @@ class ImagesFactory extends Phaser.Scene {
 		this.sprites = []
 		this.spritessheet = []
 		this.bulletssprite = []
+		this.ui = []
 
 		this.loadedimages = []
 		this.loadedsprites = []
 		this.loadedspritesSheet = []
 		this.loadedbulletssprite = []
 
-		this.stacks = ['images', 'sprites', 'spritessheet', 'bulletssprite']
+		this.stacks = ['images', 'sprites', 'spritessheet', 'bulletssprite', 'ui']
 
 		this.stackedcounter = 0
 		this.loadedcounter = 0
@@ -51,9 +52,9 @@ class ImagesFactory extends Phaser.Scene {
 			this.loadedcounter++
 		}
 	}
-	add_imagesToLoadList(arraylist, type) {
-		if (!arraylist.length || !arraylist.length > 0 || !type) { console.log('bad'); return }
-		arraylist.forEach(item => {
+	add_imagesToLoadList(imageArray, type) {
+		if (!imageArray.length || !imageArray.length > 0 || !type) { console.log('bad'); return }
+		imageArray.forEach(item => {
 			item.immat = this[type].length
 			this[type].push(item)
 			this.stackedcounter++
@@ -72,6 +73,8 @@ class ImagesFactory extends Phaser.Scene {
 		this.add_imagesToLoadList(PLAYERFACTORY.bulletssprite, 'bulletssprite')
 		// floors
 		this.add_imagesToLoadList(FLOORSFACTORY.images, 'images')
+		// ui
+		this.add_imagesToLoadList(UIFACTORY.images, 'ui')
 
 		// load images
 		this.stacks.forEach(itemname => {

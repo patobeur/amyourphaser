@@ -64,9 +64,10 @@ class InteractiveFactory {
 	}
 	mousemove(event) {
 		let floor = GAME.scene.scenes[SCENEIMMAT].allGroups.floor[FLOORSFACTORY.currentFloorUname]
-		let cursor = GAME.scene.scenes[SCENEIMMAT].allSingles.cursor
 		let dx = floor.input.localX
 		let dy = floor.input.localY
+
+		let cursor = GAME.scene.scenes[SCENEIMMAT].allSingles.cursor
 		cursor.setVisible(true).setPosition(dx, dy);
 		// test 
 		// let BetweenPoints = Phaser.Math.Angle.BetweenPoints(objsource, objdest)

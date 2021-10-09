@@ -34,40 +34,46 @@ class FloorsFactory extends Phaser.Scene {
 				blocks: [
 					{
 						immat: -1,
-						uname: 'block_0',
-						x: 0, y: 0,
-						path: THEMEPATHASSETS + 'img/wall_32x64.png'
-					},
-					{
-						immat: -1,
 						uname: 'block_1',
-						x: 4 * 32, y: 4 * 32
-						,
-						path: THEMEPATHASSETS + 'img/wall_64x64.png',
-						collide: true
+						x: 3 * 32, y: 2 * 32,
+						path: THEMEPATHASSETS + 'img/wall_64x32.png',
+						collide: true,
+						worldbound: true
 					},
 					{
 						immat: -1,
 						uname: 'block_2',
 						x: 7 * 32, y: 0,
-						path: THEMEPATHASSETS + 'img/wall_32x64.png',
-						collide: true
+						path: THEMEPATHASSETS + 'img/wall_64x32.png',
+						collide: true,
+						worldbound: true
 					},
 					{
 						immat: -1,
 						uname: 'block_3',
 						x: 7 * 32, y: 4 * 32,
-						path: THEMEPATHASSETS + 'img/wall_32x128.png',
-						collide: true
+						path: THEMEPATHASSETS + 'img/wall_64x64.png',
+						collide: true,
+						immovable: true,
+						nomoves: true,
+						worldbound: true
 					},
 					{
 						immat: -1,
 						uname: 'block_4',
 						x: 2 * 32, y: 192,
-						path: THEMEPATHASSETS + 'img/wall_32x64.png',
+						path: THEMEPATHASSETS + 'img/wall_64x32.png',
 						collide: true,
-						rotate: 0
-					}
+						rotate: 0,
+						immovable: true,
+						nomoves: true
+					},
+					{
+						immat: -1,
+						uname: 'block_0',
+						x: 3 * 32, y: 0,
+						path: THEMEPATHASSETS + 'img/wall_32x64.png',
+					},
 				]
 			}
 		]
@@ -81,25 +87,36 @@ class FloorsFactory extends Phaser.Scene {
 			GAME.scene.scenes[SCENEIMMAT].physics.add.image(
 				0, 0,
 				this.currentFloorUname
-			).setOrigin(0, 0)//.setScale(10)
+			).setOrigin(0, 0);
+		GAME.scene.scenes[SCENEIMMAT].allGroups.floor[this.currentFloorUname].setCollideWorldBounds(true);
+		GAME.scene.scenes[SCENEIMMAT].allGroups.floor[this.currentFloorUname].immovable = true
+		GAME.scene.scenes[SCENEIMMAT].allGroups.floor[this.currentFloorUname].body.moves = false
 	}
 	addBlocksToScene() {
 		console.log('adding blocks...')
 		// this.currentFloorUname = FLOORSFACTORY.images[FLOORSFACTORY.currentFloorImmat].uname
 		this.roomsDatas[FLOORSFACTORY.currentFloorImmat].blocks.forEach(block => {
 			// console.log('set_blocks', block)
-			console.log('adding : ', block.uname, 'to allGroups.block')
+			// console.log('adding : ', block.uname, 'to allGroups.block')
 			GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname] =
-				GAME.scene.scenes[SCENEIMMAT].physics.add.image(
+				GAME.scene.scenes[SCENEIMMAT].physics.add.sprite(
 					block.x,
 					block.y,
 					block.uname
-				).setOrigin(0, 0)//.setCollideWorldBounds(true);
+				)
+					.setOrigin(0, 0)
+			// 
+			// GAME.scene.scenes[SCENEIMMAT].collide_object(
+			// 	GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname]
+			// )
+
+			if (block.worldbound) { GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname].setCollideWorldBounds(true) }
+			// if (block.immovable) { GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname].immovable = true }
+			if (block.nomoves) { GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname].body.moves = false }
 
 			if (block.collide) {
 				GAME.scene.scenes[SCENEIMMAT].collide_object(
-					GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname],
-					PLAYERFACTORY.playerPhaser)
+					GAME.scene.scenes[SCENEIMMAT].allGroups.block[block.uname])
 			}
 			if (block.rotate) {
 				GAME.scene.scenes[SCENEIMMAT].tweens.add({
@@ -127,44 +144,44 @@ class FloorsFactory extends Phaser.Scene {
 
 	}
 	// 🙏 ERKAGOON
-	collide_object(object1, player) {
-		console.log('------collide_object-----')
-		GAME.scene.scenes[SCENEIMMAT].physics.add.collider(
-			player,
-			object1,
-			(test) => { this.collideCallback(test) },
-			(test) => { this.callbackContext(test) },
-		);
-		console.log(GAME.scene.scenes[SCENEIMMAT].physics)
-		console.log('------collide_object done-----')
-	}
-	collideCallback(test) {
-		console.log('test', test)
-		console.log('##########')
-		if (PLAYERFACTORY.playerDatas.up_player) {
-			console.log('##########')
-			//here on stop le player dans la direction du haut
-			PLAYERFACTORY.playerPhaser.y -= -5;
-		}
-		if (PLAYERFACTORY.playerDatas.down_player) {
-			console.log('##########')
-			//here on stop le player dans la direction du bas
-			PLAYERFACTORY.playerPhaser.y += -5;
-		}
-		if (PLAYERFACTORY.playerDatas.left_player) {
-			console.log('##########')
-			//here on stop le player dans la direction de gauche
-			PLAYERFACTORY.playerPhaser.x -= -5;
-		}
-		if (PLAYERFACTORY.playerDatas.right_player) {
-			console.log('##########')
-			//here on stop le player dans la direction de droite
-			PLAYERFACTORY.playerPhaser.x += -5;
-		}
-	}
-	callbackContext() {
-		console.log('wtf')
-	}
+	// collide_object(object1, player) {
+	// 	console.log('------collide_object-----')
+	// 	GAME.scene.scenes[SCENEIMMAT].physics.add.collider(
+	// 		player,
+	// 		object1,
+	// 		(test) => { this.collideCallback(test) },
+	// 		(test) => { this.callbackContext(test) },
+	// 	);
+	// 	console.log(GAME.scene.scenes[SCENEIMMAT].physics)
+	// 	console.log('------collide_object done-----')
+	// }
+	// collideCallback(test) {
+	// 	console.log('test', test)
+	// 	console.log('##########')
+	// 	if (PLAYERFACTORY.playerDatas.up_player) {
+	// 		console.log('##########')
+	// 		//here on stop le player dans la direction du haut
+	// 		PLAYERFACTORY.playerPhaser.y -= -5;
+	// 	}
+	// 	if (PLAYERFACTORY.playerDatas.down_player) {
+	// 		console.log('##########')
+	// 		//here on stop le player dans la direction du bas
+	// 		PLAYERFACTORY.playerPhaser.y += -5;
+	// 	}
+	// 	if (PLAYERFACTORY.playerDatas.left_player) {
+	// 		console.log('##########')
+	// 		//here on stop le player dans la direction de gauche
+	// 		PLAYERFACTORY.playerPhaser.x -= -5;
+	// 	}
+	// 	if (PLAYERFACTORY.playerDatas.right_player) {
+	// 		console.log('##########')
+	// 		//here on stop le player dans la direction de droite
+	// 		PLAYERFACTORY.playerPhaser.x += -5;
+	// 	}
+	// }
+	// callbackContext() {
+	// 	console.log('wtf')
+	// }
 	beat_off(object1, player, beatOff) {
 		this.physics.add.collider(
 			object1,

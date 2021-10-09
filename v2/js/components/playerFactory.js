@@ -47,6 +47,36 @@ class PlayerFactory extends Phaser.Scene {
 		// shoot system
 		this.bullets;
 	}
+	addplayertoscene() {
+		this.playerPhaser = GAME.scene.scenes[SCENEIMMAT].physics.add.sprite(
+			1, 1,
+			this.playerDatas.sprites.uname
+		)
+		this.playerPhaser.setCollideWorldBounds(true)
+		// this.playerPhaser.setOrigin(.5, .5)
+		this.set_bullets()
+		// add to group
+		GAME.scene.scenes[SCENEIMMAT].allGroups.player.add(this.playerPhaser)
+
+		this.createPlayerGAMEAnims()
+		CHATFACTORY.add_message('New around ? ', 'text')
+		CHATFACTORY.add_message('Here you are x:' + parseInt(this.playerPhaser.x) + ',y:' + parseInt(this.playerPhaser.y), 'text')
+	}
+	updateplayerpos() {
+		// if body player is mooving
+		var distance = Phaser.Math.Distance.Between(
+			this.playerPhaser.x,
+			this.playerPhaser.y,
+			this.playerDatas.clickpos.x,
+			this.playerDatas.clickpos.y
+		);
+		if (this.playerPhaser.body.speed > 0) {
+			if (distance < this.playerDatas.speed) {
+				//CHATFACTORY.add_message('I reach pos x:' + parseInt(this.playerPhaser.x) + ',y:' + parseInt(this.playerPhaser.y), 'text', 'me')
+				this.playerPhaser.body.reset(this.playerDatas.clickpos.x, this.playerDatas.clickpos.y);
+			}
+		}
+	}
 	// _____________________________________________________
 	// SET JOB DATAS ______________________________//_______\
 	setJobDatas() {
@@ -108,6 +138,7 @@ class PlayerFactory extends Phaser.Scene {
 		}
 		else if (this.playerkeys.key1.indexOf(event.keyCode) > -1) {
 			// console.log(event)
+			// TOUCHE & ou 1
 			PLAYERFACTORY.fire()
 		}
 	}
@@ -166,34 +197,6 @@ class PlayerFactory extends Phaser.Scene {
 			this.spritessheet.push(allJobs[jobname].spritessheet)
 			this.bulletssprite.push(allJobs[jobname].bulletssprite)
 		});
-	}
-	updateplayerpos() {
-		var distance = Phaser.Math.Distance.Between(
-			this.playerPhaser.x,
-			this.playerPhaser.y,
-			this.playerDatas.clickpos.x,
-			this.playerDatas.clickpos.y
-		);
-		// if body player is mooving
-		if (this.playerPhaser.body.speed > 0) {
-			if (distance < this.playerDatas.speed) {
-				CHATFACTORY.add_message('I reach pos x:' + parseInt(this.playerPhaser.x) + ',y:' + parseInt(this.playerPhaser.y), 'text', 'me')
-				this.playerPhaser.body.reset(this.playerDatas.clickpos.x, this.playerDatas.clickpos.y);
-			}
-		}
-	}
-	addplayertoscene() {
-		this.playerPhaser = GAME.scene.scenes[SCENEIMMAT].physics.add.sprite(
-			1, 1,
-			this.playerDatas.sprites.uname
-		).setOrigin(0.5, .5).setCollideWorldBounds(true);
-
-		this.set_bullets()
-		// add to group
-		GAME.scene.scenes[SCENEIMMAT].allGroups.player.add(this.playerPhaser)
-		this.createPlayerGAMEAnims()
-		CHATFACTORY.add_message('New around ? ', 'text')
-		CHATFACTORY.add_message('Here you are x:' + parseInt(this.playerPhaser.x) + ',y:' + parseInt(this.playerPhaser.y), 'text')
 	}
 	// JOBS / METIERS
 	get_job = (jobcat) => {

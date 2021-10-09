@@ -6,7 +6,6 @@ class GameFunctions extends Phaser.Scene {
 		//
 		// PHASER Singles
 		this.allSingles = {
-			// background: [],
 			uiburger: [],
 			cursor: Object,
 		}
@@ -19,7 +18,7 @@ class GameFunctions extends Phaser.Scene {
 	preloadAll() {
 		IMAGESFACTORY.preloadAllImages()
 		this.allGroups = {
-			background: this.physics.add.group(),
+			// background: this.physics.add.group(),
 			floor: this.physics.add.group(),
 			block: this.physics.add.group(),
 			player: this.physics.add.group(),
@@ -32,20 +31,20 @@ class GameFunctions extends Phaser.Scene {
 		FLOORSFACTORY.addFloorToScene()
 		INTERACTIVEFACTORY.setFloorClickable()
 		UIFACTORY.addcursortoscene()
+		this.setWorldBounds()
 		this.addUi() // burger
 		INTERACTIVEFACTORY.resizeApp()
 
 		FLOORSFACTORY.addBlocksToScene()
 		PLAYERFACTORY.addplayertoscene()
-		this.camerasmainfollow() // cameras.main follow player
-		this.addcamera2()
 
 
 		// keydown, keyup, wheel, resize and other interactions
 		INTERACTIVEFACTORY.set_interactivity(0)
 		// setInteractive && make clickable
 		this.consoleconfig()
-		this.setWorldBounds()
+		this.camerasmainfollow() // cameras.main follow player
+		this.addcamera2()
 
 	}
 	updateAll() {
@@ -61,7 +60,8 @@ class GameFunctions extends Phaser.Scene {
 	}
 	// worl limit
 	setWorldBounds() {
-		let floor = GAME.scene.scenes[SCENEIMMAT].allGroups.floor[FLOORSFACTORY.currentFloorUname]
+		let floor = this.allGroups.floor[FLOORSFACTORY.currentFloorUname]
+		// console.log('floor', floor)
 		// let coords = {
 		// 	x: floor.x -= (PLAYERFACTORY.playerPhaser.width / 2) - 1,
 		// 	y: floor.y -= (PLAYERFACTORY.playerPhaser.height / 2) - 1,
@@ -75,7 +75,8 @@ class GameFunctions extends Phaser.Scene {
 			h: floor.height
 		}
 		// set bounds
-		this.physics.world.setBounds(coords.x, coords.y, coords.w, coords.h);
+		// this.physics.world.setBounds(coords.x, coords.y, coords.w, coords.h);
+		this.physics.world.setBounds(0, 0, 256, 256);
 		// if (LOGON) 
 		console.log('this.physics.world.setBounds', coords.x, coords.y, coords.w, coords.h)
 	}
@@ -111,19 +112,22 @@ class GameFunctions extends Phaser.Scene {
 		// 	this.camera2.fade(1000);
 		// }
 	}
-	colliding(obj1, obj2) {
-		console.log('ok')
-		this.physics.add.collider(
-			obj1,
-			obj2
-		)
-	}
+	// colliding(obj1, obj2) {
+	// 	console.log('simple colliding ok')
+	// 	this.physics.add.collider(
+	// 		obj1,
+	// 		obj2
+	// 	)
+	// }
 	// ERKAGOON
-	collide_object(object1, player) {
+	collide_object(object1) {
+		console.log('collide_object')
+		console.log(object1)
 		this.physics.add.collider(
 			object1,
-			player,
+			PLAYERFACTORY.playerPhaser,
 			() => {
+				console.log('colliding---------------->')
 				if (PLAYERFACTORY.playerDatas.up_player) {
 					//here on stop le player dans la direction du haut
 					PLAYERFACTORY.playerPhaser.y -= -5;
@@ -140,8 +144,11 @@ class GameFunctions extends Phaser.Scene {
 					//here on stop le player dans la direction de droite
 					PLAYERFACTORY.playerPhaser.x += -5;
 				}
-			}
-		);
+			},
+		)
+	}
+	callbackContext() {
+		console.log('wtf')
 	}
 	beat_off(object1, player, beatOff) {
 		this.physics.add.collider(
