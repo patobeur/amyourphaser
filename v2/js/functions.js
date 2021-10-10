@@ -6,7 +6,6 @@ class GameFunctions extends Phaser.Scene {
 		//
 		// PHASER Singles
 		this.allSingles = {
-			background: [],
 			uiburger: [],
 			cursor: Object,
 		}
@@ -19,35 +18,38 @@ class GameFunctions extends Phaser.Scene {
 	preloadAll() {
 		IMAGESFACTORY.preloadAllImages()
 		this.allGroups = {
-			background: this.add.group(),
-			floor: this.add.group(),
-			player: this.add.group(),
+			// background: this.physics.add.group(),
+			floor: this.physics.add.group(),
+			block: this.physics.add.group(),
+			player: this.physics.add.group(),
 			// mob: this.add.group(),
-			ui: this.add.group(),
+			ui: this.physics.add.group(),
+			bullets: this.physics.add.group(),
 		}
 	}
 	createAll() {
 
 		FLOORSFACTORY.addFloorToScene()
-		INTERACTIVEFACTORY.setFloorClickable()
-		UIFACTORY.addcursortoscene()
-		PLAYERFACTORY.addplayertoscene()
-		this.addUi() // burger
+		// make floor clickable && setInteractive
+		if (CLICKTOMOVE) CLIKTOMOVEFACTORY.setFloorClickable()
+		this.setWorldBounds()
+		// UIFACTORY.addcursortoscene()
+		UIFACTORY.addUi() // burger
 		INTERACTIVEFACTORY.resizeApp()
 
+		FLOORSFACTORY.addBlocksToScene()
+		PLAYERFACTORY.addplayertoscene()
+
+
+		// keydown, keyup, wheel, resize and other interactions
+		INTERACTIVEFACTORY.set_interactivity()
 		this.consoleconfig()
 		this.camerasmainfollow() // cameras.main follow player
 		this.addcamera2()
 
-
-		// keydown, keyup, wheel, resize and other interactions
-		INTERACTIVEFACTORY.set_interactivity(0)
-		// setInteractive && make clickable
-		this.setWorldBounds()
-
 	}
 	updateAll() {
-		PLAYERFACTORY.updateplayerpos()
+		if (CLICKTOMOVE) CLIKTOMOVEFACTORY.updateplayerpos()
 	}
 	consoleconfig() {
 		if (LOGON) {
@@ -59,16 +61,26 @@ class GameFunctions extends Phaser.Scene {
 	}
 	// worl limit
 	setWorldBounds() {
-		let floor = GAME.scene.scenes[SCENEIMMAT].allGroups.floor[FLOORSFACTORY.currentFloorUname]
+		let floor = this.allGroups.floor[FLOORSFACTORY.currentFloorUname]
+		// console.log('floor', floor)
+		// let coords = {
+		// 	x: floor.x -= (PLAYERFACTORY.playerPhaser.width / 2) - 1,
+		// 	y: floor.y -= (PLAYERFACTORY.playerPhaser.height / 2) - 1,
+		// 	w: floor.width += (PLAYERFACTORY.playerPhaser.width) + 1,
+		// 	h: floor.height += (PLAYERFACTORY.playerPhaser.height) + 1
+		// }
 		let coords = {
-			x: floor.x -= (PLAYERFACTORY.playerPhaser.width / 2) - 1,
-			y: floor.y -= (PLAYERFACTORY.playerPhaser.height / 2) - 1,
-			w: floor.width += (PLAYERFACTORY.playerPhaser.width) + 1,
-			h: floor.height += (PLAYERFACTORY.playerPhaser.height) + 1
+			x: floor.x,
+			y: floor.y,
+			w: floor.width,
+			h: floor.height
 		}
 		// set bounds
-		this.physics.world.setBounds(coords.x, coords.y, coords.w, coords.h);
-		if (LOGON) console.log('this.physics.world.setBounds', coords.x, coords.y, coords.w, coords.h)
+		// this.physics.world.setBounds(coords.x, coords.y, coords.w, coords.h);
+		this.physics.world.setBounds(0, 0, 256, 256);
+		// if (LOGON) 
+		console.log('this.physics.world.setBounds', coords.x, coords.y, coords.w, coords.h)
+		console.log('ggg', this.physics.world)
 	}
 	// camera follow
 	camerasmainfollow = () => {
@@ -101,5 +113,115 @@ class GameFunctions extends Phaser.Scene {
 		// 	this.camera2._fadeAlpha = 0.0;
 		// 	this.camera2.fade(1000);
 		// }
+	}
+	// colliding(obj1, obj2) {
+	// 	console.log('simple colliding ok')
+	// 	this.physics.add.collider(
+	// 		obj1,
+	// 		obj2
+	// 	)
+	// }
+	// ERKAGOON
+	collide_object(object1) {
+		// console.log('collide_object')
+		// console.log(object1)
+		this.physics.add.collider(
+			object1,
+			PLAYERFACTORY.playerPhaser,
+			() => {
+				console.log('colliding---------------->')
+				if (PLAYERFACTORY.playerDatas.up_player) {
+					//here on stop le player dans la direction du haut
+					PLAYERFACTORY.playerPhaser.y -= -5;
+				}
+				if (PLAYERFACTORY.playerDatas.down_player) {
+					//here on stop le player dans la direction du bas
+					PLAYERFACTORY.playerPhaser.y += -5;
+				}
+				if (PLAYERFACTORY.playerDatas.left_player) {
+					//here on stop le player dans la direction de gauche
+					PLAYERFACTORY.playerPhaser.x -= -5;
+				}
+				if (PLAYERFACTORY.playerDatas.right_player) {
+					//here on stop le player dans la direction de droite
+					PLAYERFACTORY.playerPhaser.x += -5;
+				}
+			},
+		)
+	}
+	callbackContext() {
+		console.log('wtf')
+	}
+	beat_off(object1, player, beatOff) {
+		this.physics.add.collider(
+			object1,
+			player,
+			() => {
+				if (this.up_player) {
+					//here on stop le player dans la direction du haut
+					this.tweens.timeline({
+						targets: PLAYERFACTORY.playerPhaser,
+						loop: 1,
+						tweens: [
+							{
+								y: PLAYERFACTORY.playerPhaser.y + beatOff,
+								duration: 25
+							}
+						]
+					});
+				}
+				if (this.down_player) {
+					//here on stop le player dans la direction du bas
+					this.tweens.timeline({
+						targets: PLAYERFACTORY.playerPhaser,
+						loop: 1,
+						tweens: [
+							{
+								y: PLAYERFACTORY.playerPhaser.y - beatOff,
+								duration: 25
+							}
+						]
+					});
+				}
+				if (this.left_player) {
+					//here on stop le player dans la direction de gauche
+					this.tweens.timeline({
+						targets: PLAYERFACTORY.playerPhaser,
+						loop: 1,
+						tweens: [
+							{
+								x: PLAYERFACTORY.playerPhaser.x + beatOff,
+								duration: 25
+							}
+						]
+					});
+				}
+				if (this.right_player) {
+					//here on stop le player dans la direction de droite
+					this.tweens.timeline({
+						targets: PLAYERFACTORY.playerPhaser,
+						loop: 1,
+						tweens: [
+							{
+								x: PLAYERFACTORY.playerPhaser.x - beatOff,
+								duration: 25
+							}
+						]
+					});
+				}
+			}
+		);
+	}
+	game_over_collider(object1, player, colorText) {
+		this.physics.add.collider(
+			object1,
+			player,
+			() => {
+				this.beat_off(object1, player, 1);
+				PLAYERFACTORY.playerDatas.speed = 0;
+				this.add.text(PLAYERFACTORY.playerPhaser.x - 250, PLAYERFACTORY.playerPhaser.y - 50, 'GAME OVER', { font: "72px Arial Black", fill: colorText });
+				setTimeout(function () { location.reload(); }, 3000);
+			}
+		);
 	}
 }

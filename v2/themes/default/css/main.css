@@ -34,7 +34,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-image: url(../assets/img/thisisnottobeseen.png);
+  background-image: url(../../../../themes/default/assets/img/thisisnottobeseen.png);
 }
 
 body #amyourphaser {

@@ -3,7 +3,7 @@
 }
 @font-face {
 	font-family: "quikhand";
-	src: url("../assets/fonts/quikhand/Quikhand.ttf") format("truetype");
+	src: url("../../../../themes/default/assets/fonts/quikhand/Quikhand.ttf") format("truetype");
 }
 *,
 ::before,
@@ -26,7 +26,7 @@ body {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	background-image: url(../assets/img/thisisnottobeseen.png);
+	background-image: url(../../../../themes/default/assets/img/thisisnottobeseen.png);
 	#amyourphaser {
 		margin: 0 auto;
 		display: flex;
@@ -39,7 +39,7 @@ body {
 		canvas {
 			width: 100%;
 			height: 100%;
-			background-image: url(../assets/img/thisisnottobeseen.png);
+			background-image: url(../../../../themes/default/assets/img/thisisnottobeseen.png);
 		}
 		#canvascenter {
 			position: absolute;

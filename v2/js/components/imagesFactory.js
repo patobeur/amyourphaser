@@ -5,13 +5,14 @@ class ImagesFactory extends Phaser.Scene {
 		this.sprites = []
 		this.spritessheet = []
 		this.bulletssprite = []
+		this.ui = []
 
 		this.loadedimages = []
 		this.loadedsprites = []
 		this.loadedspritesSheet = []
 		this.loadedbulletssprite = []
 
-		this.stacks = ['images', 'sprites', 'spritessheet', 'bulletssprite']
+		this.stacks = ['images', 'sprites', 'spritessheet', 'bulletssprite', 'ui']
 
 		this.stackedcounter = 0
 		this.loadedcounter = 0
@@ -19,21 +20,54 @@ class ImagesFactory extends Phaser.Scene {
 	// basics 
 	get_basicsimagetopreload = () => {
 		return [
-			{ immat: -1, uname: 'wall_32x64', path: THEMEPATHASSETS + 'img/wall_32x64.png' },
-			{ immat: -1, uname: 'wall_64x64', path: THEMEPATHASSETS + 'img/wall_64x64.png' },
-			{ immat: -1, uname: 'worldmap_1920x1080', path: THEMEPATHASSETS + 'img/worldmap_1920x1080.png' },
-			{ immat: -1, uname: 'worldmap_1920x1080v2', path: THEMEPATHASSETS + 'img/worldmap_1920x1080v2.png' },
-			{ immat: -1, uname: 'burger_off', path: THEMEPATHASSETS + 'img/burger_off.png' },
-			{ immat: -1, uname: 'burger_on', path: THEMEPATHASSETS + 'img/burger_on.png' },
-			{ immat: -1, uname: 'thisisnottobeseen', path: THEMEPATHASSETS + 'img/thisisnottobeseen.png' },
-			{ immat: -1, uname: 'cursor', path: THEMEPATHASSETS + 'img/cursor.png' },
+			{ immat: -1, uname: 'worldmap_1920x1080', path: THEMEPATHIMG + 'worldmap_1920x1080.png' },
+			{ immat: -1, uname: 'worldmap_1920x1080v2', path: THEMEPATHIMG + 'worldmap_1920x1080v2.png' },
+			{ immat: -1, uname: 'burger_off', path: THEMEPATHIMG + 'burger_off.png' },
+			{ immat: -1, uname: 'burger_on', path: THEMEPATHIMG + 'burger_on.png' },
+			// { immat: -1, uname: 'thisisnottobeseen', path: THEMEPATHIMG + 'thisisnottobeseen.png' },
+			// { immat: -1, uname: 'cursor', path: THEMEPATHIMG + 'cursor.png' },
 		]
 	}
 	get_basicsspritetopreload = () => {
 		return [
-			{ immat: -1, uname: 'cursor_left', path: THEMEPATHASSETS + 'sprites/cursor_left.png', frames: { frameWidth: 32, frameHeight: 32 } },
-			{ immat: -1, uname: 'cursor_right', path: THEMEPATHASSETS + 'sprites/cursor_right.png', frames: { frameWidth: 32, frameHeight: 32 } },
+			{ immat: -1, uname: 'cursor_left', path: THEMEPATHSPRITE + 'cursor_left.png', frames: { frameWidth: 32, frameHeight: 32 } },
+			{ immat: -1, uname: 'cursor_right', path: THEMEPATHSPRITE + 'cursor_right.png', frames: { frameWidth: 32, frameHeight: 32 } },
 		]
+	}
+	add_imagesToLoadList(imageArray, type) {
+		if (!imageArray.length || !imageArray.length > 0 || !type) { console.log('bad'); return }
+		imageArray.forEach(item => {
+			item.immat = this[type].length
+			this[type].push(item)
+			this.stackedcounter++
+		});
+	}
+
+	// -------------------------------------
+	preloadAllImages() { // called by sceneMain.js
+		// add to loadlist
+		this.add_imagesToLoadList(this.get_basicsimagetopreload(), 'images')
+		this.add_imagesToLoadList(this.get_basicsspritetopreload(), 'sprites')
+		// player
+		this.add_imagesToLoadList(PLAYERFACTORY.images, 'images')
+		this.add_imagesToLoadList(PLAYERFACTORY.sprites, 'sprites')
+		this.add_imagesToLoadList(PLAYERFACTORY.spritessheet, 'spritessheet')
+		this.add_imagesToLoadList(PLAYERFACTORY.bulletssprite, 'bulletssprite')
+		// floors
+		this.add_imagesToLoadList(FLOORSFACTORY.images, 'images')
+		// ui
+		this.add_imagesToLoadList(UIFACTORY.images, 'ui')
+
+		// load images
+		this.stacks.forEach(itemname => {
+			this.load_mixed(itemname)
+		});
+		if (LOGON) {
+			console.log('spritessheet', this.spritessheet)
+			console.log('bulletssprite', this.bulletssprite)
+			console.log('sprites', this.sprites)
+			console.log('images', this.images)
+		}
 	}
 	// mixed
 	load_mixed(itemname) {
@@ -51,41 +85,6 @@ class ImagesFactory extends Phaser.Scene {
 			}
 			// console.log('loaded' + itemname, current.uname, current.path, current.frames)
 			this.loadedcounter++
-		}
-	}
-	add_imagesToLoadList(arraylist, type) {
-		if (!arraylist.length || !arraylist.length > 0 || !type) { console.log('bad'); return }
-		arraylist.forEach(item => {
-			item.immat = this[type].length
-			this[type].push(item)
-			this.stackedcounter++
-		});
-	}
-
-	// -------------------------------------
-	preloadAllImages() { // called by sceneMain.js
-		// add to loadlist
-		this.add_imagesToLoadList(this.get_basicsimagetopreload(), 'images')
-		this.add_imagesToLoadList(this.get_basicsspritetopreload(), 'sprites')
-		this.add_imagesToLoadList(PLAYERFACTORY.images, 'images')
-		this.add_imagesToLoadList(PLAYERFACTORY.sprites, 'sprites')
-		this.add_imagesToLoadList(PLAYERFACTORY.spritessheet, 'spritessheet')
-		this.add_imagesToLoadList(PLAYERFACTORY.bulletssprite, 'bulletssprite')
-		this.add_imagesToLoadList(FLOORSFACTORY.get_imagetopreload(), 'images')
-
-
-		// load images
-		this.stacks.forEach(itemname => {
-			// this['load_' + item](item)
-			this.load_mixed(itemname)
-		});
-
-
-		if (LOGON) {
-			console.log('images', this.images)
-			console.log('spritessheet', this.spritessheet)
-			console.log('bulletssprite', this.bulletssprite)
-			console.log('sprites', this.sprites)
 		}
 	}
 }
