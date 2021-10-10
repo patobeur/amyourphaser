@@ -2,10 +2,22 @@ const version = 'v5'
 console.log(version)
 const SCENEIMMAT = 0
 const LOGON = false
+const ROOTAPP = 'v2/'
+const ROOT = '../../'
 const TEMPLATE = 'default'
-const THEMEPATH = 'themes/' + TEMPLATE + '/'
-const THEMEPATHASSETS = 'themes/' + TEMPLATE + '/assets/'
+// --
+const THEMEPATH = ROOTAPP + 'themes/' + TEMPLATE + '/'
+// -- communs 
+const THEMEPATHASSETS = ROOT + 'themes/' + TEMPLATE + '/assets/'
+const THEMEPATHIMG = THEMEPATHASSETS + 'img/'
+const THEMEPATHSPRITE = THEMEPATHASSETS + 'sprites/'
+const ROOTJS = ROOTAPP + 'js/'
 // document.body.addEventListener("contextmenu", (e) => { e.preventDefault(); return false; });
+
+
+// shoot system
+const SHOOTSKILL = false
+const CLICKTOMOVE = true
 
 window.onload = () => {
 
@@ -13,20 +25,21 @@ window.onload = () => {
 	const jsFilesList = [
 		{ pathfile: THEMEPATH + 'config.js', idname: 'config-js' },
 		// local phaser script
-		{ pathfile: '../phaser/phaser.3.55.2.min.js', idname: 'phaser-js' },
+		{ pathfile: 'phaser/phaser.3.55.2.min.js', idname: 'phaser-js' },
 		// distant phaser script
 		//{ pathfile: 'https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js', idname: 'phaser-js' },
-		{ pathfile: 'js/components/chatbotFactory.js', idname: 'chatbotFactory-js' },
-		{ pathfile: 'js/components/mathFactory.js', idname: 'math-js' },
-		{ pathfile: 'js/components/uiFactory.js', idname: 'ui-js' },
-		{ pathfile: 'js/components/interactiveFactory.js', idname: 'interactive-js' },
-		{ pathfile: 'js/components/playerFactory.js', idname: 'playerFactory-js' },
-		{ pathfile: 'js/components/floorsFactory.js', idname: 'floorsFactory-js' },
-		{ pathfile: 'js/components/imagesFactory.js', idname: 'imagesFactory-js' },
-		{ pathfile: 'js/functions.js', idname: 'functions-js' },
-		{ pathfile: 'js/scenes/sceneMain.js', idname: 'sceneMain-js' },
-		{ pathfile: 'js/scenes/sceneOuterSpace.js', idname: 'sceneOuterSpace-js' },
-		{ pathfile: 'js/config.js', idname: 'phaserconfig-js' },
+		{ pathfile: ROOTJS + 'components/chatbotFactory.js', idname: 'chatbotFactory-js' },
+		{ pathfile: ROOTJS + 'components/mathFactory.js', idname: 'math-js' },
+		{ pathfile: ROOTJS + 'components/uiFactory.js', idname: 'ui-js' },
+		{ pathfile: ROOTJS + 'components/interactiveFactory.js', idname: 'interactive-js' },
+		{ pathfile: ROOTJS + 'components/playerFactory.js', idname: 'playerFactory-js' },
+		{ pathfile: ROOTJS + 'components/clicktomoveplayerFactory.js', idname: 'clicktomoveplayerFactory-js' },
+		{ pathfile: ROOTJS + 'components/floorsFactory.js', idname: 'floorsFactory-js' },
+		{ pathfile: ROOTJS + 'components/imagesFactory.js', idname: 'imagesFactory-js' },
+		{ pathfile: ROOTJS + 'functions.js', idname: 'functions-js' },
+		{ pathfile: ROOTJS + 'scenes/sceneMain.js', idname: 'sceneMain-js' },
+		{ pathfile: ROOTJS + 'scenes/sceneOuterSpace.js', idname: 'sceneOuterSpace-js' },
+		{ pathfile: ROOTJS + 'config.js', idname: 'phaserconfig-js' },
 	];
 	let isLoaderOpen = true
 	// functions 

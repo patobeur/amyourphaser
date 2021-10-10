@@ -23,16 +23,18 @@ class GameFunctions extends Phaser.Scene {
 			block: this.physics.add.group(),
 			player: this.physics.add.group(),
 			// mob: this.add.group(),
-			ui: this.add.group(),
+			ui: this.physics.add.group(),
+			bullets: this.physics.add.group(),
 		}
 	}
 	createAll() {
 
 		FLOORSFACTORY.addFloorToScene()
-		INTERACTIVEFACTORY.setFloorClickable()
-		UIFACTORY.addcursortoscene()
+		// make floor clickable && setInteractive
+		if (CLICKTOMOVE) CLIKTOMOVEFACTORY.setFloorClickable()
 		this.setWorldBounds()
-		this.addUi() // burger
+		// UIFACTORY.addcursortoscene()
+		UIFACTORY.addUi() // burger
 		INTERACTIVEFACTORY.resizeApp()
 
 		FLOORSFACTORY.addBlocksToScene()
@@ -40,15 +42,14 @@ class GameFunctions extends Phaser.Scene {
 
 
 		// keydown, keyup, wheel, resize and other interactions
-		INTERACTIVEFACTORY.set_interactivity(0)
-		// setInteractive && make clickable
+		INTERACTIVEFACTORY.set_interactivity()
 		this.consoleconfig()
 		this.camerasmainfollow() // cameras.main follow player
 		this.addcamera2()
 
 	}
 	updateAll() {
-		PLAYERFACTORY.updateplayerpos()
+		if (CLICKTOMOVE) CLIKTOMOVEFACTORY.updateplayerpos()
 	}
 	consoleconfig() {
 		if (LOGON) {
@@ -79,6 +80,7 @@ class GameFunctions extends Phaser.Scene {
 		this.physics.world.setBounds(0, 0, 256, 256);
 		// if (LOGON) 
 		console.log('this.physics.world.setBounds', coords.x, coords.y, coords.w, coords.h)
+		console.log('ggg', this.physics.world)
 	}
 	// camera follow
 	camerasmainfollow = () => {
@@ -121,8 +123,8 @@ class GameFunctions extends Phaser.Scene {
 	// }
 	// ERKAGOON
 	collide_object(object1) {
-		console.log('collide_object')
-		console.log(object1)
+		// console.log('collide_object')
+		// console.log(object1)
 		this.physics.add.collider(
 			object1,
 			PLAYERFACTORY.playerPhaser,

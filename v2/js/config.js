@@ -5,8 +5,8 @@ var myPhaserConfig = {
 	physics: {
 		default: 'arcade',
 		arcade: {
-			debug: false,
-			gravity: { y: 10 }
+			debug: true,
+			gravity: { y: 0 }
 		}
 	},
 	// backgroundColor: '#EAEAEA',
