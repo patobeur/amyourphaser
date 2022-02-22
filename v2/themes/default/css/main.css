@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "quikhand";
-  src: url("../assets/fonts/quikhand/Quikhand.ttf") format("truetype");
+  src: url("../../../../themes/default/assets/fonts/quikhand/Quikhand.ttf") format("truetype");
 }
 
 *,
@@ -58,7 +58,7 @@ body #amyourphaser {
 body #amyourphaser canvas {
   width: 100%;
   height: 100%;
-  background-image: url(../assets/img/thisisnottobeseen.png);
+  background-image: url(../../../../themes/default/assets/img/thisisnottobeseen.png);
 }
 
 body #amyourphaser #canvascenter {
