@@ -4,7 +4,7 @@ Experimental Mini RGP System
 
 🐰 try the experience dev version ! 🌱
 
-https://patobeur.github.io/amyourphaser/v2
+https://patobeur.github.io/amyourphaser
 
 - - -
 Phaser Framework -> Version 3.55.2 - Ichika - 27th May 2021
